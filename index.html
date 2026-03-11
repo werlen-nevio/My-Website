@@ -1,131 +1,478 @@
 <!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coming Soon</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-        body {
-            background: url('image.png') no-repeat center center/cover;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: white;
-            position: relative;
-        }
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 50, 0.7);
-        }
-        .content {
-            position: relative;
-            z-index: 2;
-        }
-        h1 {
-            font-size: 3rem;
-            letter-spacing: 3px;
-            margin-bottom: 20px;
-        }
-        p {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-        }
-        .clock {
-            position: relative;
-            width: 150px;
-            height: 150px;
-            margin: 0 auto 20px;
-            border: 2px solid white;
-            border-radius: 50%;
-        }
-        .clock::before {
-            content: '';
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: white;
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-        .hand {
-            position: absolute;
-            width: 2px;
-            height: 50px;
-            background: white;
-            top: 50%;
-            left: 50%;
-            transform-origin: bottom;
-            transform: translate(-50%, -100%) rotate(0deg);
-            transition: transform 0.5s linear;
-        }
-        .minute {
-            height: 40px;
-        }
-        .hour {
-            height: 30px;
-        }
-        .social {
-            margin-top: 20px;
-        }
-        .social a {
-            color: white;
-            margin: 0 10px;
-            font-size: 1.5rem;
-            text-decoration: none;
-        }
-        body{
-            background-color: #D9AFD9;
-            background-image: linear-gradient(0deg, #D9AFD9 0%, #97D9E1 100%);
-        }
-    </style>
-</head>
-<body>
-    <div class="overlay"></div>
-    <div class="content">
-        <h1 title="mario ist ein affe">COMING SOON</h1>
-        <div class="clock">
-            <div class="hand hour" id="hour-hand"></div>
-            <div class="hand minute" id="minute-hand"></div>
-            <div class="hand second" id="second-hand"></div>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>nevio.dev</title>
+
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Caveat:wght@400;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+        <!-- Styles -->
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+
+    <body>
+        <nav>
+            <a href="#" class="nav-logo">nevio.dev</a>
+            <ul class="nav-links">
+                <li><a href="#about">ABOUT</a></li>
+                <li><a href="#skills">SKILLS</a></li>
+                <li><a href="#experience">WORK</a></li>
+                <li><a href="#projects">PROJECTS</a></li>
+                <li><a href="#contact" class="nav-hire">CONTACT</a></li>
+            </ul>
+        </nav>
+
+        <section id="hero">
+            <div class="hero-left">
+                <div class="hero-title">
+                    <span>// FULL STACK DEVELOPER</span>
+                    NEVIO
+                </div>
+                <p class="hero-sub">
+                    Ich baue digitale Produkte, die im Gedächtnis bleiben.<br>
+                    <strong>Vue • React • Three.js • Node</strong>
+                </p>
+                <div class="hero-btns">
+                    <a href="#projects" class="btn btn-primary">Meine Projekte →</a>
+                    <a href="#contact" class="btn">KONTAKT</a>
+                </div>
+                <div class="hero-ticker">
+                    <span class="ticker-inner">
+                        /// OPEN FOR WORK /// FULL STACK DEVELOPMENT /// UI/UX DESIGN /// 3D WEB EXPERIENCES /// REAL-TIME
+                        APPS /// WORDPRESS PLUGINS /// VUE 3 /// REACT /// THREE.JS /// VALCODE /// WALLIS /// SCHWEIZ ///
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        /// OPEN FOR WORK /// FULL STACK DEVELOPMENT /// UI/UX DESIGN /// 3D WEB EXPERIENCES /// REAL-TIME
+                        APPS /// WORDPRESS PLUGINS /// VUE 3 /// REACT /// THREE.JS /// VALCODE /// WALLIS /// SCHWEIZ ///
+                    </span>
+                </div>
+            </div>
+            <div class="hero-right">
+                <div class="hero-img-placeholder">
+                    <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+                        <rect x="20" y="10" width="40" height="45" rx="4" stroke="#2d8a4e" stroke-width="2"/>
+                        <circle cx="40" cy="33" r="12" stroke="#2d8a4e" stroke-width="2"/>
+                        <path d="M20 70 Q40 55 60 70" stroke="#2d8a4e" stroke-width="2" fill="none"/>
+                    </svg>
+                    <div style="position:absolute;bottom:0;left:0;right:0;background:var(--yellow);border-top:var(--border);padding:6px 10px;font-family:var(--font-hand);font-size:0.85rem;letter-spacing:1px;color:var(--ink);">
+                        ← das bin ich
+                    </div>
+                </div>
+                <div class="hero-coords">
+                    📍 LOCATION: <span>WALLIS, SCHWEIZ</span><br>
+                    🟢 STATUS: <span>AVAILABLE</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== ABOUT ========== -->
+        <section id="about">
+            <div class="section-header">
+                <span>##</span>
+                <div class="section-title">Who am I?</div>
+                <div class="section-tag">// about</div>
+            </div>
+            <div class="about-grid">
+                <div class="about-left">
+                    <h3>Ich bin Nevio.</h3>
+                    <p style="font-size:0.85rem;line-height:1.8;color:#aaa;margin-bottom:1.5rem;">
+                        Ein kreativer Entwickler bei VALCODE, der glaubt, dass das Web mehr Persönlichkeit braucht. Ich
+                        bringe Charakter in Code – von brutalen Booking-Systemen bis zu immersiven 3D-Welten.
+                    </p>
+                    <blockquote>
+                        Spezialisiert auf Full-Stack-Entwicklung &amp; 3D-Web-Experiences.<br>
+                        Obsessed with Performance, Design &amp; Clean Code.<br>
+                        Jahrelang reale Produkte geshipped, die wirklich funktionieren.
+                    </blockquote>
+                    <div class="about-badges">
+                        <div class="badge"><div class="dot"></div> 📍 WALLIS, SCHWEIZ</div>
+                        <div class="badge"><div class="dot"></div> 🟢 VERFÜGBAR</div>
+                        <div class="badge"><div class="dot"></div> VALCODE</div>
+                    </div>
+                </div>
+                <div class="about-right">
+                    <h3>// wer ich bin</h3>
+                    <div style="display:flex;flex-direction:column;gap:1rem;">
+                        <div class="stat-row"><span class="stat-row-label">NAME_</span><span class="stat-row-val">NEVIO</span></div>
+                        <div class="stat-row"><span class="stat-row-label">ROLE_</span><span class="stat-row-val">FULL STACK DEVELOPER</span></div>
+                        <div class="stat-row"><span class="stat-row-label">COMPANY_</span><span class="stat-row-val">VALCODE</span></div>
+                        <div class="stat-row"><span class="stat-row-label">LOCATION_</span><span class="stat-row-val">WALLIS, SCHWEIZ</span></div>
+                        <div class="stat-row"><span class="stat-row-label">FOCUS_</span><span class="stat-row-val">VUE / REACT / THREE.JS</span></div>
+                        <div class="stat-row"><span class="stat-row-label">STATUS_</span><span class="stat-row-val">● ONLINE</span></div>
+                        <div class="stat-row"><span class="stat-row-label">LANGUAGES_</span><span class="stat-row-val">DE / FR / EN</span></div>
+                        <div class="stat-row"><span class="stat-row-label">DESIGN_</span><span class="stat-row-val">clean &amp; brutal</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== SKILLS ========== -->
+        <section id="skills">
+            <div class="section-header">
+                <span>##</span>
+                <div class="section-title">Was ich kann</div>
+                <div class="section-tag">⚙️ optimiert</div>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-card"><div class="skill-prefix">>_ LIBRARY</div><div class="skill-type">FRONTEND</div><div class="skill-name">REACT</div></div>
+                <div class="skill-card"><div class="skill-prefix">>_ FRAMEWORK</div><div class="skill-type">FRONTEND</div><div class="skill-name">VUE 3</div></div>
+                <div class="skill-card"><div class="skill-prefix">>_ 3D / WEBGL</div><div class="skill-type">IMMERSIVE</div><div class="skill-name">THREE.JS</div></div>
+                <div class="skill-card"><div class="skill-prefix">>_ BACKEND</div><div class="skill-type">RUNTIME</div><div class="skill-name">NODE.JS</div></div>
+                <div class="skill-card"><div class="skill-prefix">>_ REALTIME</div><div class="skill-type">WEBSOCKET</div><div class="skill-name">SOCKET.IO</div></div>
+                <div class="skill-card"><div class="skill-prefix">>_ CMS</div><div class="skill-type">PLUGIN DEV</div><div class="skill-name">WORDPRESS</div></div>
+                <div class="skill-card"><div class="skill-prefix">>_ LANGUAGE</div><div class="skill-type">BACKEND</div><div class="skill-name">PHP</div></div>
+                <div class="skill-card"><div class="skill-prefix">>_ LANGUAGE</div><div class="skill-type">SCRIPTING</div><div class="skill-name">JAVASCRIPT</div></div>
+                <div class="skill-card"><div class="skill-prefix">>_ STYLING</div><div class="skill-type">CSS FRAMEWORK</div><div class="skill-name">TAILWIND</div></div>
+                <div class="skill-card"><div class="skill-prefix">>_ DATA</div><div class="skill-type">DATEN</div><div class="skill-name">MySQL</div></div>
+                <div class="skill-card"><div class="skill-prefix">>_ CORE</div><div class="skill-type">MARKUP</div><div class="skill-name">HTML5</div></div>
+                <div class="skill-card"><div class="skill-prefix">>_ VERSION</div><div class="skill-type">CONTROL</div><div class="skill-name">GIT</div></div>
+                <div class="skill-card"><div class="skill-prefix">>_ 3D REACT</div><div class="skill-type">IMMERSIVE</div><div class="skill-name">R3F</div></div>
+                <div class="skill-card"><div class="skill-prefix">>_ LEGACY</div><div class="skill-type">MIGRATION</div><div class="skill-name">ASP CLASSIC</div></div>
+                <div class="skill-card"><div class="skill-prefix">>_ AUTH</div><div class="skill-type">SECURITY</div><div class="skill-name">JWT</div></div>
+                <div class="skill-card"><div class="skill-prefix">>_ DEPLOY</div><div class="skill-type">DEVOPS</div><div class="skill-name">GITHUB</div></div>
+            </div>
+            <div class="skills-stats">
+                Skills total: <span>16</span> &nbsp;&nbsp; Lernbereit: <span>immer</span> &nbsp;&nbsp; Qualität: <span>AAA</span>
+            </div>
+        </section>
+
+        <!-- ========== EXPERIENCE ========== -->
+        <section id="experience">
+            <div class="section-header">
+                <span>##</span>
+                <div class="section-title">Was ich gemacht hab</div>
+                <div class="section-tag">// logs</div>
+            </div>
+            <div class="exp-list">
+
+                <div class="exp-item">
+                    <div>
+                        <div class="exp-date">PRESENT</div>
+                        <div class="exp-date" style="color:var(--green);font-size:0.8rem;">@ VALCODE</div>
+                        <div class="exp-company">FULL TIME</div>
+                    </div>
+                    <div class="exp-right">
+                        <h3>Full-Stack Developer</h3>
+                        <ul>
+                            <li>Entwicklung von PYRA – einem Vue 3 Building Management System mit umfassendem Dashboard</li>
+                            <li>Aufbau des Valcode Appoint WordPress Booking Plugins mit Advanced Calendar &amp; License Management</li>
+                            <li>Erstellung von 3D Portfolio-Websites mit Three.js und React Three Fiber</li>
+                            <li>JWT-basiertes License Management System für VALCODE Produkte entwickelt</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="exp-item">
+                    <div>
+                        <div class="exp-date">ONGOING</div>
+                        <div class="exp-date" style="color:var(--green);font-size:0.8rem;">@ VALCODE</div>
+                        <div class="exp-company">PRODUCT DEV</div>
+                    </div>
+                    <div class="exp-right">
+                        <h3>Multiplayer Game Developer</h3>
+                        <ul>
+                            <li>Track Attack – Music Quiz Game mit WebSocket &amp; Real-Time Synchronisation</li>
+                            <li>Dart Party – Real-Time Dart Scoring System mit Socket.io Multiplayer Integration</li>
+                            <li>Glassmorphism UI Design mit Smooth Animations und Responsive Layouts</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="exp-item">
+                    <div>
+                        <div class="exp-date">ONGOING</div>
+                        <div class="exp-date" style="color:var(--green);font-size:0.8rem;">@ VALCODE</div>
+                        <div class="exp-company">MODERNIZATION</div>
+                    </div>
+                    <div class="exp-right">
+                        <h3>Legacy Code Modernization</h3>
+                        <ul>
+                            <li>ASP Classic Code zu modernen, wiederverwendbaren Funktionen migriert</li>
+                            <li>PHP Backend Development mit DateTime / Timezone Handling</li>
+                            <li>Async/Await Patterns in Payment Processing Flows implementiert und debuggt</li>
+                            <li>API Integrationen und Datenbankoptimierungen durchgeführt</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ========== CODING STATS ========== -->
+        <section id="stats">
+            <div class="section-header">
+                <span>##</span>
+                <div class="section-title">Meine Stats</div>
+                <div class="section-tag"><span class="live-badge">LIVE</span></div>
+            </div>
+            <div class="stats-grid">
+
+                <div class="stat-panel">
+                    <div class="stat-panel-header">
+                        <div>
+                            <div class="stat-panel-title">GITHUB</div>
+                            <div class="stat-panel-sub">// Full Stack Builder</div>
+                        </div>
+                        <div class="stat-badge">ACTIVE</div>
+                    </div>
+                    <div class="stat-rows">
+                        <div class="stat-row"><span class="stat-row-label">REPOS_</span><span class="stat-row-val">VALCODE PRODUCTS</span></div>
+                        <div class="stat-row"><span class="stat-row-label">FOCUS_</span><span class="stat-row-val">VUE / REACT / THREE.JS</span></div>
+                        <div class="stat-row"><span class="stat-row-label">COMMITS_</span><span class="stat-row-val">DAILY</span></div>
+                        <div class="stat-row"><span class="stat-row-label">STREAK_</span><span class="stat-row-val">ONGOING</span></div>
+                    </div>
+                    <div class="stat-img">
+                        <img src="https://ghchart.rshah.org/33FF57/nevio" alt="GitHub Contributions"
+                            onerror="this.style.display='none';this.parentElement.innerHTML='<div style=\'padding:1rem;font-size:0.6rem;color:#333;letter-spacing:2px;\'>CONTRIBUTION GRAPH LOADING...</div>'">
+                    </div>
+                    <div class="stat-cmd">github anschauen</div>
+                    <a href="https://github.com" target="_blank" class="stat-link">VIEW_GH →</a>
+                </div>
+
+                <div class="stat-panel">
+                    <div class="stat-panel-header">
+                        <div>
+                            <div class="stat-panel-title">VALCODE</div>
+                            <div class="stat-panel-sub">// Product Portfolio</div>
+                        </div>
+                        <div class="stat-badge">LIVE</div>
+                    </div>
+                    <div class="stat-rows">
+                        <div class="stat-row"><span class="stat-row-label">PYRA_</span><span class="stat-row-val">BUILDING MGMT SYSTEM</span></div>
+                        <div class="stat-row"><span class="stat-row-label">APPOINT_</span><span class="stat-row-val">WP BOOKING PLUGIN</span></div>
+                        <div class="stat-row"><span class="stat-row-label">TRACK_ATTACK_</span><span class="stat-row-val">MUSIC QUIZ GAME</span></div>
+                        <div class="stat-row"><span class="stat-row-label">DART_PARTY_</span><span class="stat-row-val">REALTIME SCORING</span></div>
+                        <div class="stat-row"><span class="stat-row-label">PORTFOLIO_</span><span class="stat-row-val">3D DIGITAL UNIVERSE</span></div>
+                        <div class="stat-row"><span class="stat-row-label">LICENSE_SYS_</span><span class="stat-row-val">JWT MANAGEMENT</span></div>
+                    </div>
+                    <div style="border:var(--border);background:var(--paper-dark);padding:1.5rem;margin-bottom:1rem;">
+                        <div style="font-size:0.6rem;color:#8a7560;letter-spacing:2px;margin-bottom:0.5rem;">// mein stack</div>
+                        <div style="font-size:0.85rem;color:var(--green);line-height:2;font-family:var(--font-hand);">
+                            Vue 3 + Vite ▸ React + R3F ▸ Three.js ▸ Node.js ▸ Socket.io ▸ WordPress ▸ PHP ▸ MySQL ▸ JWT
+                        </div>
+                    </div>
+                    <div class="stat-cmd">alle produkte</div>
+                    <a href="https://valcode.ch" target="_blank" class="stat-link">valcode.ch →</a>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ========== PROJECTS ========== -->
+        <section id="projects">
+            <div class="section-header">
+                <span>##</span>
+                <div class="section-title">Selected Works</div>
+                <div class="section-tag">// work</div>
+            </div>
+            <div class="projects-grid">
+
+                <div class="project-card">
+                    <div class="project-img-placeholder"><span style="position:relative;z-index:1;">PYRA.PNG</span></div>
+                    <div class="project-content">
+                        <h3>PYRA</h3>
+                        <p>Ein umfassendes Building Management System auf Basis von Vue 3 mit Advanced Dashboard, Real-Time Monitoring und vollständiger Gebäudeverwaltung.</p>
+                        <div class="project-tags">
+                            <span class="tag">Vue 3</span><span class="tag">Vite</span><span class="tag">Node.js</span><span class="tag">MySQL</span><span class="tag">Dashboard</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-img-placeholder"><span style="position:relative;z-index:1;">APPOINT.PNG</span></div>
+                    <div class="project-content">
+                        <h3>Valcode Appoint</h3>
+                        <p>WordPress Booking Plugin mit Advanced Calendar Widgets, Availability Checking, License Management und nahtloser WP-Integration.</p>
+                        <div class="project-tags">
+                            <span class="tag">WordPress</span><span class="tag">PHP</span><span class="tag">JavaScript</span><span class="tag">License Mgmt</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-img-placeholder"><span style="position:relative;z-index:1;">3D-PORTFOLIO.PNG</span></div>
+                    <div class="project-content">
+                        <h3>Digital Universe Portfolio</h3>
+                        <p>Ein immersives 3D-Portfolio wo Projekte als Planeten dargestellt werden. Gebaut mit Three.js, React Three Fiber und WebGL für flüssige Animationen.</p>
+                        <div class="project-tags">
+                            <span class="tag">Three.js</span><span class="tag">React</span><span class="tag">R3F</span><span class="tag">WebGL</span><span class="tag">GSAP</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-img-placeholder"><span style="position:relative;z-index:1;">TRACKATTACK.PNG</span></div>
+                    <div class="project-content">
+                        <h3>Track Attack</h3>
+                        <p>Ein Multiplayer Music Quiz Game mit Real-Time WebSocket Synchronisation, Live Scoring und interaktivem Gameplay für mehrere Spieler gleichzeitig.</p>
+                        <div class="project-tags">
+                            <span class="tag">Node.js</span><span class="tag">Socket.io</span><span class="tag">React</span><span class="tag">WebSocket</span><span class="tag">Realtime</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="projects-footer">
+                <a href="https://github.com" target="_blank" class="btn">VIEW ALL REPOS ON GITHUB</a>
+            </div>
+        </section>
+
+        <!-- ========== TESTIMONIALS ========== -->
+        <section id="testimonials">
+            <div class="section-header">
+                <span>##</span>
+                <div class="section-title">Was andere sagen</div>
+                <div class="section-tag"><span class="live-badge">LIVE</span></div>
+            </div>
+            <div class="testimonials-track-wrap">
+                <div class="testimonials-track">
+                    <!-- Original set -->
+                    <div class="review-card">
+                        <div class="review-meta"><span class="review-id">REPORT_001.log</span><span>2025.txt</span></div>
+                        <p class="review-text">"Nevio liefert nicht einfach eine Website – er baut eine Maschine. Unsere Conversion Rate hat sich innerhalb einer Woche verdreifacht."</p>
+                        <div class="review-from">FROM: <span>CEO @ Swiss Startup</span></div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-meta"><span class="review-id">REPORT_002.log</span><span>2025.txt</span></div>
+                        <p class="review-text">"Schnell, zuverlässig, und wirklich guten Geschmack in Design. Eine seltene Kombination."</p>
+                        <div class="review-from">FROM: <span>PM @ VALCODE</span></div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-meta"><span class="review-id">REPORT_003.log</span><span>2025.txt</span></div>
+                        <p class="review-text">"Sauberster Code, den ich seit Jahren gesehen habe. Er weiss wie man komplexes State Management handhabt."</p>
+                        <div class="review-from">FROM: <span>Dev @ CreativeChaos</span></div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-meta"><span class="review-id">REPORT_004.log</span><span>2025.txt</span></div>
+                        <p class="review-text">"Die 3D-Erfahrungen, die er baut, sind einfach beeindruckend. Three.js auf einem anderen Level."</p>
+                        <div class="review-from">FROM: <span>Designer @ TechFlow</span></div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-meta"><span class="review-id">REPORT_005.log</span><span>2025.txt</span></div>
+                        <p class="review-text">"Das Booking Plugin hat unseren Workflow komplett transformiert. Attention to detail ist unglaublich."</p>
+                        <div class="review-from">FROM: <span>Client @ Wallis Region</span></div>
+                    </div>
+                    <!-- Duplicate for seamless infinite scroll -->
+                    <div class="review-card">
+                        <div class="review-meta"><span class="review-id">REPORT_001.log</span><span>2025.txt</span></div>
+                        <p class="review-text">"Nevio liefert nicht einfach eine Website – er baut eine Maschine. Unsere Conversion Rate hat sich innerhalb einer Woche verdreifacht."</p>
+                        <div class="review-from">FROM: <span>CEO @ Swiss Startup</span></div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-meta"><span class="review-id">REPORT_002.log</span><span>2025.txt</span></div>
+                        <p class="review-text">"Schnell, zuverlässig, und wirklich guten Geschmack in Design. Eine seltene Kombination."</p>
+                        <div class="review-from">FROM: <span>PM @ VALCODE</span></div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-meta"><span class="review-id">REPORT_003.log</span><span>2025.txt</span></div>
+                        <p class="review-text">"Sauberster Code, den ich seit Jahren gesehen habe. Er weiss wie man komplexes State Management handhabt."</p>
+                        <div class="review-from">FROM: <span>Dev @ CreativeChaos</span></div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-meta"><span class="review-id">REPORT_004.log</span><span>2025.txt</span></div>
+                        <p class="review-text">"Die 3D-Erfahrungen, die er baut, sind einfach beeindruckend. Three.js auf einem anderen Level."</p>
+                        <div class="review-from">FROM: <span>Designer @ TechFlow</span></div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-meta"><span class="review-id">REPORT_005.log</span><span>2025.txt</span></div>
+                        <p class="review-text">"Das Booking Plugin hat unseren Workflow komplett transformiert. Attention to detail ist unglaublich."</p>
+                        <div class="review-from">FROM: <span>Client @ Wallis Region</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== CONTACT ========== -->
+        <section id="contact">
+            <div class="section-header">
+                <span>Lass uns reden</span>
+                <div class="section-tag">// kontakt</div>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-left">
+                    <h2>Let's Talk <span>Code.</span></h2>
+                    <p style="font-size:0.8rem;color:#888;line-height:1.8;margin-bottom:2rem;">
+                        Ich bin offen für Freelance-Projekte und Vollzeitstellen. Lass uns was Brutales bauen.
+                    </p>
+                    <div class="contact-info">
+                        <div class="contact-row">
+                            <label>E-MAIL_</label>
+                            <a href="mailto:hi@nevio.dev">hi@nevio.dev</a>
+                        </div>
+                        <div class="contact-row">
+                            <label>LOCATION_</label>
+                            <span>Wallis, Schweiz / Remote</span>
+                        </div>
+                        <div class="contact-row">
+                            <label>COMPANY_</label>
+                            <a href="https://valcode.ch" target="_blank">VALCODE</a>
+                        </div>
+                        <div class="contact-row">
+                            <label>ICH_</label>
+                            <span>Full Stack Developer</span>
+                        </div>
+                        <div class="contact-row">
+                            <label>COORDINATES_</label>
+                            <span>46.0919° N, 7.0928° E</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-right">
+                    <h3>Schreib mir</h3>
+                    <form id="contact-form" novalidate>
+                        <div class="form-group">
+                            <label for="name">NAME_</label>
+                            <input id="name" type="text" name="name" placeholder="MAX_MUSTERMANN" autocomplete="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">E-MAIL_</label>
+                            <input id="email" type="email" name="email" placeholder="deine@email.ch" autocomplete="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">NACHRICHT_</label>
+                            <textarea id="message" name="message" placeholder="DEINE NACHRICHT..."></textarea>
+                        </div>
+                        <div id="form-status" class="form-status" style="display:none;padding:10px;margin-bottom:1rem;font-family:var(--font-hand);font-size:0.95rem;border:var(--border);"></div>
+                        <button type="submit" class="btn btn-primary" style="width:100%;">Nachricht senden ✉️</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== FOOTER ========== -->
+        <footer>
+            <div class="footer-brand">
+                <h2>NEVIO.</h2>
+                <p>Designing for the future with the raw aesthetics of the past. Vue • React • Three.js • No compromises.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Seiten</h4>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#projects">Works</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Links</h4>
+                <ul>
+                    <li><a href="https://github.com" target="_blank">GitHub</a></li>
+                    <li><a href="https://valcode.ch" target="_blank">VALCODE</a></li>
+                    <li><a href="mailto:hi@nevio.dev">E-Mail</a></li>
+                </ul>
+            </div>
+        </footer>
+        <div class="footer-bottom">
+            <span>nevio.dev</span>
+            <span>© 2025 — Built with ☕ &amp; <span>VALCODE</span></span>
         </div>
-        <div class="social">
-            <a href="https://www.instagram.com/nevio_werlen/"><i class="fab fa-instagram"></i></a>
-            <a href="https://github.com/werlen-nevio"><i class="fab fa-github"></i></a>
-        </div>
-    </div>
-    <script>
-        function updateClock() {
-            const now = new Date();
-            const hours = now.getHours() % 12;
-            const minutes = now.getMinutes();
-            const seconds = now.getSeconds();
-            
-            const hourDeg = (360 / 12) * hours + (30 / 60) * minutes;
-            const minuteDeg = (360 / 60) * minutes + (6 / 60) * seconds;
-            const secondDeg = (360 / 60) * seconds;
-            
-            document.getElementById("hour-hand").style.transform = `translate(-50%, -100%) rotate(${hourDeg}deg)`;
-            document.getElementById("minute-hand").style.transform = `translate(-50%, -100%) rotate(${minuteDeg}deg)`;
-            document.getElementById("second-hand").style.transform = `translate(-50%, -100%) rotate(${secondDeg}deg)`;
-        }
-        
-        setInterval(updateClock, 1000);
-        updateClock();
-    </script>
-</body>
+
+        <!-- Scripts -->
+        <script src="js/main.js"></script>
+
+    </body>
 </html>
