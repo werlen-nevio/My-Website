@@ -1,7 +1,22 @@
-/**
- * nevio.dev — Main JS
- * Handles contact form, nav active states, and misc interactions.
- */
+/* ========== HAMBURGER MENU ========== */
+const hamburger  = document.querySelector('.nav-hamburger');
+const mobileNav  = document.querySelector('.nav-mobile');
+
+if (hamburger && mobileNav) {
+    hamburger.addEventListener('click', () => {
+        const open = mobileNav.classList.toggle('open');
+        hamburger.classList.toggle('open', open);
+        hamburger.setAttribute('aria-expanded', open);
+    });
+
+    mobileNav.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+            mobileNav.classList.remove('open');
+            hamburger.classList.remove('open');
+            hamburger.setAttribute('aria-expanded', 'false');
+        });
+    });
+}
 
 /* ========== CONTACT FORM ========== */
 const contactForm = document.getElementById('contact-form');
@@ -20,17 +35,9 @@ if (contactForm) {
             return;
         }
 
-        // Simulate send (replace with real fetch/API call)
-        const btn = contactForm.querySelector('button[type="submit"]');
-        btn.disabled = true;
-        btn.textContent = 'Sende...';
-
-        setTimeout(() => {
-            showStatus('Nachricht gesendet ✓ Ich melde mich bald!', 'success');
-            contactForm.reset();
-            btn.disabled = false;
-            btn.textContent = 'Nachricht senden ✉️';
-        }, 900);
+        const subject = encodeURIComponent(`Kontakt von ${name}`);
+        const body    = encodeURIComponent(`Name: ${name}\nE-Mail: ${email}\n\n${message}`);
+        window.location.href = `mailto:hi@nevio.dev?subject=${subject}&body=${body}`;
     });
 }
 
