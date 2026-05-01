@@ -80,3 +80,64 @@ document.querySelectorAll('.skill-card').forEach((card) => {
         card.style.zIndex = '';
     });
 });
+
+/* ========== PROJECT GALLERY LIGHTBOX ========== */
+(() => {
+    const items = Array.from(document.querySelectorAll('.project-gallery .gallery-item'));
+    if (!items.length) return;
+
+    const lightbox = document.createElement('div');
+    lightbox.className = 'lightbox';
+    lightbox.innerHTML = `
+        <button class="lightbox-btn lightbox-close" aria-label="Close">×</button>
+        <button class="lightbox-btn lightbox-prev" aria-label="Previous">‹</button>
+        <button class="lightbox-btn lightbox-next" aria-label="Next">›</button>
+        <img class="lightbox-img" alt="">
+        <div class="lightbox-caption"></div>
+    `;
+    document.body.appendChild(lightbox);
+
+    const imgEl     = lightbox.querySelector('.lightbox-img');
+    const captionEl = lightbox.querySelector('.lightbox-caption');
+    const closeBtn  = lightbox.querySelector('.lightbox-close');
+    const prevBtn   = lightbox.querySelector('.lightbox-prev');
+    const nextBtn   = lightbox.querySelector('.lightbox-next');
+
+    let current = 0;
+
+    const show = (i) => {
+        current = (i + items.length) % items.length;
+        const item    = items[current];
+        const src     = item.querySelector('img')?.getAttribute('src') || '';
+        const caption = item.querySelector('.gallery-item-caption')?.textContent.trim() || '';
+        imgEl.src = src;
+        imgEl.alt = caption;
+        captionEl.textContent = caption;
+        captionEl.style.display = caption ? 'block' : 'none';
+    };
+
+    const open = (i) => {
+        show(i);
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    };
+
+    const close = () => {
+        lightbox.classList.remove('open');
+        document.body.style.overflow = '';
+        imgEl.src = '';
+    };
+
+    items.forEach((item, i) => item.addEventListener('click', () => open(i)));
+    closeBtn.addEventListener('click', close);
+    prevBtn.addEventListener('click', () => show(current - 1));
+    nextBtn.addEventListener('click', () => show(current + 1));
+    lightbox.addEventListener('click', (e) => { if (e.target === lightbox) close(); });
+
+    document.addEventListener('keydown', (e) => {
+        if (!lightbox.classList.contains('open')) return;
+        if (e.key === 'Escape')     close();
+        if (e.key === 'ArrowLeft')  show(current - 1);
+        if (e.key === 'ArrowRight') show(current + 1);
+    });
+})();
