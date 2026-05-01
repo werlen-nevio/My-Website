@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>AIVenture — nevio.dev</title>
+
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Caveat:wght@400;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+        <!-- Styles -->
+        <link rel="stylesheet" href="/css/style.css?v=5">
+    </head>
+
+    <body>
+        <nav>
+            <a href="/" class="nav-logo">nevio.dev</a>
+            <ul class="nav-links">
+                <li><a href="/#about">ABOUT</a></li>
+                <li><a href="/#skills">SKILLS</a></li>
+                <li><a href="/#experience">WORK</a></li>
+                <li><a href="/#projects">PROJECTS</a></li>
+                <li><a href="/#contact" class="nav-hire">CONTACT</a></li>
+            </ul>
+            <button class="nav-hamburger" aria-label="Menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </nav>
+        <div class="nav-mobile" role="navigation">
+            <a href="/#about">ABOUT</a>
+            <a href="/#skills">SKILLS</a>
+            <a href="/#experience">WORK</a>
+            <a href="/#projects">PROJECTS</a>
+            <a href="/#contact" class="nav-hire">CONTACT</a>
+        </div>
+
+        <main class="project-page">
+
+            <!-- Back link -->
+            <div class="project-backbar">
+                <a href="/#projects">← back to projects</a>
+            </div>
+
+            <!-- Hero -->
+            <section class="project-hero">
+                <div class="project-hero-left">
+                    <h1 class="project-hero-title">AIVenture</h1>
+                    <p class="project-hero-tagline">
+                        A creative daily game where words meet images. Describe an AI-generated picture in your own words, the closer your description matches the AI's interpretation, the higher your score. Built in Silicon Valley as part of the IT Talents program.
+                    </p>
+                    <div class="project-hero-tags">
+                        <span class="tag">Webapp</span><span class="tag">AI</span><span class="tag">Game</span><span class="tag">Frontend</span><span class="tag">GCP</span><span class="tag">Silicon Valley</span>
+                    </div>
+                </div>
+                <div class="project-hero-right">
+                    <img src="/assets/aiventure/Startscreen.png" alt="Startscreen.png">
+                </div>
+            </section>
+
+            <!-- Meta strip -->
+            <div class="project-meta">
+                <div class="project-meta-cell">
+                    <div class="project-meta-label">Year</div>
+                    <div class="project-meta-val">2025</div>
+                </div>
+                <div class="project-meta-cell">
+                    <div class="project-meta-label">Role</div>
+                    <div class="project-meta-val">Developer</div>
+                </div>
+                <div class="project-meta-cell">
+                    <div class="project-meta-label">Stack</div>
+                    <div class="project-meta-val">React · Java · Gemini AI</div>
+                </div>
+                <div class="project-meta-cell">
+                    <div class="project-meta-label">Program</div>
+                    <div class="project-meta-val">IT Talents · SV</div>
+                </div>
+                <div class="project-meta-cell">
+                    <div class="project-meta-label">Status</div>
+                    <div class="project-meta-val">Deactivated</div>
+                </div>
+            </div>
+
+            <!-- Body -->
+            <div class="project-body">
+                <article>
+                    <h2>The idea</h2>
+                    <p>
+                        <strong>AIVenture</strong> is a daily image-describing challenge inspired by <em>Wordle</em>, but instead of guessing a word, you're challenged to describe a daily AI-generated image. Your goal: craft a description that best matches what the AI "thinks" the image is about.
+                    </p>
+                    <p>
+                        Each day a new picture drops. You write what you see. The AI scores how close your words land to its own interpretation. Simple loop, endless variety, and a different vocabulary battle every morning.
+                    </p>
+
+                    <h2>Built in Silicon Valley</h2>
+                    <p>
+                        AIVenture was developed during the <strong>IT Talents</strong> program in <strong>Silicon Valley</strong>, an immersive initiative that sends a hand-picked team of young Swiss developers into the heart of the global tech industry to build a real product under real-world conditions. For a few intense weeks our office was a few miles from the companies whose APIs we were using, the timezone was rough, and the feedback loops were tight.
+                    </p>
+                    <p>
+                        Our sponsor and mentor on site was <a href="https://www.linkedin.com/in/ben-pietrzak-047a6192/" target="_blank" rel="noopener"><strong>Ben Pietrzak</strong></a>, whose industry experience shaped how we scoped the product, prioritised features, and thought about the user experience. Having someone with that background in the room turned a school-style team project into something a lot closer to an actual startup sprint, brutal scope cuts, faster decisions, and a much sharper sense of "what is this game actually <em>for</em>."
+                    </p>
+
+                    <h2>How it works</h2>
+                    <ul>
+                        <li>A new image is generated and published every day</li>
+                        <li>Players type a description in their own words</li>
+                        <li>The Gemini-powered backend compares the guess against the image's interpretation</li>
+                        <li>A score is returned in real time, the closer the words, the higher the score</li>
+                    </ul>
+
+                    <blockquote>
+                        Words paint pictures and pictures inspire words.
+                    </blockquote>
+
+                    <h2>What I built</h2>
+                    <p>
+                        I've worked on the frontend side together with the rest of the team. The interface has to make a single text input feel like a game: tight feedback, an obvious scoring loop, and a daily ritual that looks the same every morning so players build the habit. Everything orbits around one image and one input field.
+                    </p>
+
+                    <h2>Infrastructure</h2>
+                    <p>
+                        The whole pipeline runs on <strong>Google Cloud Platform</strong>. The build pipeline packages the app into a container and pushes it to GCP Container Registry. Deployment is then triggered manually into the running environment, which serves the game on a custom domain.
+                    </p>
+                </article>
+
+                <aside class="project-aside">
+                    <div class="project-aside-block">
+                        <h4>// stack</h4>
+                        <ul>
+                            <li>React / Vite</li>
+                            <li>Java</li>
+                            <li>Gemini</li>
+                            <li>GCP (Cloud Run, Container Registry)</li>
+                        </ul>
+                    </div>
+                    <div class="project-aside-block">
+                        <h4>// program</h4>
+                        <ul>
+                            <li>IT Talents</li>
+                            <li>Silicon Valley, CA</li>
+                            <li>Sponsor: <a href="https://www.linkedin.com/in/ben-pietrzak-047a6192/" target="_blank" rel="noopener">Ben Pietrzak</a></li>
+                        </ul>
+                    </div>
+                    <div class="project-aside-block">
+                        <h4>// my role</h4>
+                        <ul>
+                            <li>Development</li>
+                            <li>UI for the daily game loop</li>
+                        </ul>
+                    </div>
+                    <div class="project-aside-block">
+                        <h4>// team</h4>
+                        <ul>
+                            <li>Fabio L. — Lead / Front- &amp; Backend</li>
+                            <li>Nevio W. — Frontend &amp; small parts of Backend</li>
+                            <li>Valérie L. — Frontend</li>
+                            <li>Dennis K. — AI / Image Comparison</li>
+                            <li>Robin H. — AI / Google Cloud</li>
+                            <li>Fabian B. — Backend / Google Cloud</li>
+                            <li>Armando A. — Backend</li>
+                        </ul>
+                    </div>
+                    <div class="project-aside-block">
+                        <h4>// links</h4>
+                        <ul>
+                            <li><a href="mailto:mail@nevio.dev">Ask me about it →</a></li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+
+            <!-- Gallery -->
+            <section class="project-gallery">
+                <h2>Snapshots</h2>
+                <div class="gallery-grid">
+                    <figure class="gallery-item">
+                        <div class="gallery-item-frame">
+                            <img src="/assets/aiventure/Startscreen.png" alt="AIVenture Startscreen">
+                        </div>
+                        <figcaption class="gallery-item-caption">Startscreen</figcaption>
+                    </figure>
+
+                    <figure class="gallery-item">
+                        <div class="gallery-item-frame">
+                            <img src="/assets/aiventure/4Guesses.png" alt="AIVenture 4 guesses">
+                        </div>
+                        <figcaption class="gallery-item-caption">Daily guesses</figcaption>
+                    </figure>
+
+                    <figure class="gallery-item">
+                        <div class="gallery-item-frame">
+                            <img src="/assets/aiventure/Submitted.png" alt="AIVenture guess submitted">
+                        </div>
+                        <figcaption class="gallery-item-caption">Guess submitted</figcaption>
+                    </figure>
+
+                    <figure class="gallery-item">
+                        <div class="gallery-item-frame">
+                            <img src="/assets/aiventure/Leaderboard.png" alt="AIVenture Leaderboard">
+                        </div>
+                        <figcaption class="gallery-item-caption">Leaderboard</figcaption>
+                    </figure>
+                </div>
+            </section>
+
+            <!-- Next project -->
+            <a href="/projects/slopesafe" class="project-next">
+                <div>
+                    <div class="project-next-label">// next case study</div>
+                    <div class="project-next-title">SlopeSafe →</div>
+                </div>
+                <span class="btn">Read next</span>
+            </a>
+
+        </main>
+
+        <!-- ========== FOOTER ========== -->
+        <footer>
+            <div class="footer-brand">
+                <h2>NEVIO.</h2>
+                <p>Designing for the future with the raw aesthetics of the past. No compromises.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Pages</h4>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/#projects">Works</a></li>
+                    <li><a href="/#about">About</a></li>
+                    <li><a href="/#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Links</h4>
+                <ul>
+                    <li><a href="https://github.com/werlen-nevio" target="_blank">GitHub</a></li>
+                    <li><a href="mailto:mail@nevio.dev">E-Mail</a></li>
+                </ul>
+            </div>
+        </footer>
+        <div class="footer-bottom">
+            <span>nevio.dev</span>
+            <span>© 2025 — Built with ☕</span>
+        </div>
+
+        <!-- Scripts -->
+        <script src="/js/main.js?v=5"></script>
+    </body>
+</html>
