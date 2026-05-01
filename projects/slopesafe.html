@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>SlopeSafe - nevio.dev</title>
+
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Caveat:wght@400;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+        <!-- Styles -->
+        <link rel="stylesheet" href="/css/style.css?v=5">
+    </head>
+
+    <body>
+        <nav>
+            <a href="/" class="nav-logo">nevio.dev</a>
+            <ul class="nav-links">
+                <li><a href="/#about">ABOUT</a></li>
+                <li><a href="/#skills">SKILLS</a></li>
+                <li><a href="/#experience">WORK</a></li>
+                <li><a href="/#projects">PROJECTS</a></li>
+                <li><a href="/#contact" class="nav-hire">CONTACT</a></li>
+            </ul>
+            <button class="nav-hamburger" aria-label="Menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </nav>
+        <div class="nav-mobile" role="navigation">
+            <a href="/#about">ABOUT</a>
+            <a href="/#skills">SKILLS</a>
+            <a href="/#experience">WORK</a>
+            <a href="/#projects">PROJECTS</a>
+            <a href="/#contact" class="nav-hire">CONTACT</a>
+        </div>
+
+        <main class="project-page">
+
+            <!-- Back link -->
+            <div class="project-backbar">
+                <a href="/#projects">← back to projects</a>
+            </div>
+
+            <!-- Hero -->
+            <section class="project-hero">
+                <div class="project-hero-left">
+                    <h1 class="project-hero-title">SlopeSafe</h1>
+                    <p class="project-hero-tagline">
+                        A platform delivering real-time avalanche danger levels for Swiss ski resorts, with an interactive map, weather forecasts, and official SLF data integration.
+                    </p>
+                    <div class="project-hero-tags">
+                        <span class="tag">App</span><span class="tag">Webapp</span><span class="tag">UI</span><span class="tag">UX</span><span class="tag">Backend</span><span class="tag">Frontend</span>
+                    </div>
+                </div>
+                <div class="project-hero-right">
+                    <img src="/assets/slopesafe/phone_screens.png" alt="SlopeSafe phone screens">
+                </div>
+            </section>
+
+            <!-- Meta strip -->
+            <div class="project-meta">
+                <div class="project-meta-cell">
+                    <div class="project-meta-label">Development</div>
+                    <div class="project-meta-val">2025/26</div>
+                </div>
+                <div class="project-meta-cell">
+                    <div class="project-meta-label">Role</div>
+                    <div class="project-meta-val">Full-Stack &amp; Design</div>
+                </div>
+                <div class="project-meta-cell">
+                    <div class="project-meta-label">Stack</div>
+                    <div class="project-meta-val">Vue</div>
+                </div>
+                <div class="project-meta-cell">
+                    <div class="project-meta-label">Status</div>
+                    <div class="project-meta-val">Live</div>
+                </div>
+            </div>
+
+            <!-- Body -->
+            <div class="project-body">
+                <article>
+                    <h2>Why SlopeSafe</h2>
+                    <p>
+                        Living in Valais means living next to mountains that do not forgive being underestimated. Avalanche bulletins exist, the SLF publishes excellent data, but the experience of <em>checking the danger before you head out</em> is fragmented across PDFs, regional sites and apps that each tell a different part of the story.
+                    </p>
+                    <p>
+                        <strong>SlopeSafe</strong> brings it together: a single map, a single danger level per resort, with the underlying weather and bulletin data one tap away.
+                    </p>
+
+                    <h2>How it works</h2>
+                    <ul>
+                        <li>Pulls live avalanche bulletins from the official SLF feed</li>
+                        <li>Joins them with per-resort weather forecasts</li>
+                        <li>Renders the result as an interactive Switzerland-wide map</li>
+                        <li>Updates automatically, no manual refresh</li>
+                    </ul>
+
+                    <blockquote>
+                        The right number on the right map at the right time saves more lives than any feature ever will.
+                    </blockquote>
+
+                    <h2>Design</h2>
+                    <h3>Color is the interface</h3>
+                    <p>
+                        The European avalanche danger scale runs 1-5 with a fixed color palette. SlopeSafe never overrides those colors. The whole UI orbits around them so the map reads exactly the same as a printed bulletin.
+                    </p>
+
+                    <h3>Phone-first</h3>
+                    <p>
+                        Most sessions happen at 7am at a parking lot before a tour. The phone layout came first, the desktop view second. Touch targets are big, the map is the hero, and everything else can be reached in one tap.
+                    </p>
+                </article>
+
+                <aside class="project-aside">
+                    <div class="project-aside-block">
+                        <h4>// stack</h4>
+                        <ul>
+                            <li>Vue 3</li>
+                            <li>Node.js</li>
+                            <li>Leaflet / MapLibre</li>
+                            <li>SLF Data Feed</li>
+                        </ul>
+                    </div>
+                    <div class="project-aside-block">
+                        <h4>// my role</h4>
+                        <ul>
+                            <li>Concept &amp; UX</li>
+                            <li>Frontend</li>
+                            <li>Backend &amp; data ingestion</li>
+                        </ul>
+                    </div>
+                    <div class="project-aside-block">
+                        <h4>// links</h4>
+                        <ul>
+                            <li><a href="https://slopesafe.ch">Website →</a></li>
+                        </ul>
+                        <ul>
+                            <li><a href="mailto:mail@nevio.dev">Ask me about it →</a></li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+
+            <!-- Gallery -->
+            <section class="project-gallery">
+                <h2>Snapshots</h2>
+                <div class="gallery-grid">
+                    <figure class="gallery-item">
+                        <div class="gallery-item-frame">
+                            <img src="/assets/slopesafe/Desktop_Map.png" alt="Desktop Map">
+                        </div>
+                        <figcaption class="gallery-item-caption">Desktop Map</figcaption>
+                    </figure>
+                    <figure class="gallery-item">
+                        <div class="gallery-item-frame">
+                            <img src="/assets/slopesafe/Desktop_Info1.png" alt="Desktop Warnings">
+                        </div>
+                        <figcaption class="gallery-item-caption">Desktop Warnings</figcaption>
+                    </figure>
+                    <figure class="gallery-item">
+                        <div class="gallery-item-frame">
+                            <img src="/assets/slopesafe/Desktop_Info2.png" alt="Desktop Weather">
+                        </div>
+                        <figcaption class="gallery-item-caption">Desktop Weather</figcaption>
+                    </figure>
+                </div>
+            </section>
+
+            <!-- Next project -->
+            <a href="/projects/pyra" class="project-next">
+                <div>
+                    <div class="project-next-label">// next case study</div>
+                    <div class="project-next-title">PYRA Webinterface →</div>
+                </div>
+                <span class="btn">Read next</span>
+            </a>
+
+        </main>
+
+        <!-- ========== FOOTER ========== -->
+        <footer>
+            <div class="footer-brand">
+                <h2>NEVIO.</h2>
+                <p>Designing for the future with the raw aesthetics of the past. No compromises.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Pages</h4>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/#projects">Works</a></li>
+                    <li><a href="/#about">About</a></li>
+                    <li><a href="/#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Links</h4>
+                <ul>
+                    <li><a href="https://github.com/werlen-nevio" target="_blank">GitHub</a></li>
+                    <li><a href="mailto:mail@nevio.dev">E-Mail</a></li>
+                </ul>
+            </div>
+        </footer>
+        <div class="footer-bottom">
+            <span>nevio.dev</span>
+            <span>© 2025 — Built with ☕</span>
+        </div>
+
+        <!-- Scripts -->
+        <script src="/js/main.js?v=5"></script>
+    </body>
+</html>
