@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-i18n-page-title="cv.pageTitle">
 
     <head>
         <meta charset="UTF-8">
@@ -11,7 +11,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Caveat:wght@400;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
         <!-- Styles -->
-        <link rel="stylesheet" href="/css/style.css?v=6">
+        <link rel="stylesheet" href="/css/style.css?v=7">
 
         <style>
             /* ========== CV PAGE ========== */
@@ -435,31 +435,39 @@
         <nav>
             <a href="/" class="nav-logo">nevio.dev</a>
             <ul class="nav-links">
-                <li><a href="/#about">ABOUT</a></li>
-                <li><a href="/#skills">SKILLS</a></li>
-                <li><a href="/#experience">WORK</a></li>
-                <li><a href="/#projects">PROJECTS</a></li>
-                <li><a href="/#contact" class="nav-hire">CONTACT</a></li>
+                <li><a href="/#about" data-i18n="common.nav.about">ABOUT</a></li>
+                <li><a href="/#skills" data-i18n="common.nav.skills">SKILLS</a></li>
+                <li><a href="/#experience" data-i18n="common.nav.work">WORK</a></li>
+                <li><a href="/#projects" data-i18n="common.nav.projects">PROJECTS</a></li>
+                <li><a href="/#contact" class="nav-hire" data-i18n="common.nav.contact">CONTACT</a></li>
             </ul>
+            <div class="lang-switch" role="group" aria-label="Switch language">
+                <button type="button" data-lang="de">DE</button>
+                <button type="button" data-lang="en">EN</button>
+            </div>
             <button class="nav-hamburger" aria-label="Menu" aria-expanded="false">
                 <span></span><span></span><span></span>
             </button>
         </nav>
         <div class="nav-mobile" role="navigation">
-            <a href="/#about">ABOUT</a>
-            <a href="/#skills">SKILLS</a>
-            <a href="/#experience">WORK</a>
-            <a href="/#projects">PROJECTS</a>
-            <a href="/#contact" class="nav-hire">CONTACT</a>
+            <a href="/#about" data-i18n="common.nav.about">ABOUT</a>
+            <a href="/#skills" data-i18n="common.nav.skills">SKILLS</a>
+            <a href="/#experience" data-i18n="common.nav.work">WORK</a>
+            <a href="/#projects" data-i18n="common.nav.projects">PROJECTS</a>
+            <a href="/#contact" class="nav-hire" data-i18n="common.nav.contact">CONTACT</a>
+            <div class="lang-switch" role="group" aria-label="Switch language">
+                <button type="button" data-lang="de">DE</button>
+                <button type="button" data-lang="en">EN</button>
+            </div>
         </div>
 
         <div class="cv-toolbar">
             <div class="cv-toolbar-left">
-                <a href="/">← back to nevio.dev</a>
+                <a href="/" data-i18n="cv.back">← back to nevio.dev</a>
             </div>
             <div class="cv-toolbar-actions">
-                <button id="cv-download" class="btn btn-primary" type="button">Download PDF</button>
-                <button id="cv-print" class="btn" type="button">🖨 Print</button>
+                <button id="cv-download" class="btn btn-primary" type="button" data-i18n="cv.download">Download PDF</button>
+                <button id="cv-print" class="btn" type="button" data-i18n="cv.print">🖨 Print</button>
             </div>
         </div>
 
@@ -467,21 +475,21 @@
             <header class="cv-header">
                 <div>
                     <div class="cv-name">Nevio Werlen</div>
-                    <div class="cv-role">Full-Stack Developer</div>
-                    <div class="cv-tagline">I build digital products that people remember.</div>
+                    <div class="cv-role" data-i18n="cv.role">Full-Stack Developer</div>
+                    <div class="cv-tagline" data-i18n="cv.tagline">I build digital products that people remember.</div>
                 </div>
                 <div class="cv-contact">
-                    <div><span class="cv-contact-label">LOC</span>Valais, Switzerland</div>
-                    <div><span class="cv-contact-label">MAIL</span><a href="mailto:mail@nevio.dev">mail@nevio.dev</a></div>
-                    <div><span class="cv-contact-label">WEB</span><a href="https://nevio.dev">nevio.dev</a></div>
-                    <div><span class="cv-contact-label">GH</span><a href="https://github.com/werlen-nevio">github.com/werlen-nevio</a></div>
-                    <div><span class="cv-contact-label">IN</span><a href="https://www.linkedin.com/in/nevio-werlen-893548383/">linkedin/nevio-werlen</a></div>
+                    <div><span class="cv-contact-label" data-i18n="cv.labelLoc">LOC</span><span data-i18n="cv.valLoc">Valais, Switzerland</span></div>
+                    <div><span class="cv-contact-label" data-i18n="cv.labelMail">MAIL</span><a href="mailto:mail@nevio.dev">mail@nevio.dev</a></div>
+                    <div><span class="cv-contact-label" data-i18n="cv.labelWeb">WEB</span><a href="https://nevio.dev">nevio.dev</a></div>
+                    <div><span class="cv-contact-label" data-i18n="cv.labelGh">GH</span><a href="https://github.com/werlen-nevio">github.com/werlen-nevio</a></div>
+                    <div><span class="cv-contact-label" data-i18n="cv.labelIn">IN</span><a href="https://www.linkedin.com/in/nevio-werlen-893548383/">linkedin/nevio-werlen</a></div>
                 </div>
             </header>
 
             <section class="cv-section">
-                <h2 class="cv-section-title">Profile</h2>
-                <p class="cv-profile">
+                <h2 class="cv-section-title" data-i18n="cv.sectionProfile">Profile</h2>
+                <p class="cv-profile" data-i18n="cv.profileBody">
                     Creative developer specialized in Full-Stack Development &amp; Web Experiences.
                     Obsessed with good design and shipping real products that actually get used.
                     Experience across React, Vue, Node, PHP and legacy migrations.
@@ -491,60 +499,60 @@
             <div class="cv-cols">
                 <div>
                     <section class="cv-section">
-                        <h2 class="cv-section-title">Experience</h2>
+                        <h2 class="cv-section-title" data-i18n="cv.sectionExperience">Experience</h2>
 
                         <div class="cv-exp-item">
                             <div class="cv-exp-head">
-                                <div class="cv-exp-title">Developer — AIVenture</div>
-                                <div class="cv-exp-date">October 2025</div>
+                                <div class="cv-exp-title" data-i18n="cv.aiventureTitle">Developer — AIVenture</div>
+                                <div class="cv-exp-date" data-i18n="cv.aiventureDate">October 2025</div>
                             </div>
-                            <div class="cv-exp-company">IT Talents Program · Silicon Valley, CA</div>
+                            <div class="cv-exp-company" data-i18n="cv.aiventureCompany">IT Talents Program · Silicon Valley, CA</div>
                             <ul class="cv-exp-bullets">
-                                <li>Selected for the Swiss IT Talents program in Silicon Valley.</li>
-                                <li>Built AIVenture, a daily AI image-describing game, with a team of seven Swiss developers.</li>
-                                <li>Frontend (React / Vite) and small parts of the backend, deployed on Google Cloud Platform.</li>
+                                <li data-i18n="cv.aiventureBullet1">Selected for the Swiss IT Talents program in Silicon Valley.</li>
+                                <li data-i18n="cv.aiventureBullet2">Built AIVenture, a daily AI image-describing game, with a team of seven Swiss developers.</li>
+                                <li data-i18n="cv.aiventureBullet3">Frontend (React / Vite) and small parts of the backend, deployed on Google Cloud Platform.</li>
                             </ul>
                         </div>
 
                         <div class="cv-exp-item">
                             <div class="cv-exp-head">
-                                <div class="cv-exp-title">Web Developer — Apprenticeship</div>
-                                <div class="cv-exp-date">2022 — Present</div>
+                                <div class="cv-exp-title" data-i18n="cv.cortecTitle">Web Developer — Apprenticeship</div>
+                                <div class="cv-exp-date" data-i18n="cv.cortecDate">2022 — Present</div>
                             </div>
-                            <div class="cv-exp-company">Cortec AG · Valais, Switzerland</div>
+                            <div class="cv-exp-company" data-i18n="cv.cortecCompany">Cortec AG · Valais, Switzerland</div>
                             <ul class="cv-exp-bullets">
-                                <li>Development and enhancement of ERP and cinema booking systems.</li>
-                                <li>Integration of new features into the existing ERP platform.</li>
+                                <li data-i18n="cv.cortecBullet1">Development and enhancement of ERP and cinema booking systems.</li>
+                                <li data-i18n="cv.cortecBullet2">Integration of new features into the existing ERP platform.</li>
                             </ul>
                         </div>
                     </section>
 
                     <section class="cv-section">
-                        <h2 class="cv-section-title">Selected Projects</h2>
+                        <h2 class="cv-section-title" data-i18n="cv.sectionProjects">Selected Projects</h2>
 
                         <div class="cv-project">
-                            <div class="cv-project-name">SlopeSafe</div>
-                            <div class="cv-project-desc">
+                            <div class="cv-project-name" data-i18n="cv.slopesafeName">SlopeSafe</div>
+                            <div class="cv-project-desc" data-i18n="cv.slopesafeDesc">
                                 A platform delivering real-time avalanche danger levels for Swiss ski resorts,
                                 with an interactive map, weather forecasts, and official SLF data integration.
                             </div>
-                            <div class="cv-project-tags">App · Webapp · UI/UX · Backend · Frontend</div>
+                            <div class="cv-project-tags" data-i18n="cv.slopesafeTags">App · Webapp · UI/UX · Backend · Frontend</div>
                         </div>
 
                         <div class="cv-project">
-                            <div class="cv-project-name">AIVenture</div>
-                            <div class="cv-project-desc">
+                            <div class="cv-project-name" data-i18n="cv.aiventureName">AIVenture</div>
+                            <div class="cv-project-desc" data-i18n="cv.aiventureProjectDesc">
                                 A daily image-describing game inspired by Wordle: describe an AI-generated
                                 picture in your own words and score how close you land to the original.
                             </div>
-                            <div class="cv-project-tags">Webapp · AI · Game · Silicon Valley</div>
+                            <div class="cv-project-tags" data-i18n="cv.aiventureTags">Webapp · AI · Game · Silicon Valley</div>
                         </div>
                     </section>
                 </div>
 
                 <aside>
                     <section class="cv-section">
-                        <h2 class="cv-section-title">Skills</h2>
+                        <h2 class="cv-section-title" data-i18n="cv.sectionSkills">Skills</h2>
                         <div class="cv-skills">
                             <span class="cv-skill">React</span>
                             <span class="cv-skill">Vue 3</span>
@@ -559,41 +567,41 @@
                     </section>
 
                     <section class="cv-section">
-                        <h2 class="cv-section-title">Details</h2>
+                        <h2 class="cv-section-title" data-i18n="cv.sectionDetails">Details</h2>
                         <ul class="cv-list">
                             <li class="cv-list-row">
-                                <span class="cv-list-label">Role</span>
-                                <span class="cv-list-val">Developer</span>
+                                <span class="cv-list-label" data-i18n="cv.labelRole">Role</span>
+                                <span class="cv-list-val" data-i18n="cv.valRole">Developer</span>
                             </li>
                             <li class="cv-list-row">
-                                <span class="cv-list-label">Company</span>
-                                <span class="cv-list-val">Cortec AG</span>
+                                <span class="cv-list-label" data-i18n="cv.labelCompany">Company</span>
+                                <span class="cv-list-val" data-i18n="cv.valCompany">Cortec AG</span>
                             </li>
                             <li class="cv-list-row">
-                                <span class="cv-list-label">Focus</span>
-                                <span class="cv-list-val">Web Development</span>
+                                <span class="cv-list-label" data-i18n="cv.labelFocus">Focus</span>
+                                <span class="cv-list-val" data-i18n="cv.valFocus">Web Development</span>
                             </li>
                             <li class="cv-list-row">
-                                <span class="cv-list-label">Location</span>
-                                <span class="cv-list-val">Valais, CH</span>
+                                <span class="cv-list-label" data-i18n="cv.labelLocation">Location</span>
+                                <span class="cv-list-val" data-i18n="cv.valLocation">Valais, CH</span>
                             </li>
                         </ul>
                     </section>
 
                     <section class="cv-section">
-                        <h2 class="cv-section-title">Languages</h2>
+                        <h2 class="cv-section-title" data-i18n="cv.sectionLanguages">Languages</h2>
                         <ul class="cv-list">
                             <li class="cv-list-row">
-                                <span class="cv-list-label">German</span>
-                                <span class="cv-list-val">Native</span>
+                                <span class="cv-list-label" data-i18n="cv.labelGerman">German</span>
+                                <span class="cv-list-val" data-i18n="cv.valNative">Native</span>
                             </li>
                             <li class="cv-list-row">
-                                <span class="cv-list-label">English</span>
-                                <span class="cv-list-val">Fluent</span>
+                                <span class="cv-list-label" data-i18n="cv.labelEnglish">English</span>
+                                <span class="cv-list-val" data-i18n="cv.valFluent">Fluent</span>
                             </li>
                             <li class="cv-list-row">
-                                <span class="cv-list-label">French</span>
-                                <span class="cv-list-val">School level</span>
+                                <span class="cv-list-label" data-i18n="cv.labelFrench">French</span>
+                                <span class="cv-list-val" data-i18n="cv.valSchool">School level</span>
                             </li>
                         </ul>
                     </section>
@@ -601,18 +609,20 @@
             </div>
 
             <footer class="cv-footer">
-                <span>nevio.dev / cv</span>
+                <span data-i18n="cv.footer">nevio.dev / cv</span>
                 <span class="cv-footer-sig">— Nevio</span>
                 <span>© 2026</span>
             </footer>
         </div>
 
         <!-- Scripts -->
-        <script src="/js/main.js?v=5"></script>
+        <script src="/js/i18n.js?v=1"></script>
+        <script src="/js/main.js?v=6"></script>
         <script>
             document.getElementById('cv-download')?.addEventListener('click', () => {
                 const prevTitle = document.title;
-                document.title = 'Nevio_Werlen_CV';
+                const fname = (window.i18n && window.i18n.t('cv.downloadTitle')) || 'Nevio_Werlen_CV';
+                document.title = fname;
                 window.print();
                 setTimeout(() => { document.title = prevTitle; }, 500);
             });

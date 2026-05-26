@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-i18n-page-title="home.pageTitle">
 
     <head>
         <meta charset="UTF-8">
@@ -11,29 +11,37 @@
         <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Caveat:wght@400;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
         <!-- Styles -->
-        <link rel="stylesheet" href="/css/style.css?v=6">
+        <link rel="stylesheet" href="/css/style.css?v=7">
     </head>
 
     <body>
         <nav>
             <a href="#" class="nav-logo">nevio.dev</a>
             <ul class="nav-links">
-                <li><a href="#about">ABOUT</a></li>
-                <li><a href="#skills">SKILLS</a></li>
-                <li><a href="#experience">WORK</a></li>
-                <li><a href="#projects">PROJECTS</a></li>
-                <li><a href="#contact" class="nav-hire">CONTACT</a></li>
+                <li><a href="#about" data-i18n="common.nav.about">ABOUT</a></li>
+                <li><a href="#skills" data-i18n="common.nav.skills">SKILLS</a></li>
+                <li><a href="#experience" data-i18n="common.nav.work">WORK</a></li>
+                <li><a href="#projects" data-i18n="common.nav.projects">PROJECTS</a></li>
+                <li><a href="#contact" class="nav-hire" data-i18n="common.nav.contact">CONTACT</a></li>
             </ul>
+            <div class="lang-switch" role="group" data-i18n-aria-label="common.langSwitchAria" aria-label="Switch language">
+                <button type="button" data-lang="de">DE</button>
+                <button type="button" data-lang="en">EN</button>
+            </div>
             <button class="nav-hamburger" aria-label="Menu" aria-expanded="false">
                 <span></span><span></span><span></span>
             </button>
         </nav>
         <div class="nav-mobile" role="navigation">
-            <a href="#about">ABOUT</a>
-            <a href="#skills">SKILLS</a>
-            <a href="#experience">WORK</a>
-            <a href="#projects">PROJECTS</a>
-            <a href="#contact" class="nav-hire">CONTACT</a>
+            <a href="#about" data-i18n="common.nav.about">ABOUT</a>
+            <a href="#skills" data-i18n="common.nav.skills">SKILLS</a>
+            <a href="#experience" data-i18n="common.nav.work">WORK</a>
+            <a href="#projects" data-i18n="common.nav.projects">PROJECTS</a>
+            <a href="#contact" class="nav-hire" data-i18n="common.nav.contact">CONTACT</a>
+            <div class="lang-switch" role="group" aria-label="Switch language">
+                <button type="button" data-lang="de">DE</button>
+                <button type="button" data-lang="en">EN</button>
+            </div>
         </div>
 
         <section id="hero">
@@ -41,19 +49,19 @@
                 <div class="hero-title">
                     NEVIO
                 </div>
-                <p class="hero-sub">
+                <p class="hero-sub" data-i18n-html="home.hero.subHtml">
                     I build digital products that people remember.<br>
                     <strong>Vue • React • Node</strong>
                 </p>
                 <div class="hero-btns">
-                    <a href="#projects" class="btn btn-primary">My Projects</a>
-                    <a href="#contact" class="btn">Contact</a>
-                    <a href="/cv" class="btn">CV</a>
+                    <a href="#projects" class="btn btn-primary" data-i18n="home.hero.btnProjects">My Projects</a>
+                    <a href="#contact" class="btn" data-i18n="home.hero.btnContact">Contact</a>
+                    <a href="/cv" class="btn" data-i18n="home.hero.btnCv">CV</a>
                 </div>
             </div>
             <div class="hero-right">
                 <div class="hero-card">
-                    <div class="hero-card-label">// find me on</div>
+                    <div class="hero-card-label" data-i18n="home.hero.cardLabel">// find me on</div>
                     <div class="hero-card-actions">
                         <a href="https://github.com/werlen-nevio" target="_blank" class="hero-link" data-tag="01">
                             <span class="hero-link-icon">
@@ -80,14 +88,14 @@
                                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
                             </span>
                             <span class="hero-link-text">
-                                <span class="hero-link-title">E-Mail</span>
+                                <span class="hero-link-title" data-i18n="home.hero.linkEmail">E-Mail</span>
                                 <span class="hero-link-handle">mail@nevio.dev</span>
                             </span>
                             <span class="hero-link-arrow">→</span>
                         </a>
                     </div>
                 </div>
-                <div class="hero-coords">
+                <div class="hero-coords" data-i18n-html="home.hero.coordsHtml">
                     📍 Location: <span>Valais, Switzerland</span><br>
                 </div>
             </div>
@@ -96,17 +104,17 @@
         <!-- ========== ABOUT ========== -->
         <section id="about">
             <div class="section-header">
-                <div class="section-title">Who am I?</div>
-                <div class="section-tag">about</div>
+                <div class="section-title" data-i18n="home.about.title">Who am I?</div>
+                <div class="section-tag" data-i18n="home.about.tag">about</div>
             </div>
             <div class="about-grid">
                 <div class="about-left">
-                    <h3>My name is Nevio Werlen.</h3>
-                    <p style="font-size:0.85rem;line-height:1.8;color:#aaa;margin-bottom:1.5rem;">
+                    <h3 data-i18n="home.about.name">My name is Nevio Werlen.</h3>
+                    <p data-i18n="home.about.intro" style="font-size:0.85rem;line-height:1.8;color:#aaa;margin-bottom:1.5rem;">
                         A creative developer who believes the web needs more personality. I
                         bring character to code.
                     </p>
-                    <blockquote>
+                    <blockquote data-i18n-html="home.about.blockquoteHtml">
                         Specialized in Full-Stack Development &amp; Web Experiences.<br>
                         Obsessed with good Design.<br>
                         Experience with shipping real products that actually get used.
@@ -123,14 +131,14 @@
                     </div>
                 </div>
                 <div class="about-right">
-                    <h3>Who I am</h3>
+                    <h3 data-i18n="home.about.rightH3">Who I am</h3>
                     <div style="display:flex;flex-direction:column;gap:1rem;">
-                        <div class="stat-row"><span class="stat-row-label">Name</span><span class="stat-row-val">Nevio Werlen</span></div>
-                        <div class="stat-row"><span class="stat-row-label">Role</span><span class="stat-row-val">Developer</span></div>
-                        <div class="stat-row"><span class="stat-row-label">Company</span><span class="stat-row-val">Cortec AG</span></div>
-                        <div class="stat-row"><span class="stat-row-label">Location</span><span class="stat-row-val">Valais, Switzerland</span></div>
-                        <div class="stat-row"><span class="stat-row-label">Focus</span><span class="stat-row-val">Web Development</span></div>
-                        <div class="stat-row"><span class="stat-row-label">Languages</span><span class="stat-row-val">de / en / fr</span></div>
+                        <div class="stat-row"><span class="stat-row-label" data-i18n="home.about.labelName">Name</span><span class="stat-row-val" data-i18n="home.about.valName">Nevio Werlen</span></div>
+                        <div class="stat-row"><span class="stat-row-label" data-i18n="home.about.labelRole">Role</span><span class="stat-row-val" data-i18n="home.about.valRole">Developer</span></div>
+                        <div class="stat-row"><span class="stat-row-label" data-i18n="home.about.labelCompany">Company</span><span class="stat-row-val" data-i18n="home.about.valCompany">Cortec AG</span></div>
+                        <div class="stat-row"><span class="stat-row-label" data-i18n="home.about.labelLocation">Location</span><span class="stat-row-val" data-i18n="home.about.valLocation">Valais, Switzerland</span></div>
+                        <div class="stat-row"><span class="stat-row-label" data-i18n="home.about.labelFocus">Focus</span><span class="stat-row-val" data-i18n="home.about.valFocus">Web Development</span></div>
+                        <div class="stat-row"><span class="stat-row-label" data-i18n="home.about.labelLanguages">Languages</span><span class="stat-row-val" data-i18n="home.about.valLanguages">de / en / fr</span></div>
                     </div>
                 </div>
             </div>
@@ -139,61 +147,61 @@
         <!-- ========== SKILLS ========== -->
         <section id="skills">
             <div class="section-header">
-                <div class="section-title">My skillset</div>
-                <div class="section-tag">skills</div>
+                <div class="section-title" data-i18n="home.skills.title">My skillset</div>
+                <div class="section-tag" data-i18n="home.skills.tag">skills</div>
             </div>
             <div class="skills-grid">
-                <div class="skill-card"><div class="skill-prefix">LIBRARY</div><div class="skill-type">FRONTEND</div><div class="skill-name">REACT</div></div>
-                <div class="skill-card"><div class="skill-prefix">FRAMEWORK</div><div class="skill-type">FRONTEND</div><div class="skill-name">VUE 3</div></div>
-                <div class="skill-card"><div class="skill-prefix">LANGUAGE</div><div class="skill-type">RUNTIME BACKEND</div><div class="skill-name">NODE.JS</div></div>
-                <div class="skill-card"><div class="skill-prefix">REALTIME</div><div class="skill-type">WEBSOCKET</div><div class="skill-name">SOCKET.IO</div></div>
-                <div class="skill-card"><div class="skill-prefix">CMS</div><div class="skill-type">PLUGINS</div><div class="skill-name">WORDPRESS</div></div>
-                <div class="skill-card"><div class="skill-prefix">LANGUAGE</div><div class="skill-type">BACKEND</div><div class="skill-name">PHP</div></div>
-                <div class="skill-card"><div class="skill-prefix">LANGUAGE</div><div class="skill-type">SCRIPTING</div><div class="skill-name">JAVASCRIPT</div></div>
-                <div class="skill-card"><div class="skill-prefix">SQL</div><div class="skill-type">DATABASE</div><div class="skill-name">MySQL</div></div>
-                <div class="skill-card"><div class="skill-prefix">CORE</div><div class="skill-type">MARKUP</div><div class="skill-name">HTML5</div></div>
-                <div class="skill-card"><div class="skill-prefix">VERSION</div><div class="skill-type">CONTROL</div><div class="skill-name">GIT</div></div>
-                <div class="skill-card"><div class="skill-prefix">LEGACY</div><div class="skill-type">MIGRATION</div><div class="skill-name">ASP CLASSIC</div></div>
-                <div class="skill-card"><div class="skill-prefix">AUTH</div><div class="skill-type">SECURITY</div><div class="skill-name">JWT</div></div>
+                <div class="skill-card"><div class="skill-prefix" data-i18n="home.skillCard.library">LIBRARY</div><div class="skill-type" data-i18n="home.skillCard.frontend">FRONTEND</div><div class="skill-name">REACT</div></div>
+                <div class="skill-card"><div class="skill-prefix" data-i18n="home.skillCard.framework">FRAMEWORK</div><div class="skill-type" data-i18n="home.skillCard.frontend">FRONTEND</div><div class="skill-name">VUE 3</div></div>
+                <div class="skill-card"><div class="skill-prefix" data-i18n="home.skillCard.language">LANGUAGE</div><div class="skill-type" data-i18n="home.skillCard.backendRuntime">RUNTIME BACKEND</div><div class="skill-name">NODE.JS</div></div>
+                <div class="skill-card"><div class="skill-prefix" data-i18n="home.skillCard.realtime">REALTIME</div><div class="skill-type" data-i18n="home.skillCard.websocket">WEBSOCKET</div><div class="skill-name">SOCKET.IO</div></div>
+                <div class="skill-card"><div class="skill-prefix" data-i18n="home.skillCard.cms">CMS</div><div class="skill-type" data-i18n="home.skillCard.plugins">PLUGINS</div><div class="skill-name">WORDPRESS</div></div>
+                <div class="skill-card"><div class="skill-prefix" data-i18n="home.skillCard.language">LANGUAGE</div><div class="skill-type" data-i18n="home.skillCard.backend">BACKEND</div><div class="skill-name">PHP</div></div>
+                <div class="skill-card"><div class="skill-prefix" data-i18n="home.skillCard.language">LANGUAGE</div><div class="skill-type" data-i18n="home.skillCard.scripting">SCRIPTING</div><div class="skill-name">JAVASCRIPT</div></div>
+                <div class="skill-card"><div class="skill-prefix" data-i18n="home.skillCard.sql">SQL</div><div class="skill-type" data-i18n="home.skillCard.database">DATABASE</div><div class="skill-name">MySQL</div></div>
+                <div class="skill-card"><div class="skill-prefix" data-i18n="home.skillCard.core">CORE</div><div class="skill-type" data-i18n="home.skillCard.markup">MARKUP</div><div class="skill-name">HTML5</div></div>
+                <div class="skill-card"><div class="skill-prefix" data-i18n="home.skillCard.version">VERSION</div><div class="skill-type" data-i18n="home.skillCard.control">CONTROL</div><div class="skill-name">GIT</div></div>
+                <div class="skill-card"><div class="skill-prefix" data-i18n="home.skillCard.legacy">LEGACY</div><div class="skill-type" data-i18n="home.skillCard.migration">MIGRATION</div><div class="skill-name">ASP CLASSIC</div></div>
+                <div class="skill-card"><div class="skill-prefix" data-i18n="home.skillCard.auth">AUTH</div><div class="skill-type" data-i18n="home.skillCard.security">SECURITY</div><div class="skill-name">JWT</div></div>
             </div>
         </section>
 
         <!-- ========== EXPERIENCE ========== -->
         <section id="experience">
             <div class="section-header">
-                <div class="section-title">Where I work</div>
-                <div class="section-tag">work</div>
+                <div class="section-title" data-i18n="home.experience.title">Where I work</div>
+                <div class="section-tag" data-i18n="home.experience.tag">work</div>
             </div>
             <div class="exp-list">
 
                 <div class="exp-item">
                     <div>
-                        <div class="exp-date">October 2025</div>
-                        <div class="exp-date" style="color:var(--green);font-size:0.8rem;">IT Talents · Silicon Valley</div>
-                        <div class="exp-company">Talent Program</div>
+                        <div class="exp-date" data-i18n="home.experience.aiventureDate">October 2025</div>
+                        <div class="exp-date" data-i18n="home.experience.aiventureProgram" style="color:var(--green);font-size:0.8rem;">IT Talents · Silicon Valley</div>
+                        <div class="exp-company" data-i18n="home.experience.aiventureType">Talent Program</div>
                     </div>
                     <div class="exp-right">
-                        <h3>Developer - AIVenture</h3>
+                        <h3 data-i18n="home.experience.aiventureRole">Developer - AIVenture</h3>
                         <ul>
-                            <li>Selected for the Swiss IT Talents program in Silicon Valley, CA</li>
-                            <li>Built <a href="/projects/aiventure" style="color:var(--green);border-bottom:1.5px solid var(--green);">AIVenture</a>, a daily AI image-describing game, with a team of seven Swiss developers</li>
-                            <li>Frontend (React/Vite) and small parts of the backend, deployed on Google Cloud Platform</li>
-                            <li>Mentored on-site by sponsor Ben under real-world startup-sprint conditions</li>
+                            <li data-i18n-html="home.experience.aiventureBullet1Html">Selected for the Swiss IT Talents program in Silicon Valley, CA</li>
+                            <li data-i18n-html="home.experience.aiventureBullet2Html">Built <a href="/projects/aiventure" style="color:var(--green);border-bottom:1.5px solid var(--green);">AIVenture</a>, a daily AI image-describing game, with a team of seven Swiss developers</li>
+                            <li data-i18n="home.experience.aiventureBullet3">Frontend (React/Vite) and small parts of the backend, deployed on Google Cloud Platform</li>
+                            <li data-i18n="home.experience.aiventureBullet4">Mentored on-site by sponsor Ben under real-world startup-sprint conditions</li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="exp-item">
                     <div>
-                        <div class="exp-date">2022 - PRESENT</div>
-                        <div class="exp-date" style="color:var(--green);font-size:0.8rem;">Cortec AG</div>
-                        <div class="exp-company">Apprenticeship</div>
+                        <div class="exp-date" data-i18n="home.experience.cortecDate">2022 - PRESENT</div>
+                        <div class="exp-date" data-i18n="home.experience.cortecCompany" style="color:var(--green);font-size:0.8rem;">Cortec AG</div>
+                        <div class="exp-company" data-i18n="home.experience.cortecType">Apprenticeship</div>
                     </div>
                     <div class="exp-right">
-                        <h3>Web Developer</h3>
+                        <h3 data-i18n="home.experience.cortecRole">Web Developer</h3>
                         <ul>
-                            <li>Development and enhancement of ERP and cinema booking systems</li>
-                            <li>Integration of new features into the existing ERP system</li>
+                            <li data-i18n="home.experience.cortecBullet1">Development and enhancement of ERP and cinema booking systems</li>
+                            <li data-i18n="home.experience.cortecBullet2">Integration of new features into the existing ERP system</li>
                         </ul>
                     </div>
                 </div>
@@ -204,20 +212,20 @@
         <!-- ========== CODING STATS ========== -->
         <section id="stats">
             <div class="section-header">
-                <div class="section-title">My Stats</div>
-                <span class="live-badge">LIVE</span>
+                <div class="section-title" data-i18n="home.stats.title">My Stats</div>
+                <span class="live-badge" data-i18n="home.stats.live">LIVE</span>
             </div>
             <div class="stats-grid">
 
                 <div class="stat-panel">
                     <div class="stat-panel-header">
                         <div>
-                            <div class="stat-panel-title">GITHUB</div>
+                            <div class="stat-panel-title" data-i18n="home.stats.githubTitle">GITHUB</div>
                         </div>
                     </div>
                     <div class="stat-img">
-                        <img src="https://ghchart.rshah.org/2d8a4e/werlen-nevio" alt="GitHub Contributions"
-                            onerror="this.style.display='none';this.parentElement.innerHTML='<div style=\'padding:1rem;font-size:0.6rem;color:#333;letter-spacing:2px;\'>CONTRIBUTION GRAPH LOADING...</div>'">
+                        <img src="https://ghchart.rshah.org/2d8a4e/werlen-nevio" alt="GitHub Contributions" data-i18n-alt="home.stats.githubAlt"
+                            onerror="this.style.display='none';this.parentElement.innerHTML='<div style=\'padding:1rem;font-size:0.6rem;color:#333;letter-spacing:2px;\'>'+(window.i18n?window.i18n.t('home.stats.githubLoading'):'CONTRIBUTION GRAPH LOADING...')+'</div>'">
                     </div>
                     <div class="about-badges">
                         <a href="https://github.com/werlen-nevio" target="_blank" class="badge badge-link">
@@ -233,19 +241,19 @@
         <!-- ========== PROJECTS ========== -->
         <section id="projects">
             <div class="section-header">
-                <div class="section-title">Selected Projects</div>
-                <div class="section-tag">projects</div>
+                <div class="section-title" data-i18n="home.projects.title">Selected Projects</div>
+                <div class="section-tag" data-i18n="home.projects.tag">projects</div>
             </div>
             <div class="projects-grid">
                 <a href="/projects/slopesafe" class="project-card">
                     <div class="project-img-placeholder"><img src="/assets/slopesafe/phone_screens.png" alt="SlopeSafe"></div>
                     <div class="project-content">
                         <h3>SlopeSafe</h3>
-                        <p>A platform delivering real-time avalanche danger levels for Swiss ski resorts, with an interactive map, weather forecasts, and official SLF data integration.</p>
+                        <p data-i18n="home.projects.slopesafeDesc">A platform delivering real-time avalanche danger levels for Swiss ski resorts, with an interactive map, weather forecasts, and official SLF data integration.</p>
                         <div class="project-tags">
                             <span class="tag">App</span><span class="tag">Webapp</span><span class="tag">UI</span><span class="tag">UX</span><span class="tag">Backend</span><span class="tag">Frontend</span>
                         </div>
-                        <div class="project-readmore">Read more →</div>
+                        <div class="project-readmore" data-i18n="home.projects.readMore">Read more →</div>
                     </div>
                 </a>
 
@@ -253,11 +261,11 @@
                     <div class="project-img-placeholder"><span style="position:relative;z-index:1;">PYRA.PNG</span></div>
                     <div class="project-content">
                         <h3>PYRA Webinterface</h3>
-                        <p>A web dashboard for digitalizing fire safety inspections, managing buildings, users, templates, and reports for Swiss fire departments and municipalities.</p>
+                        <p data-i18n="home.projects.pyraDesc">A web dashboard for digitalizing fire safety inspections, managing buildings, users, templates, and reports for Swiss fire departments and municipalities.</p>
                         <div class="project-tags">
                             <span class="tag">Angular</span><span class="tag">WebUI</span><span class="tag">UI</span><span class="tag">UX</span>
                         </div>
-                        <div class="project-readmore">Read more →</div>
+                        <div class="project-readmore" data-i18n="home.projects.readMore">Read more →</div>
                     </div>
                 </a>
 
@@ -265,56 +273,56 @@
                     <div class="project-img-placeholder"><img src="/assets/aiventure/Startscreen.png" alt="AIVenture"></div>
                     <div class="project-content">
                         <h3>AIVenture</h3>
-                        <p>A daily image-describing game inspired by Wordle: describe an AI-generated picture in your own words and score how close you land to the original.</p>
+                        <p data-i18n="home.projects.aiventureDesc">A daily image-describing game inspired by Wordle: describe an AI-generated picture in your own words and score how close you land to the original.</p>
                         <div class="project-tags">
                             <span class="tag">Webapp</span><span class="tag">AI</span><span class="tag">Game</span><span class="tag">Frontend</span><span class="tag">Silicon Valley</span><span class="tag">IT Talent Program</span>
                         </div>
-                        <div class="project-readmore">Read more →</div>
+                        <div class="project-readmore" data-i18n="home.projects.readMore">Read more →</div>
                     </div>
                 </a>
             </div>
             <div class="projects-footer">
-                <a href="https://github.com/werlen-nevio?tab=repositories" target="_blank" class="btn">SEE ALL PROJECTS</a>
+                <a href="https://github.com/werlen-nevio?tab=repositories" target="_blank" class="btn" data-i18n="home.projects.seeAll">SEE ALL PROJECTS</a>
             </div>
         </section>
 
         <!-- ========== CONTACT ========== -->
         <section id="contact">
             <div class="section-header">
-                <span>Let's talk</span>
-                <div class="section-tag">// kontakt</div>
+                <span data-i18n="home.contact.title">Let's talk</span>
+                <div class="section-tag" data-i18n="home.contact.tag">// contact</div>
             </div>
             <div class="contact-grid">
                 <div class="contact-left">
-                    <h2>Let's Talk <span>Code.</span></h2>
+                    <h2 data-i18n-html="home.contact.headingHtml">Let's Talk <span>Code.</span></h2>
                     <div class="contact-info">
                         <div class="contact-row">
-                            <label>E-Mail</label>
+                            <label data-i18n="home.contact.labelEmail">E-Mail</label>
                             <a href="mailto:hi@nevio.dev">mail@nevio.dev</a>
                         </div>
                         <div class="contact-row">
-                            <label>Location</label>
-                            <span>Valais, Switzerland / Remote</span>
+                            <label data-i18n="home.contact.labelLocation">Location</label>
+                            <span data-i18n="home.contact.valLocation">Valais, Switzerland / Remote</span>
                         </div>
                     </div>
                 </div>
                 <div class="contact-right">
-                    <h3>Schreib mir</h3>
+                    <h3 data-i18n="home.contact.formTitle">Write me</h3>
                     <form id="contact-form" novalidate>
                         <div class="form-group">
-                            <label for="name">Name</label>
-                            <input id="name" type="text" name="name" placeholder="John Doe" autocomplete="name">
+                            <label for="name" data-i18n="home.contact.fieldName">Name</label>
+                            <input id="name" type="text" name="name" placeholder="John Doe" data-i18n-placeholder="home.contact.placeholderName" autocomplete="name">
                         </div>
                         <div class="form-group">
-                            <label for="email">E-Mail</label>
-                            <input id="email" type="email" name="email" placeholder="john@doe.com" autocomplete="email">
+                            <label for="email" data-i18n="home.contact.fieldEmail">E-Mail</label>
+                            <input id="email" type="email" name="email" placeholder="john@doe.com" data-i18n-placeholder="home.contact.placeholderEmail" autocomplete="email">
                         </div>
                         <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" placeholder="Your message..."></textarea>
+                            <label for="message" data-i18n="home.contact.fieldMessage">Message</label>
+                            <textarea id="message" name="message" placeholder="Your message..." data-i18n-placeholder="home.contact.placeholderMessage"></textarea>
                         </div>
                         <div id="form-status" class="form-status" style="display:none;padding:10px;margin-bottom:1rem;font-family:var(--font-hand);font-size:0.95rem;border:var(--border);"></div>
-                        <button type="submit" class="btn btn-primary" style="width:100%;">Send Message</button>
+                        <button type="submit" class="btn btn-primary" style="width:100%;" data-i18n="home.contact.submit">Send Message</button>
                     </form>
                 </div>
             </div>
@@ -324,32 +332,33 @@
         <footer>
             <div class="footer-brand">
                 <h2>NEVIO.</h2>
-                <p>Designing for the future with the raw aesthetics of the past. No compromises.</p>
+                <p data-i18n="common.footer.brandDesc">Designing for the future with the raw aesthetics of the past. No compromises.</p>
             </div>
             <div class="footer-col">
-                <h4>Pages</h4>
+                <h4 data-i18n="common.footer.pagesTitle">Pages</h4>
                 <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#projects">Works</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#" data-i18n="common.footer.home">Home</a></li>
+                    <li><a href="#projects" data-i18n="common.footer.works">Works</a></li>
+                    <li><a href="#about" data-i18n="common.footer.about">About</a></li>
+                    <li><a href="#contact" data-i18n="common.footer.contact">Contact</a></li>
                 </ul>
             </div>
             <div class="footer-col">
-                <h4>Links</h4>
+                <h4 data-i18n="common.footer.linksTitle">Links</h4>
                 <ul>
-                    <li><a href="https://github.com/werlen-nevio" target="_blank">GitHub</a></li>
-                    <li><a href="mailto:mail@nevio.dev">E-Mail</a></li>
+                    <li><a href="https://github.com/werlen-nevio" target="_blank" data-i18n="common.footer.github">GitHub</a></li>
+                    <li><a href="mailto:mail@nevio.dev" data-i18n="common.footer.email">E-Mail</a></li>
                 </ul>
             </div>
         </footer>
         <div class="footer-bottom">
             <span>nevio.dev</span>
-            <span>© 2025 — Built with ☕</span></span>
+            <span data-i18n="common.footer.built">© 2025 — Built with ☕</span>
         </div>
 
         <!-- Scripts -->
-        <script src="js/main.js?v=5"></script>
+        <script src="/js/i18n.js?v=1"></script>
+        <script src="/js/main.js?v=6"></script>
 
     </body>
 </html>

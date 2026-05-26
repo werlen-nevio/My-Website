@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-i18n-page-title="projects.pyra.pageTitle">
 
     <head>
         <meta charset="UTF-8">
@@ -11,44 +11,52 @@
         <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Caveat:wght@400;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
         <!-- Styles -->
-        <link rel="stylesheet" href="/css/style.css?v=5">
+        <link rel="stylesheet" href="/css/style.css?v=7">
     </head>
 
     <body>
         <nav>
             <a href="/" class="nav-logo">nevio.dev</a>
             <ul class="nav-links">
-                <li><a href="/#about">ABOUT</a></li>
-                <li><a href="/#skills">SKILLS</a></li>
-                <li><a href="/#experience">WORK</a></li>
-                <li><a href="/#projects">PROJECTS</a></li>
-                <li><a href="/#contact" class="nav-hire">CONTACT</a></li>
+                <li><a href="/#about" data-i18n="common.nav.about">ABOUT</a></li>
+                <li><a href="/#skills" data-i18n="common.nav.skills">SKILLS</a></li>
+                <li><a href="/#experience" data-i18n="common.nav.work">WORK</a></li>
+                <li><a href="/#projects" data-i18n="common.nav.projects">PROJECTS</a></li>
+                <li><a href="/#contact" class="nav-hire" data-i18n="common.nav.contact">CONTACT</a></li>
             </ul>
+            <div class="lang-switch" role="group" aria-label="Switch language">
+                <button type="button" data-lang="de">DE</button>
+                <button type="button" data-lang="en">EN</button>
+            </div>
             <button class="nav-hamburger" aria-label="Menu" aria-expanded="false">
                 <span></span><span></span><span></span>
             </button>
         </nav>
         <div class="nav-mobile" role="navigation">
-            <a href="/#about">ABOUT</a>
-            <a href="/#skills">SKILLS</a>
-            <a href="/#experience">WORK</a>
-            <a href="/#projects">PROJECTS</a>
-            <a href="/#contact" class="nav-hire">CONTACT</a>
+            <a href="/#about" data-i18n="common.nav.about">ABOUT</a>
+            <a href="/#skills" data-i18n="common.nav.skills">SKILLS</a>
+            <a href="/#experience" data-i18n="common.nav.work">WORK</a>
+            <a href="/#projects" data-i18n="common.nav.projects">PROJECTS</a>
+            <a href="/#contact" class="nav-hire" data-i18n="common.nav.contact">CONTACT</a>
+            <div class="lang-switch" role="group" aria-label="Switch language">
+                <button type="button" data-lang="de">DE</button>
+                <button type="button" data-lang="en">EN</button>
+            </div>
         </div>
 
         <main class="project-page">
 
             <!-- Back link -->
             <div class="project-backbar">
-                <a href="/#projects">← back to projects</a>
+                <a href="/#projects" data-i18n="projects.back">← back to projects</a>
             </div>
 
             <!-- Hero -->
             <section class="project-hero">
                 <div class="project-hero-left">
-                    <div class="project-hero-eyebrow">// case study — 01</div>
-                    <h1 class="project-hero-title">PYRA Webinterface</h1>
-                    <p class="project-hero-tagline">
+                    <div class="project-hero-eyebrow" data-i18n="projects.pyra.eyebrow">// case study — 01</div>
+                    <h1 class="project-hero-title" data-i18n="projects.pyra.title">PYRA Webinterface</h1>
+                    <p class="project-hero-tagline" data-i18n="projects.pyra.tagline">
                         A web dashboard for digitalizing fire safety inspections, managing buildings, users, templates, and reports for Swiss fire departments and municipalities.
                     </p>
                     <div class="project-hero-tags">
@@ -63,69 +71,69 @@
             <!-- Meta strip -->
             <div class="project-meta">
                 <div class="project-meta-cell">
-                    <div class="project-meta-label">Year</div>
-                    <div class="project-meta-val">2024 — Present</div>
+                    <div class="project-meta-label" data-i18n="projects.metaYear">Year</div>
+                    <div class="project-meta-val" data-i18n="projects.pyra.metaYear">2024 — Present</div>
                 </div>
                 <div class="project-meta-cell">
-                    <div class="project-meta-label">Role</div>
-                    <div class="project-meta-val">Frontend Developer</div>
+                    <div class="project-meta-label" data-i18n="projects.metaRole">Role</div>
+                    <div class="project-meta-val" data-i18n="projects.pyra.metaRole">Frontend Developer</div>
                 </div>
                 <div class="project-meta-cell">
-                    <div class="project-meta-label">Stack</div>
-                    <div class="project-meta-val">Angular · TypeScript</div>
+                    <div class="project-meta-label" data-i18n="projects.metaStack">Stack</div>
+                    <div class="project-meta-val" data-i18n="projects.pyra.metaStack">Angular · TypeScript</div>
                 </div>
                 <div class="project-meta-cell">
-                    <div class="project-meta-label">Status</div>
-                    <div class="project-meta-val">In production</div>
+                    <div class="project-meta-label" data-i18n="projects.metaStatus">Status</div>
+                    <div class="project-meta-val" data-i18n="projects.pyra.metaStatus">In production</div>
                 </div>
             </div>
 
             <!-- Body -->
             <div class="project-body">
                 <article>
-                    <h2>The problem</h2>
-                    <p>
+                    <h2 data-i18n="projects.pyra.h2Problem">The problem</h2>
+                    <p data-i18n="projects.pyra.problemP1">
                         Fire safety inspections in Switzerland are still mostly paper-based. Inspectors carry checklists into buildings, fill them in by hand, then re-type the data into legacy systems back at the office. Reports get lost, photos never make it to the right place, and follow-ups slip through the cracks.
                     </p>
-                    <p>
+                    <p data-i18n-html="projects.pyra.problemP2Html">
                         <strong>PYRA</strong> replaces that paper trail with a single web app that fire departments and municipalities can use to plan inspections, capture findings on-site, and generate the official reports automatically.
                     </p>
 
-                    <h2>What I built</h2>
-                    <p>
+                    <h2 data-i18n="projects.pyra.h2What">What I built</h2>
+                    <p data-i18n="projects.pyra.whatP1">
                         I worked on the web interface — the part inspectors and admins see in the browser. The goal was to make a tool that feels fast and obvious to people who do not think of themselves as "computer people."
                     </p>
                     <ul>
-                        <li>Building &amp; unit management with hierarchical navigation</li>
-                        <li>Editable inspection templates that drive the on-site checklists</li>
-                        <li>User and role management for departments and municipalities</li>
-                        <li>Report generation with print-ready output</li>
+                        <li data-i18n-html="projects.pyra.whatLi1">Building &amp; unit management with hierarchical navigation</li>
+                        <li data-i18n="projects.pyra.whatLi2">Editable inspection templates that drive the on-site checklists</li>
+                        <li data-i18n="projects.pyra.whatLi3">User and role management for departments and municipalities</li>
+                        <li data-i18n="projects.pyra.whatLi4">Report generation with print-ready output</li>
                     </ul>
 
-                    <blockquote>
+                    <blockquote data-i18n="projects.pyra.quote">
                         Every screen is one decision away from the action the user actually came here to do.
                     </blockquote>
 
-                    <h2>Design notes</h2>
-                    <h3>Tables that don't get in the way</h3>
-                    <p>
+                    <h2 data-i18n="projects.pyra.h2Design">Design notes</h2>
+                    <h3 data-i18n="projects.pyra.h3Tables">Tables that don't get in the way</h3>
+                    <p data-i18n="projects.pyra.tablesBody">
                         Most of the app is tables — buildings, inspections, users, reports. Instead of fighting that, I leaned into it: dense rows, sticky headers, inline status, and a single primary action per row. No modal stacks.
                     </p>
 
-                    <h3>Templates as first-class data</h3>
-                    <p>
+                    <h3 data-i18n="projects.pyra.h3Templates">Templates as first-class data</h3>
+                    <p data-i18n="projects.pyra.templatesBody">
                         Inspection templates are the core of the system. Editing one had to feel safer than it looks. Versioning, draft vs. published states, and a preview of the rendered checklist were table stakes.
                     </p>
 
-                    <h2>What I learned</h2>
-                    <p>
+                    <h2 data-i18n="projects.pyra.h2Learned">What I learned</h2>
+                    <p data-i18n-html="projects.pyra.learnedHtml">
                         Building for users who are <em>not</em> developers forces every shortcut to justify itself. A keyboard shortcut nobody finds is not a shortcut. A toast that disappears in 3 seconds is a bug. Most of the wins on this project came from removing things, not adding them.
                     </p>
                 </article>
 
                 <aside class="project-aside">
                     <div class="project-aside-block">
-                        <h4>// stack</h4>
+                        <h4 data-i18n="projects.stack">// stack</h4>
                         <ul>
                             <li>Angular</li>
                             <li>TypeScript</li>
@@ -134,17 +142,17 @@
                         </ul>
                     </div>
                     <div class="project-aside-block">
-                        <h4>// my role</h4>
+                        <h4 data-i18n="projects.myRole">// my role</h4>
                         <ul>
-                            <li>UI / UX</li>
-                            <li>Frontend architecture</li>
-                            <li>Component library</li>
+                            <li data-i18n="projects.pyra.myRole1">UI / UX</li>
+                            <li data-i18n="projects.pyra.myRole2">Frontend architecture</li>
+                            <li data-i18n="projects.pyra.myRole3">Component library</li>
                         </ul>
                     </div>
                     <div class="project-aside-block">
-                        <h4>// links</h4>
+                        <h4 data-i18n="projects.links">// links</h4>
                         <ul>
-                            <li><a href="mailto:mail@nevio.dev">Ask me about it →</a></li>
+                            <li><a href="mailto:mail@nevio.dev" data-i18n="projects.askMe">Ask me about it →</a></li>
                         </ul>
                     </div>
                 </aside>
@@ -152,7 +160,7 @@
 
             <!-- Gallery -->
             <section class="project-gallery">
-                <h2>Snapshots</h2>
+                <h2 data-i18n="projects.snapshots">Snapshots</h2>
                 <div class="gallery-grid">
                     <!--
                     Drop screenshots into /assets/pyra/ and add items like:
@@ -170,10 +178,10 @@
             <!-- Next project -->
             <a href="/projects/aiventure" class="project-next">
                 <div>
-                    <div class="project-next-label">// next case study</div>
-                    <div class="project-next-title">AI Venture →</div>
+                    <div class="project-next-label" data-i18n="projects.nextCase">// next case study</div>
+                    <div class="project-next-title" data-i18n="projects.pyra.nextTitle">AI Venture →</div>
                 </div>
-                <span class="btn">Read next</span>
+                <span class="btn" data-i18n="projects.readNext">Read next</span>
             </a>
 
         </main>
@@ -182,31 +190,32 @@
         <footer>
             <div class="footer-brand">
                 <h2>NEVIO.</h2>
-                <p>Designing for the future with the raw aesthetics of the past. No compromises.</p>
+                <p data-i18n="common.footer.brandDesc">Designing for the future with the raw aesthetics of the past. No compromises.</p>
             </div>
             <div class="footer-col">
-                <h4>Pages</h4>
+                <h4 data-i18n="common.footer.pagesTitle">Pages</h4>
                 <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/#projects">Works</a></li>
-                    <li><a href="/#about">About</a></li>
-                    <li><a href="/#contact">Contact</a></li>
+                    <li><a href="/" data-i18n="common.footer.home">Home</a></li>
+                    <li><a href="/#projects" data-i18n="common.footer.works">Works</a></li>
+                    <li><a href="/#about" data-i18n="common.footer.about">About</a></li>
+                    <li><a href="/#contact" data-i18n="common.footer.contact">Contact</a></li>
                 </ul>
             </div>
             <div class="footer-col">
-                <h4>Links</h4>
+                <h4 data-i18n="common.footer.linksTitle">Links</h4>
                 <ul>
-                    <li><a href="https://github.com/werlen-nevio" target="_blank">GitHub</a></li>
-                    <li><a href="mailto:mail@nevio.dev">E-Mail</a></li>
+                    <li><a href="https://github.com/werlen-nevio" target="_blank" data-i18n="common.footer.github">GitHub</a></li>
+                    <li><a href="mailto:mail@nevio.dev" data-i18n="common.footer.email">E-Mail</a></li>
                 </ul>
             </div>
         </footer>
         <div class="footer-bottom">
             <span>nevio.dev</span>
-            <span>© 2025 — Built with ☕</span>
+            <span data-i18n="common.footer.built">© 2025 — Built with ☕</span>
         </div>
 
         <!-- Scripts -->
-        <script src="/js/main.js?v=5"></script>
+        <script src="/js/i18n.js?v=1"></script>
+        <script src="/js/main.js?v=6"></script>
     </body>
 </html>

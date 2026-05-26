@@ -31,11 +31,13 @@ if (contactForm) {
         const message = contactForm.querySelector('textarea[name="message"]').value.trim();
 
         if (!name || !email || !message) {
-            showStatus('Bitte alle Felder ausfüllen.', 'error');
+            const msg = (window.i18n && window.i18n.t('home.contact.errorRequired')) || 'Please fill in all fields.';
+            showStatus(msg, 'error');
             return;
         }
 
-        const subject = encodeURIComponent(`Kontakt von ${name}`);
+        const subjectText = (window.i18n && window.i18n.t('home.contact.mailSubject')) || 'Contact from';
+        const subject = encodeURIComponent(`${subjectText} ${name}`);
         const body    = encodeURIComponent(`Name: ${name}\nE-Mail: ${email}\n\n${message}`);
         window.location.href = `mailto:hi@nevio.dev?subject=${subject}&body=${body}`;
     });
