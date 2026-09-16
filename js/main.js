@@ -1,87 +1,42 @@
-/* ========== HAMBURGER MENU ========== */
-const hamburger  = document.querySelector('.nav-hamburger');
-const mobileNav  = document.querySelector('.nav-mobile');
+/* ========== SUBPAGE HERO — mountain scene ========== */
+(() => {
+    const L = window.Landscape;
+    const svg = document.querySelector('.subhero .scene');
+    if (!L || !svg) return;
 
-if (hamburger && mobileNav) {
-    hamburger.addEventListener('click', () => {
-        const open = mobileNav.classList.toggle('open');
-        hamburger.classList.toggle('open', open);
-        hamburger.setAttribute('aria-expanded', open);
+    const H = 360, seed = +svg.dataset.seed || 1;
+    const far = L.ridge({ seed: 11 + seed, base: 190, rough: 70, peaks: [{ x: 1080, h: 120, w: 190, k: 1.45 }, { x: 360, h: 60, w: 260 }] });
+    const mid = L.ridge({ seed: 23 + seed, base: 244, rough: 50, peaks: [{ x: 620, h: 70, w: 240 }, { x: 1420, h: 64, w: 220 }] });
+    const near = L.ridge({ seed: 7 + seed, base: 300, rough: 26, steps: 6 });
+
+    svg.querySelector('.layers').innerHTML =
+        `<path class="l1" d="${L.fill(far, H)}"/><path class="snowcap" d="${L.snow(far, 150, 5 + seed)}"/>` +
+        `<path class="l3" d="${L.fill(mid, H)}"/><path class="snowcap" d="${L.snow(mid, 214, 9 + seed)}" opacity=".6"/>` +
+        `<path class="l4" d="${L.fill(near, H)}"/>` + L.trees(near, { seed: 3 + seed }) +
+        `<path class="l6" d="M0 360 L0 350 Q 400 336 800 340 T 1600 348 L1600 360 Z"/>`;
+
+    const canvas = document.querySelector('.subhero canvas.stars');
+    const drawStars = () => L.stars(canvas, 120, 4 + seed);
+    drawStars();
+    addEventListener('resize', drawStars);
+})();
+
+/* ========== RIDGES — footer and CV sheet ========== */
+(() => {
+    const L = window.Landscape;
+    if (!L) return;
+
+    document.querySelectorAll('.footer-ridge').forEach((svg, i) => {
+        const pts = L.ridge({ seed: 31 + i, base: 66, rough: 26, steps: 6, peaks: [{ x: 1040, h: 52, w: 260, k: 1.3 }, { x: 320, h: 24, w: 220 }] });
+        svg.innerHTML = `<path d="${L.fill(pts, 90)}"/>`;
     });
 
-    mobileNav.querySelectorAll('a').forEach((link) => {
-        link.addEventListener('click', () => {
-            mobileNav.classList.remove('open');
-            hamburger.classList.remove('open');
-            hamburger.setAttribute('aria-expanded', 'false');
-        });
+    document.querySelectorAll('.cv-ridge').forEach((svg) => {
+        const far = L.ridge({ seed: 5, base: 70, rough: 30, steps: 6, peaks: [{ x: 1180, h: 56, w: 240, k: 1.4 }, { x: 420, h: 30, w: 260 }] });
+        const near = L.ridge({ seed: 19, base: 98, rough: 16, steps: 6, peaks: [{ x: 760, h: 22, w: 320 }] });
+        svg.innerHTML = `<path class="far" d="${L.fill(far, 120)}"/><path class="near" d="${L.fill(near, 120)}"/>`;
     });
-}
-
-/* ========== CONTACT FORM ========== */
-const contactForm = document.getElementById('contact-form');
-const formStatus  = document.getElementById('form-status');
-
-if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-
-        const name    = contactForm.querySelector('input[name="name"]').value.trim();
-        const email   = contactForm.querySelector('input[name="email"]').value.trim();
-        const message = contactForm.querySelector('textarea[name="message"]').value.trim();
-
-        if (!name || !email || !message) {
-            const msg = (window.i18n && window.i18n.t('home.contact.errorRequired')) || 'Please fill in all fields.';
-            showStatus(msg, 'error');
-            return;
-        }
-
-        const subjectText = (window.i18n && window.i18n.t('home.contact.mailSubject')) || 'Contact from';
-        const subject = encodeURIComponent(`${subjectText} ${name}`);
-        const body    = encodeURIComponent(`Name: ${name}\nE-Mail: ${email}\n\n${message}`);
-        window.location.href = `mailto:hi@nevio.dev?subject=${subject}&body=${body}`;
-    });
-}
-
-function showStatus(msg, type) {
-    if (!formStatus) return;
-    formStatus.textContent = msg;
-    formStatus.className = 'form-status form-status--' + type;
-    formStatus.style.display = 'block';
-    setTimeout(() => { formStatus.style.display = 'none'; }, 4000);
-}
-
-/* ========== NAV ACTIVE STATE ========== */
-const sections = document.querySelectorAll('section[id]');
-const navLinks  = document.querySelectorAll('.nav-links a');
-
-const observer = new IntersectionObserver(
-    (entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                navLinks.forEach((link) => {
-                    link.classList.toggle(
-                        'nav-active',
-                        link.getAttribute('href') === '#' + entry.target.id
-                    );
-                });
-            }
-        });
-    },
-    { threshold: 0.35 }
-);
-
-sections.forEach((s) => observer.observe(s));
-
-/* ========== SKILL CARDS — hover label ========== */
-document.querySelectorAll('.skill-card').forEach((card) => {
-    card.addEventListener('mouseenter', () => {
-        card.style.zIndex = '2';
-    });
-    card.addEventListener('mouseleave', () => {
-        card.style.zIndex = '';
-    });
-});
+})();
 
 /* ========== PROJECT GALLERY LIGHTBOX ========== */
 (() => {
@@ -90,6 +45,8 @@ document.querySelectorAll('.skill-card').forEach((card) => {
 
     const lightbox = document.createElement('div');
     lightbox.className = 'lightbox';
+    lightbox.setAttribute('role', 'dialog');
+    lightbox.setAttribute('aria-modal', 'true');
     lightbox.innerHTML = `
         <button class="lightbox-btn lightbox-close" aria-label="Close">×</button>
         <button class="lightbox-btn lightbox-prev" aria-label="Previous">‹</button>
@@ -122,15 +79,24 @@ document.querySelectorAll('.skill-card').forEach((card) => {
         show(i);
         lightbox.classList.add('open');
         document.body.style.overflow = 'hidden';
+        closeBtn.focus();
     };
 
     const close = () => {
         lightbox.classList.remove('open');
         document.body.style.overflow = '';
         imgEl.src = '';
+        items[current].focus();
     };
 
-    items.forEach((item, i) => item.addEventListener('click', () => open(i)));
+    items.forEach((item, i) => {
+        item.tabIndex = 0;
+        item.setAttribute('role', 'button');
+        item.addEventListener('click', () => open(i));
+        item.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(i); }
+        });
+    });
     closeBtn.addEventListener('click', close);
     prevBtn.addEventListener('click', () => show(current - 1));
     nextBtn.addEventListener('click', () => show(current + 1));

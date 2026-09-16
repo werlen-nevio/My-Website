@@ -12,46 +12,52 @@ Personal portfolio website for **Nevio** — Full Stack Developer at [VALCODE](h
 |---------|---------------------------------------------------|
 | Markup  | HTML5                                             |
 | Styles  | Vanilla CSS (custom design system)                |
-| Scripts | Vanilla JavaScript                                |
-| Fonts   | Special Elite · Caveat · Space Mono (Google Fonts)|
+| Scripts | Vanilla JavaScript · GSAP + ScrollTrigger · Lenis (CDN, home only) |
+| Fonts   | Archivo · Hanken Grotesk · JetBrains Mono (Google Fonts) |
 | Hosting | VPS + Nginx + Let's Encrypt (Certbot)             |
 
 ## Project Structure
 
 ```
 nevio.dev/
-├── index.html        # Main page (nav, hero, about, skills, experience, projects, contact, footer)
+├── index.html          # Home (hero, about, projects, route, backpack, summit/contact)
+├── cv.html             # Printable A4 CV (Download PDF = browser print)
+├── projects/           # Case studies: slopesafe, pyra, aiventure
 ├── css/
-│   └── style.css     # All styles — variables, layout, components, responsive breakpoints
+│   └── style.css       # All styles — tokens (light/dark), home, subpages, CV, print
 ├── js/
-│   └── main.js       # Contact form handling, nav active state, misc interactions
+│   ├── i18n.js         # DE/EN switcher, reads data-i18n* attributes
+│   ├── i18n.json       # All translations
+│   ├── landscape.js    # Seeded generator for ridges, snow, trees, stars
+│   ├── home.js         # Hero scene, altimeter, hiking trail, contact form, scroll motion
+│   └── main.js         # Subpages: mountain header, footer/CV ridges, gallery lightbox
 ├── nginx/
 │   ├── nevio.dev.conf  # Nginx server blocks (HTTP redirect + HTTPS with SSL)
 │   └── deploy.sh       # One-shot server setup script (Nginx + Certbot + UFW)
 └── README.md
 ```
 
+Screenshots live in `assets/` on the server (git-ignored).
+
 ## Design
 
-Notebook / brutalist aesthetic:
-- Lined paper background with red margin rule
-- Ink-on-paper color palette (`--paper`, `--ink`, `--green`, `--yellow`)
-- Hand-written feel via **Caveat** font
-- Typewriter feel via **Special Elite** / **Space Mono**
-- Hard borders, offset box-shadows, subtle card rotations
+Alpine ascent — scrolling the home page climbs from Visp (651 m) to the Allalinhorn (4’027 m):
+- Generated mountain layers with parallax; the name sits on a ridge
+- Fixed altimeter that tracks the current "station" while scrolling
+- Swiss hiking signpost (yellow) as navigation, white-red-white trail blazes as markers
+- Night summit with a summit cross for the contact section
+- Light and dark theme via `prefers-color-scheme`; motion respects `prefers-reduced-motion`
 
 ## Sections
 
-| # | Section       | Description                                                       |
-|---|---------------|-------------------------------------------------------------------|
-| 1 | Hero          | Intro, online status badge, CTA buttons, ticker tape              |
-| 2 | About         | Bio, blockquote, info table                                       |
-| 3 | Skills        | 16-skill grid (Frontend / Backend / 3D / DevOps)                  |
-| 4 | Experience    | Chronological work log                                            |
-| 5 | Stats         | GitHub activity chart + VALCODE product overview                  |
-| 6 | Projects      | PYRA · Valcode Appoint · 3D Portfolio · Track Attack              |
-| 7 | Testimonials  | Auto-scrolling review cards (pauses on hover)                     |
-| 8 | Contact       | Contact info + accessible form with client-side validation        |
+| # | Section         | Station        | Description                                            |
+|---|-----------------|----------------|--------------------------------------------------------|
+| 1 | Hero            | Visp           | Intro, signpost navigation                             |
+| 2 | About           | Saas-Fee       | Bio + legend table                                     |
+| 3 | Projects        | Felskinn       | Bento cards with live mock-ups                         |
+| 4 | Route           | Mittelallalin  | Experience as a hiking trail that draws while scrolling|
+| 5 | Backpack        | —              | Skills + GitHub contribution chart                     |
+| 6 | Summit          | Allalinhorn    | Contact form (opens the mail app)                      |
 
 ## Development
 

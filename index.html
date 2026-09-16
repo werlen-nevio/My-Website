@@ -4,361 +4,335 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>nevio.dev</title>
+        <title>Nevio Werlen – nevio.dev</title>
+        <meta name="description" content="Nevio Werlen – creative full-stack developer from Valais, Switzerland.">
+        <meta name="color-scheme" content="light dark">
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏔️</text></svg>">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Caveat:wght@400;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
         <!-- Styles -->
-        <link rel="stylesheet" href="/css/style.css?v=7">
+        <link rel="stylesheet" href="/css/style.css?v=8">
     </head>
 
     <body>
-        <nav>
-            <a href="#" class="nav-logo">nevio.dev</a>
-            <ul class="nav-links">
-                <li><a href="#about" data-i18n="common.nav.about">ABOUT</a></li>
-                <li><a href="#skills" data-i18n="common.nav.skills">SKILLS</a></li>
-                <li><a href="#experience" data-i18n="common.nav.work">WORK</a></li>
-                <li><a href="#projects" data-i18n="common.nav.projects">PROJECTS</a></li>
-                <li><a href="#contact" class="nav-hire" data-i18n="common.nav.contact">CONTACT</a></li>
-            </ul>
-            <div class="lang-switch" role="group" data-i18n-aria-label="common.langSwitchAria" aria-label="Switch language">
-                <button type="button" data-lang="de">DE</button>
-                <button type="button" data-lang="en">EN</button>
-            </div>
-            <button class="nav-hamburger" aria-label="Menu" aria-expanded="false">
-                <span></span><span></span><span></span>
-            </button>
-        </nav>
-        <div class="nav-mobile" role="navigation">
-            <a href="#about" data-i18n="common.nav.about">ABOUT</a>
-            <a href="#skills" data-i18n="common.nav.skills">SKILLS</a>
-            <a href="#experience" data-i18n="common.nav.work">WORK</a>
-            <a href="#projects" data-i18n="common.nav.projects">PROJECTS</a>
-            <a href="#contact" class="nav-hire" data-i18n="common.nav.contact">CONTACT</a>
-            <div class="lang-switch" role="group" aria-label="Switch language">
-                <button type="button" data-lang="de">DE</button>
-                <button type="button" data-lang="en">EN</button>
-            </div>
-        </div>
+        <!-- ========== HERO ========== -->
+        <header class="hero" id="start" data-station="Visp" data-alt="651">
+            <canvas class="stars" id="heroStars" aria-hidden="true"></canvas>
+            <div class="clouds" aria-hidden="true"><span class="cloud c1"></span><span class="cloud c2"></span><span class="cloud c3"></span></div>
 
-        <section id="hero">
-            <div class="hero-left">
-                <div class="hero-title">
-                    NEVIO
-                </div>
-                <p class="hero-sub" data-i18n-html="home.hero.subHtml">
-                    I build digital products that people remember.<br>
-                    <strong>Vue • React • Node</strong>
-                </p>
-                <div class="hero-btns">
-                    <a href="#projects" class="btn btn-primary" data-i18n="home.hero.btnProjects">My Projects</a>
-                    <a href="#contact" class="btn" data-i18n="home.hero.btnContact">Contact</a>
-                    <a href="/cv" class="btn" data-i18n="home.hero.btnCv">CV</a>
-                </div>
-            </div>
-            <div class="hero-right">
-                <div class="hero-card">
-                    <div class="hero-card-label" data-i18n="home.hero.cardLabel">// find me on</div>
-                    <div class="hero-card-actions">
-                        <a href="https://github.com/werlen-nevio" target="_blank" class="hero-link" data-tag="01">
-                            <span class="hero-link-icon">
-                                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-                            </span>
-                            <span class="hero-link-text">
-                                <span class="hero-link-title">GitHub</span>
-                                <span class="hero-link-handle">@werlen-nevio</span>
-                            </span>
-                            <span class="hero-link-arrow">→</span>
-                        </a>
-                        <a href="https://www.linkedin.com/in/nevio-werlen-893548383/" target="_blank" class="hero-link" data-tag="02">
-                            <span class="hero-link-icon">
-                                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                            </span>
-                            <span class="hero-link-text">
-                                <span class="hero-link-title">LinkedIn</span>
-                                <span class="hero-link-handle">Nevio Werlen</span>
-                            </span>
-                            <span class="hero-link-arrow">→</span>
-                        </a>
-                        <a href="mailto:nevio.werlen@gmail.com" class="hero-link" data-tag="03">
-                            <span class="hero-link-icon">
-                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
-                            </span>
-                            <span class="hero-link-text">
-                                <span class="hero-link-title" data-i18n="home.hero.linkEmail">E-Mail</span>
-                                <span class="hero-link-handle">mail@nevio.dev</span>
-                            </span>
-                            <span class="hero-link-arrow">→</span>
-                        </a>
+            <svg class="scene back" viewBox="0 0 1600 800" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+                <defs>
+                    <linearGradient id="snowGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" class="sg1"/><stop offset="1" class="sg2"/></linearGradient>
+                </defs>
+                <g class="px" data-speed="0.55"><g class="rise" id="L1"></g></g>
+                <g class="px" data-speed="0.4"><g class="rise" id="L2"></g></g>
+            </svg>
+
+            <h1 class="hero-name" id="heroName"><span class="wrap"><span class="nm">Nevio Werlen</span></span></h1>
+
+            <svg class="scene front" viewBox="0 0 1600 800" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+                <g class="px" data-speed="0.24"><g class="rise" id="L3"></g></g>
+                <g class="px" data-speed="0.13"><g class="rise" id="L4"></g></g>
+                <g class="px" data-speed="0.05"><g class="rise" id="L5"></g></g>
+                <g><path class="l6" d="M0 800 L0 772 Q 400 742 800 748 T 1600 770 L1600 800 Z"/></g>
+            </svg>
+
+            <nav class="topbar wrap" data-i18n-aria-label="common.navAria" aria-label="Main navigation">
+                <a class="wordmark" href="#start"><b>nevio</b>.dev</a>
+                <div class="topbar-right">
+                    <div class="topnav">
+                        <a href="#about" data-i18n="common.nav.about">About</a>
+                        <a href="#projects" data-i18n="common.nav.projects">Projects</a>
+                        <a href="#experience" data-i18n="common.nav.route">Route</a>
+                        <a class="keep" href="#contact" data-i18n="common.nav.contact">Contact</a>
+                    </div>
+                    <div class="lang-switch" role="group" data-i18n-aria-label="common.langSwitchAria" aria-label="Switch language">
+                        <button type="button" data-lang="de">DE</button>
+                        <button type="button" data-lang="en">EN</button>
                     </div>
                 </div>
-                <div class="hero-coords" data-i18n-html="home.hero.coordsHtml">
-                    📍 Location: <span>Valais, Switzerland</span><br>
-                </div>
-            </div>
-        </section>
+            </nav>
 
-        <!-- ========== ABOUT ========== -->
-        <section id="about">
-            <div class="section-header">
-                <div class="section-title" data-i18n="home.about.title">Who am I?</div>
-                <div class="section-tag" data-i18n="home.about.tag">about</div>
-            </div>
-            <div class="about-grid">
-                <div class="about-left">
-                    <h3 data-i18n="home.about.name">My name is Nevio Werlen.</h3>
-                    <p data-i18n="home.about.intro" style="font-size:0.85rem;line-height:1.8;color:#aaa;margin-bottom:1.5rem;">
-                        A creative developer who believes the web needs more personality. I
-                        bring character to code.
-                    </p>
-                    <blockquote data-i18n-html="home.about.blockquoteHtml">
-                        Specialized in Full-Stack Development &amp; Web Experiences.<br>
-                        Obsessed with good Design.<br>
-                        Experience with shipping real products that actually get used.
-                    </blockquote>
-                    <div class="about-badges">
-                        <a href="https://github.com/werlen-nevio" target="_blank" class="badge badge-link">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-                            GitHub
-                        </a>
-                        <a href="https://www.linkedin.com/in/nevio-werlen-893548383/" target="_blank" class="badge badge-link">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                            LinkedIn
-                        </a>
-                    </div>
-                </div>
-                <div class="about-right">
-                    <h3 data-i18n="home.about.rightH3">Who I am</h3>
-                    <div style="display:flex;flex-direction:column;gap:1rem;">
-                        <div class="stat-row"><span class="stat-row-label" data-i18n="home.about.labelName">Name</span><span class="stat-row-val" data-i18n="home.about.valName">Nevio Werlen</span></div>
-                        <div class="stat-row"><span class="stat-row-label" data-i18n="home.about.labelRole">Role</span><span class="stat-row-val" data-i18n="home.about.valRole">Developer</span></div>
-                        <div class="stat-row"><span class="stat-row-label" data-i18n="home.about.labelCompany">Company</span><span class="stat-row-val" data-i18n="home.about.valCompany">Cortec AG</span></div>
-                        <div class="stat-row"><span class="stat-row-label" data-i18n="home.about.labelLocation">Location</span><span class="stat-row-val" data-i18n="home.about.valLocation">Valais, Switzerland</span></div>
-                        <div class="stat-row"><span class="stat-row-label" data-i18n="home.about.labelFocus">Focus</span><span class="stat-row-val" data-i18n="home.about.valFocus">Web Development</span></div>
-                        <div class="stat-row"><span class="stat-row-label" data-i18n="home.about.labelLanguages">Languages</span><span class="stat-row-val" data-i18n="home.about.valLanguages">de / en / fr</span></div>
+            <div class="hero-intro">
+                <div class="wrap">
+                    <div class="inner">
+                        <p class="coords" data-i18n="home.hero.coords">46.29° N · 7.88° E — Visp, 651 m a.s.l.</p>
+                        <p class="lede" data-i18n="home.hero.lede">I build digital products that people remember. Full-stack developer from Valais, obsessed with good design.</p>
+                        <p class="stackline"><span>Vue · React · Node</span><a href="/cv" data-i18n="home.hero.cv">CV →</a></p>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- ========== SKILLS ========== -->
-        <section id="skills">
-            <div class="section-header">
-                <div class="section-title" data-i18n="home.skills.title">My skillset</div>
-                <div class="section-tag" data-i18n="home.skills.tag">skills</div>
+            <div class="signpost" data-i18n-aria-label="home.hero.signAria" aria-label="Signpost">
+                <div class="pole"></div>
+                <div class="plate"><strong>Visp</strong><span>651 m</span></div>
+                <a class="arm r a1" href="#projects"><span data-i18n="home.hero.armProjects">Projects</span><em>15 min</em></a>
+                <a class="arm l a2" href="#experience"><span data-i18n="home.hero.armRoute">Route</span><em>35 min</em></a>
+                <a class="arm r a3" href="#contact"><span data-i18n="home.hero.armSummit">Summit</span><em>1 h 20 min</em></a>
             </div>
-            <div class="skills-grid">
-                <div class="skill-card"><div class="skill-prefix" data-i18n="home.skillCard.library">LIBRARY</div><div class="skill-type" data-i18n="home.skillCard.frontend">FRONTEND</div><div class="skill-name">REACT</div></div>
-                <div class="skill-card"><div class="skill-prefix" data-i18n="home.skillCard.framework">FRAMEWORK</div><div class="skill-type" data-i18n="home.skillCard.frontend">FRONTEND</div><div class="skill-name">VUE 3</div></div>
-                <div class="skill-card"><div class="skill-prefix" data-i18n="home.skillCard.language">LANGUAGE</div><div class="skill-type" data-i18n="home.skillCard.backendRuntime">RUNTIME BACKEND</div><div class="skill-name">NODE.JS</div></div>
-                <div class="skill-card"><div class="skill-prefix" data-i18n="home.skillCard.realtime">REALTIME</div><div class="skill-type" data-i18n="home.skillCard.websocket">WEBSOCKET</div><div class="skill-name">SOCKET.IO</div></div>
-                <div class="skill-card"><div class="skill-prefix" data-i18n="home.skillCard.cms">CMS</div><div class="skill-type" data-i18n="home.skillCard.plugins">PLUGINS</div><div class="skill-name">WORDPRESS</div></div>
-                <div class="skill-card"><div class="skill-prefix" data-i18n="home.skillCard.language">LANGUAGE</div><div class="skill-type" data-i18n="home.skillCard.backend">BACKEND</div><div class="skill-name">PHP</div></div>
-                <div class="skill-card"><div class="skill-prefix" data-i18n="home.skillCard.language">LANGUAGE</div><div class="skill-type" data-i18n="home.skillCard.scripting">SCRIPTING</div><div class="skill-name">JAVASCRIPT</div></div>
-                <div class="skill-card"><div class="skill-prefix" data-i18n="home.skillCard.sql">SQL</div><div class="skill-type" data-i18n="home.skillCard.database">DATABASE</div><div class="skill-name">MySQL</div></div>
-                <div class="skill-card"><div class="skill-prefix" data-i18n="home.skillCard.core">CORE</div><div class="skill-type" data-i18n="home.skillCard.markup">MARKUP</div><div class="skill-name">HTML5</div></div>
-                <div class="skill-card"><div class="skill-prefix" data-i18n="home.skillCard.version">VERSION</div><div class="skill-type" data-i18n="home.skillCard.control">CONTROL</div><div class="skill-name">GIT</div></div>
-                <div class="skill-card"><div class="skill-prefix" data-i18n="home.skillCard.legacy">LEGACY</div><div class="skill-type" data-i18n="home.skillCard.migration">MIGRATION</div><div class="skill-name">ASP CLASSIC</div></div>
-                <div class="skill-card"><div class="skill-prefix" data-i18n="home.skillCard.auth">AUTH</div><div class="skill-type" data-i18n="home.skillCard.security">SECURITY</div><div class="skill-name">JWT</div></div>
+        </header>
+
+        <!-- ========== ALTIMETER ========== -->
+        <aside class="alti" aria-hidden="true">
+            <div class="alti-read">
+                <span class="lbl" data-i18n="common.altitude.label">Altitude</span>
+                <span class="num" id="altNum">651</span><span class="unit" data-i18n="common.altitude.unit">m a.s.l.</span>
+                <span class="stn" id="altStn">Visp</span>
             </div>
-        </section>
+            <div class="alti-track" id="altTrack"><span class="alti-marker" id="altMarker"></span></div>
+        </aside>
 
-        <!-- ========== EXPERIENCE ========== -->
-        <section id="experience">
-            <div class="section-header">
-                <div class="section-title" data-i18n="home.experience.title">Where I work</div>
-                <div class="section-tag" data-i18n="home.experience.tag">work</div>
-            </div>
-            <div class="exp-list">
-
-                <div class="exp-item">
-                    <div>
-                        <div class="exp-date" data-i18n="home.experience.aiventureDate">October 2025</div>
-                        <div class="exp-date" data-i18n="home.experience.aiventureProgram" style="color:var(--green);font-size:0.8rem;">IT Talents · Silicon Valley</div>
-                        <div class="exp-company" data-i18n="home.experience.aiventureType">Talent Program</div>
+        <main>
+            <!-- ========== ABOUT ========== -->
+            <section class="sec" id="about" data-station="Saas-Fee" data-alt="1800">
+                <div class="wrap about-grid">
+                    <div class="about-text reveal">
+                        <p class="eyebrow">▲ 1’800 m · Saas-Fee</p>
+                        <h2 class="h2" data-i18n="home.about.title">Who am I?</h2>
+                        <p class="body-l">
+                            <span data-i18n="home.about.name">My name is Nevio Werlen.</span>
+                            <span data-i18n="home.about.intro">A creative developer who believes the web needs more personality. I bring character to code.</span>
+                        </p>
+                        <p class="muted" data-i18n="home.about.focus">Specialized in Full-Stack Development &amp; Web Experiences. Obsessed with good design. Experience with shipping real products that actually get used.</p>
+                        <div class="linkrow">
+                            <a href="https://github.com/werlen-nevio" target="_blank" rel="noopener">GitHub ↗</a>
+                            <a href="https://www.linkedin.com/in/nevio-werlen-893548383/" target="_blank" rel="noopener">LinkedIn ↗</a>
+                            <a href="/cv" data-i18n="home.about.cv">CV →</a>
+                        </div>
                     </div>
-                    <div class="exp-right">
-                        <h3 data-i18n="home.experience.aiventureRole">Developer - AIVenture</h3>
-                        <ul>
-                            <li data-i18n-html="home.experience.aiventureBullet1Html">Selected for the Swiss IT Talents program in Silicon Valley, CA</li>
-                            <li data-i18n-html="home.experience.aiventureBullet2Html">Built <a href="/projects/aiventure" style="color:var(--green);border-bottom:1.5px solid var(--green);">AIVenture</a>, a daily AI image-describing game, with a team of seven Swiss developers</li>
-                            <li data-i18n="home.experience.aiventureBullet3">Frontend (React/Vite) and small parts of the backend, deployed on Google Cloud Platform</li>
-                            <li data-i18n="home.experience.aiventureBullet4">Mentored on-site by sponsor Ben under real-world startup-sprint conditions</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="exp-item">
-                    <div>
-                        <div class="exp-date" data-i18n="home.experience.cortecDate">2022 - PRESENT</div>
-                        <div class="exp-date" data-i18n="home.experience.cortecCompany" style="color:var(--green);font-size:0.8rem;">Cortec AG</div>
-                        <div class="exp-company" data-i18n="home.experience.cortecType">Apprenticeship</div>
-                    </div>
-                    <div class="exp-right">
-                        <h3 data-i18n="home.experience.cortecRole">Web Developer</h3>
-                        <ul>
-                            <li data-i18n="home.experience.cortecBullet1">Development and enhancement of ERP and cinema booking systems</li>
-                            <li data-i18n="home.experience.cortecBullet2">Integration of new features into the existing ERP system</li>
-                        </ul>
+                    <div class="legend reveal">
+                        <div class="legend-title"><span data-i18n="home.about.legendTitle">Legend</span><span data-i18n="home.about.legendDate">As of 2026</span></div>
+                        <dl>
+                            <div class="row"><dt data-i18n="home.about.labelName">Name</dt><dd>Nevio Werlen</dd></div>
+                            <div class="row"><dt data-i18n="home.about.labelRole">Role</dt><dd data-i18n="home.about.valRole">Developer</dd></div>
+                            <div class="row"><dt data-i18n="home.about.labelCompany">Company</dt><dd>Cortec AG</dd></div>
+                            <div class="row"><dt data-i18n="home.about.labelLocation">Location</dt><dd data-i18n="home.about.valLocation">Valais, Switzerland</dd></div>
+                            <div class="row"><dt data-i18n="home.about.labelFocus">Focus</dt><dd data-i18n="home.about.valFocus">Web Development</dd></div>
+                            <div class="row"><dt data-i18n="home.about.labelLanguages">Languages</dt><dd data-i18n="home.about.valLanguages">German · English · French</dd></div>
+                        </dl>
                     </div>
                 </div>
+            </section>
 
-            </div>
-        </section>
-
-        <!-- ========== CODING STATS ========== -->
-        <section id="stats">
-            <div class="section-header">
-                <div class="section-title" data-i18n="home.stats.title">My Stats</div>
-                <span class="live-badge" data-i18n="home.stats.live">LIVE</span>
-            </div>
-            <div class="stats-grid">
-
-                <div class="stat-panel">
-                    <div class="stat-panel-header">
+            <!-- ========== PROJECTS ========== -->
+            <section class="sec sec-tight" id="projects" data-station="Felskinn" data-alt="2991">
+                <div class="wrap">
+                    <div class="sec-head reveal">
                         <div>
-                            <div class="stat-panel-title" data-i18n="home.stats.githubTitle">GITHUB</div>
+                            <p class="eyebrow">▲ 2’991 m · Felskinn</p>
+                            <h2 class="h2" data-i18n="home.projects.title">Selected Projects</h2>
                         </div>
+                        <p data-i18n="home.projects.intro">Three projects: for ski resorts, fire departments and everyone who likes a good guess.</p>
                     </div>
-                    <div class="stat-img">
-                        <img src="https://ghchart.rshah.org/2d8a4e/werlen-nevio" alt="GitHub Contributions" data-i18n-alt="home.stats.githubAlt"
-                            onerror="this.style.display='none';this.parentElement.innerHTML='<div style=\'padding:1rem;font-size:0.6rem;color:#333;letter-spacing:2px;\'>'+(window.i18n?window.i18n.t('home.stats.githubLoading'):'CONTRIBUTION GRAPH LOADING...')+'</div>'">
+
+                    <div class="bento">
+                        <article class="card p-slope reveal tilt">
+                            <svg class="topo" id="topo" viewBox="0 0 520 420" aria-hidden="true"></svg>
+                            <div class="card-body">
+                                <div class="tags"><span>App</span><span>Webapp</span><span>UI</span><span>UX</span><span>Backend</span><span>Frontend</span></div>
+                                <h3>SlopeSafe</h3>
+                                <p class="desc" data-i18n="home.projects.slopesafeDesc">A platform delivering real-time avalanche danger levels for Swiss ski resorts, with an interactive map, weather forecasts, and official SLF data integration.</p>
+                                <div class="danger" role="img" data-i18n-aria-label="home.projects.dangerAria" aria-label="Example display: danger level 3, considerable">
+                                    <div class="danger-head"><span data-i18n="home.projects.dangerPlace">Saas-Fee · sample data</span><strong data-i18n="home.projects.dangerLevel">Level 3 – considerable</strong></div>
+                                    <ol class="scale" id="dangerScale">
+                                        <li><b>1</b><span data-i18n="home.projects.danger1">low</span></li>
+                                        <li><b>2</b><span data-i18n="home.projects.danger2">moderate</span></li>
+                                        <li class="now"><b>3</b><span data-i18n="home.projects.danger3">considerable</span></li>
+                                        <li><b>4</b><span data-i18n="home.projects.danger4">high</span></li>
+                                        <li><b>5</b><span data-i18n="home.projects.danger5">very high</span></li>
+                                    </ol>
+                                </div>
+                                <a class="more" href="/projects/slopesafe" data-i18n="home.projects.readMore">Read more →</a>
+                            </div>
+                        </article>
+
+                        <article class="card p-pyra reveal tilt">
+                            <div class="card-body">
+                                <div class="tags"><span>Angular</span><span>WebUI</span><span>UI</span><span>UX</span></div>
+                                <h3>PYRA Webinterface</h3>
+                                <p class="desc" data-i18n="home.projects.pyraDesc">A web dashboard for digitalizing fire safety inspections, managing buildings, users, templates, and reports for Swiss fire departments and municipalities.</p>
+                                <div class="checklist">
+                                    <div class="ch-head"><span data-i18n="home.projects.checkHead">Inspection · example</span><span data-i18n="home.projects.checkPlace">School building</span></div>
+                                    <ul>
+                                        <li class="ok"><span class="box"><svg viewBox="0 0 12 12"><path d="M2 6.5 5 9.5 10 3"/></svg></span><span data-i18n="home.projects.check1">Escape routes clear</span></li>
+                                        <li class="ok"><span class="box"><svg viewBox="0 0 12 12"><path d="M2 6.5 5 9.5 10 3"/></svg></span><span data-i18n="home.projects.check2">Fire extinguishers checked</span></li>
+                                        <li><span class="box"></span><span data-i18n="home.projects.check3">Fire door closes</span></li>
+                                    </ul>
+                                    <div class="ch-foot" data-i18n="home.projects.checkFoot">2 of 3 items done</div>
+                                </div>
+                                <a class="more" href="/projects/pyra" data-i18n="home.projects.readMore">Read more →</a>
+                            </div>
+                        </article>
+
+                        <article class="card p-ai reveal tilt">
+                            <div class="card-body ai-grid">
+                                <div class="ai-copy">
+                                    <div class="tags"><span>Webapp</span><span>AI</span><span>Game</span><span>Frontend</span><span>Silicon Valley</span><span>IT Talent Program</span></div>
+                                    <h3>AIVenture</h3>
+                                    <p class="desc" data-i18n="home.projects.aiventureDesc">A daily image-describing game inspired by Wordle: describe an AI-generated picture in your own words and score how close you land to the original.</p>
+                                    <a class="more" href="/projects/aiventure" data-i18n="home.projects.readMore">Read more →</a>
+                                </div>
+                                <div class="ai-mock" role="group" data-i18n-aria-label="home.projects.aiAria" aria-label="Example of a game round">
+                                    <div class="ai-top"><span data-i18n="home.projects.aiHead">Image of the day · example</span><span data-i18n="home.projects.aiTry">Guess 2</span></div>
+                                    <div class="ai-img" role="img" data-i18n-aria-label="home.projects.aiImgAria" aria-label="Abstract AI image: fox in the snow"></div>
+                                    <div class="ai-guess" data-i18n="home.projects.aiGuess">“A fox sitting in the snow under the winter sun”</div>
+                                    <div class="meter"><span class="bar"><i id="aiBar"></i></span><span data-i18n="home.projects.aiScore">78 % close</span></div>
+                                </div>
+                            </div>
+                        </article>
                     </div>
-                    <div class="about-badges">
-                        <a href="https://github.com/werlen-nevio" target="_blank" class="badge badge-link">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-                            GitHub
-                        </a>
+
+                    <div class="bento-foot">
+                        <a class="more" href="https://github.com/werlen-nevio?tab=repositories" target="_blank" rel="noopener" data-i18n="home.projects.seeAll">All projects on GitHub ↗</a>
                     </div>
                 </div>
+            </section>
 
-            </div>
-        </section>
-
-        <!-- ========== PROJECTS ========== -->
-        <section id="projects">
-            <div class="section-header">
-                <div class="section-title" data-i18n="home.projects.title">Selected Projects</div>
-                <div class="section-tag" data-i18n="home.projects.tag">projects</div>
-            </div>
-            <div class="projects-grid">
-                <a href="/projects/slopesafe" class="project-card">
-                    <div class="project-img-placeholder"><img src="/assets/slopesafe/phone_screens.png" alt="SlopeSafe"></div>
-                    <div class="project-content">
-                        <h3>SlopeSafe</h3>
-                        <p data-i18n="home.projects.slopesafeDesc">A platform delivering real-time avalanche danger levels for Swiss ski resorts, with an interactive map, weather forecasts, and official SLF data integration.</p>
-                        <div class="project-tags">
-                            <span class="tag">App</span><span class="tag">Webapp</span><span class="tag">UI</span><span class="tag">UX</span><span class="tag">Backend</span><span class="tag">Frontend</span>
-                        </div>
-                        <div class="project-readmore" data-i18n="home.projects.readMore">Read more →</div>
+            <!-- ========== ROUTE (EXPERIENCE) ========== -->
+            <section class="sec" id="experience" data-station="Mittelallalin" data-alt="3457">
+                <div class="wrap route-grid">
+                    <div class="route-intro reveal">
+                        <p class="eyebrow">▲ 3’457 m · Mittelallalin</p>
+                        <h2 class="h2" data-i18n="home.experience.title">Where I work</h2>
+                        <p data-i18n="home.experience.intro">The route so far: from starting my apprenticeship in Valais to a sprint in Silicon Valley – and still climbing.</p>
+                        <p class="legend-trail"><span class="blaze"><i></i><i></i><i></i></span><span data-i18n="home.experience.blaze">Mountain trail, marked white-red-white</span></p>
                     </div>
-                </a>
-
-                <a href="/projects/pyra" class="project-card">
-                    <div class="project-img-placeholder"><span style="position:relative;z-index:1;">PYRA.PNG</span></div>
-                    <div class="project-content">
-                        <h3>PYRA Webinterface</h3>
-                        <p data-i18n="home.projects.pyraDesc">A web dashboard for digitalizing fire safety inspections, managing buildings, users, templates, and reports for Swiss fire departments and municipalities.</p>
-                        <div class="project-tags">
-                            <span class="tag">Angular</span><span class="tag">WebUI</span><span class="tag">UI</span><span class="tag">UX</span>
-                        </div>
-                        <div class="project-readmore" data-i18n="home.projects.readMore">Read more →</div>
-                    </div>
-                </a>
-
-                <a href="/projects/aiventure" class="project-card">
-                    <div class="project-img-placeholder"><img src="/assets/aiventure/Startscreen.png" alt="AIVenture"></div>
-                    <div class="project-content">
-                        <h3>AIVenture</h3>
-                        <p data-i18n="home.projects.aiventureDesc">A daily image-describing game inspired by Wordle: describe an AI-generated picture in your own words and score how close you land to the original.</p>
-                        <div class="project-tags">
-                            <span class="tag">Webapp</span><span class="tag">AI</span><span class="tag">Game</span><span class="tag">Frontend</span><span class="tag">Silicon Valley</span><span class="tag">IT Talent Program</span>
-                        </div>
-                        <div class="project-readmore" data-i18n="home.projects.readMore">Read more →</div>
-                    </div>
-                </a>
-            </div>
-            <div class="projects-footer">
-                <a href="https://github.com/werlen-nevio?tab=repositories" target="_blank" class="btn" data-i18n="home.projects.seeAll">SEE ALL PROJECTS</a>
-            </div>
-        </section>
-
-        <!-- ========== CONTACT ========== -->
-        <section id="contact">
-            <div class="section-header">
-                <span data-i18n="home.contact.title">Let's talk</span>
-                <div class="section-tag" data-i18n="home.contact.tag">// contact</div>
-            </div>
-            <div class="contact-grid">
-                <div class="contact-left">
-                    <h2 data-i18n-html="home.contact.headingHtml">Let's Talk <span>Code.</span></h2>
-                    <div class="contact-info">
-                        <div class="contact-row">
-                            <label data-i18n="home.contact.labelEmail">E-Mail</label>
-                            <a href="mailto:hi@nevio.dev">mail@nevio.dev</a>
-                        </div>
-                        <div class="contact-row">
-                            <label data-i18n="home.contact.labelLocation">Location</label>
-                            <span data-i18n="home.contact.valLocation">Valais, Switzerland / Remote</span>
-                        </div>
+                    <div class="trail" id="trail">
+                        <svg id="trailSvg" aria-hidden="true"><path class="casing" id="trailCasing"/><path class="line" id="trailLine"/></svg>
+                        <ol class="trail-list">
+                            <li class="wp reveal">
+                                <span class="blaze"><i></i><i></i><i></i></span>
+                                <time data-i18n="home.experience.cortecDate">Since 2022</time>
+                                <h3>Cortec AG</h3>
+                                <p class="role" data-i18n="home.experience.cortecRole">Apprenticeship · Web Developer</p>
+                                <ul>
+                                    <li data-i18n="home.experience.cortecBullet1">Development and enhancement of ERP and cinema booking systems</li>
+                                    <li data-i18n="home.experience.cortecBullet2">Integration of new features into the existing ERP system</li>
+                                </ul>
+                            </li>
+                            <li class="wp reveal">
+                                <span class="blaze"><i></i><i></i><i></i></span>
+                                <time data-i18n="home.experience.aiventureDate">October 2025</time>
+                                <h3>IT Talents · Silicon Valley</h3>
+                                <p class="role" data-i18n="home.experience.aiventureRole">Talent Program · Developer AIVenture</p>
+                                <ul>
+                                    <li data-i18n="home.experience.aiventureBullet1">Selected for the Swiss IT Talents program in Silicon Valley, CA</li>
+                                    <li data-i18n-html="home.experience.aiventureBullet2Html">Built <a href="/projects/aiventure">AIVenture</a>, a daily AI image-describing game, with a team of seven Swiss developers</li>
+                                    <li data-i18n="home.experience.aiventureBullet3">Frontend (React/Vite) and small parts of the backend, deployed on Google Cloud Platform</li>
+                                    <li data-i18n="home.experience.aiventureBullet4">Mentored on-site by sponsor Ben under real-world startup-sprint conditions</li>
+                                </ul>
+                            </li>
+                            <li class="wp reveal">
+                                <span class="blaze"><i></i><i></i><i></i></span>
+                                <time data-i18n="home.experience.todayDate">Today</time>
+                                <h3 data-i18n="home.experience.todayTitle">Still climbing</h3>
+                                <p class="role" data-i18n="home.experience.todayRole">Cortec AG · own projects</p>
+                                <p class="txt muted" data-i18n="home.experience.todayText">Apprenticeship at Cortec AG, with side projects like SlopeSafe.</p>
+                            </li>
+                        </ol>
                     </div>
                 </div>
-                <div class="contact-right">
-                    <h3 data-i18n="home.contact.formTitle">Write me</h3>
-                    <form id="contact-form" novalidate>
-                        <div class="form-group">
-                            <label for="name" data-i18n="home.contact.fieldName">Name</label>
-                            <input id="name" type="text" name="name" placeholder="John Doe" data-i18n-placeholder="home.contact.placeholderName" autocomplete="name">
-                        </div>
-                        <div class="form-group">
-                            <label for="email" data-i18n="home.contact.fieldEmail">E-Mail</label>
-                            <input id="email" type="email" name="email" placeholder="john@doe.com" data-i18n-placeholder="home.contact.placeholderEmail" autocomplete="email">
-                        </div>
-                        <div class="form-group">
-                            <label for="message" data-i18n="home.contact.fieldMessage">Message</label>
-                            <textarea id="message" name="message" placeholder="Your message..." data-i18n-placeholder="home.contact.placeholderMessage"></textarea>
-                        </div>
-                        <div id="form-status" class="form-status" style="display:none;padding:10px;margin-bottom:1rem;font-family:var(--font-hand);font-size:0.95rem;border:var(--border);"></div>
-                        <button type="submit" class="btn btn-primary" style="width:100%;" data-i18n="home.contact.submit">Send Message</button>
-                    </form>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- ========== FOOTER ========== -->
-        <footer>
-            <div class="footer-brand">
-                <h2>NEVIO.</h2>
-                <p data-i18n="common.footer.brandDesc">Designing for the future with the raw aesthetics of the past. No compromises.</p>
+            <!-- ========== BACKPACK (SKILLS) ========== -->
+            <section class="sec sec-tight" id="skills">
+                <div class="wrap">
+                    <div class="sec-head reveal">
+                        <div>
+                            <p class="eyebrow" data-i18n="home.skills.eyebrow">Last stop before the summit</p>
+                            <h2 class="h2" data-i18n="home.skills.title">In the backpack</h2>
+                        </div>
+                        <p data-i18n="home.skills.intro">What I carry on the climb – from frontend to legacy migration.</p>
+                    </div>
+                    <div class="packs">
+                        <div class="pack">
+                            <h3 data-i18n="home.skills.packFrontend">Frontend</h3>
+                            <div class="chips">
+                                <span class="chip">React</span><span class="chip">Vue 3</span><span class="chip">JavaScript</span><span class="chip">HTML5</span>
+                            </div>
+                        </div>
+                        <div class="pack">
+                            <h3 data-i18n="home.skills.packBackend">Backend</h3>
+                            <div class="chips">
+                                <span class="chip">Node.js</span><span class="chip">PHP</span><span class="chip">JWT <small>Auth</small></span>
+                            </div>
+                        </div>
+                        <div class="pack">
+                            <h3 data-i18n="home.skills.packData">Realtime &amp; data</h3>
+                            <div class="chips">
+                                <span class="chip">Socket.io <small>WebSocket</small></span><span class="chip">MySQL</span>
+                            </div>
+                        </div>
+                        <div class="pack">
+                            <h3 data-i18n="home.skills.packTools">Tools</h3>
+                            <div class="chips">
+                                <span class="chip">Git</span><span class="chip">WordPress <small>Plugins</small></span><span class="chip">ASP Classic <small>Migration</small></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tracks reveal">
+                        <div class="tracks-head">
+                            <h3 data-i18n="home.stats.title">Tracks on GitHub</h3>
+                            <span class="live" data-i18n="home.stats.live">Live</span>
+                        </div>
+                        <div class="tracks-chart">
+                            <img src="https://ghchart.rshah.org/D52B1E/werlen-nevio" alt="GitHub contributions" data-i18n-alt="home.stats.alt" loading="lazy" onerror="this.closest('.tracks').classList.add('is-empty')">
+                        </div>
+                        <p class="tracks-fallback" data-i18n="home.stats.fallback">The contribution graph could not be loaded right now.</p>
+                        <a class="more" href="https://github.com/werlen-nevio" target="_blank" rel="noopener" data-i18n="home.stats.link">GitHub profile ↗</a>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- ========== SUMMIT (CONTACT) ========== -->
+        <section class="summit" id="contact" data-station="Allalinhorn" data-alt="4027">
+            <canvas id="summitStars" aria-hidden="true"></canvas>
+            <div class="wrap summit-grid">
+                <div class="reveal">
+                    <p class="eyebrow">▲ 4’027 m · Allalinhorn</p>
+                    <h2 class="h2" data-i18n="home.contact.title">Let's talk code.</h2>
+                    <p class="sub" data-i18n="home.contact.sub">A project, an idea or a question? Write me – you've reached the summit, now it's time to talk.</p>
+                    <a class="mailbig" href="mailto:mail@nevio.dev">mail@nevio.dev</a>
+                    <div class="meta-list"><span data-i18n="home.contact.valLocation">Valais, Switzerland / Remote</span><span>DE · EN · FR</span></div>
+                </div>
+                <form class="form reveal" id="contact-form">
+                    <label for="f-name"><span data-i18n="home.contact.fieldName">Name</span><input id="f-name" name="name" autocomplete="name" placeholder="John Doe" data-i18n-placeholder="home.contact.placeholderName" required></label>
+                    <label for="f-mail"><span data-i18n="home.contact.fieldEmail">E-Mail</span><input id="f-mail" name="email" type="email" autocomplete="email" placeholder="john@doe.com" data-i18n-placeholder="home.contact.placeholderEmail" required></label>
+                    <label for="f-msg"><span data-i18n="home.contact.fieldMessage">Message</span><textarea id="f-msg" name="message" rows="4" placeholder="Your message..." data-i18n-placeholder="home.contact.placeholderMessage" required></textarea></label>
+                    <button class="btn-sign" type="submit" data-i18n="home.contact.submit">Send Message</button>
+                    <p class="form-note" id="form-note" aria-live="polite"></p>
+                </form>
             </div>
-            <div class="footer-col">
-                <h4 data-i18n="common.footer.pagesTitle">Pages</h4>
-                <ul>
-                    <li><a href="#" data-i18n="common.footer.home">Home</a></li>
-                    <li><a href="#projects" data-i18n="common.footer.works">Works</a></li>
-                    <li><a href="#about" data-i18n="common.footer.about">About</a></li>
-                    <li><a href="#contact" data-i18n="common.footer.contact">Contact</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4 data-i18n="common.footer.linksTitle">Links</h4>
-                <ul>
-                    <li><a href="https://github.com/werlen-nevio" target="_blank" data-i18n="common.footer.github">GitHub</a></li>
-                    <li><a href="mailto:mail@nevio.dev" data-i18n="common.footer.email">E-Mail</a></li>
-                </ul>
-            </div>
-        </footer>
-        <div class="footer-bottom">
-            <span>nevio.dev</span>
-            <span data-i18n="common.footer.built">© 2025 — Built with ☕</span>
-        </div>
+            <svg class="peak" id="peak" viewBox="0 0 1600 360" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+                <defs><linearGradient id="glowGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBD9C8"/><stop offset="1" stop-color="#D98D84"/></linearGradient></defs>
+                <path class="far" id="peakFar"/><path class="rock" id="peakRock"/><path class="glow" id="peakGlow"/><g id="peakCross"></g>
+            </svg>
+            <footer class="footer">
+                <div class="wrap">
+                    <span data-i18n="common.footer.copy">© 2026 Nevio Werlen · Built in Valais</span>
+                    <nav data-i18n-aria-label="common.footer.linksAria" aria-label="Links">
+                        <a href="https://github.com/werlen-nevio" target="_blank" rel="noopener">GitHub</a>
+                        <a href="https://www.linkedin.com/in/nevio-werlen-893548383/" target="_blank" rel="noopener">LinkedIn</a>
+                        <a href="/cv" data-i18n="common.nav.cv">CV</a>
+                        <a href="#start" data-i18n="common.footer.top">↑ Back to the valley</a>
+                    </nav>
+                </div>
+            </footer>
+        </section>
 
         <!-- Scripts -->
-        <script src="/js/i18n.js?v=1"></script>
-        <script src="/js/main.js?v=6"></script>
+        <script src="/js/i18n.js?v=2"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+        <script src="/js/landscape.js?v=1"></script>
+        <script src="/js/home.js?v=1"></script>
 
     </body>
 </html>
