@@ -1,0 +1,471 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Logo from '../components/ui/Logo.astro';
+import Icon from '../components/ui/Icon.astro';
+import { useT, l, localizePath, formatPeriod, isCurrent, type Lang } from '../i18n';
+import { profile } from '../data/profile';
+import { experience } from '../data/experience';
+import { education } from '../data/education';
+import { projects } from '../data/projects';
+import { skillGroups, skillName } from '../data/skills';
+
+interface Props {
+    lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useT(lang);
+const linkedin = profile.socials.find((s) => s.id === 'linkedin')!;
+const github = profile.socials.find((s) => s.id === 'github')!;
+---
+
+<BaseLayout lang={lang} path="/cv" title={t('meta.cvTitle')} description={t('meta.cvDescription')} theme="light" intro="page" bodyClass="cv-body">
+    <div class="cv-page theme-light" data-build-root="intro">
+        <div class="container cv-toolbar">
+            <a class="cv-back" href={localizePath('/', lang)} data-build="draw" data-build-group="bar" data-build-label="Link">
+                <Icon name="arrow-left" size={16} />
+                {t('cv.back')}
+            </a>
+            <div class="cv-actions" data-build="draw" data-build-group="bar">
+                <button class="cv-btn cv-btn--primary" type="button" data-cv-download data-filename={t('cv.fileName')}>
+                    <Icon name="arrow-down" size={16} />
+                    {t('cv.download')}
+                </button>
+                <button class="cv-btn" type="button" data-cv-print>
+                    {t('cv.print')}
+                </button>
+            </div>
+        </div>
+
+        <article class="cv-sheet theme-light" data-build="draw" data-build-label="Layout">
+            <header class="cv-head">
+                <div class="cv-head__id">
+                    <Logo size={46} class="cv-mark" />
+                    <div>
+                        <h1 class="cv-name">{profile.name}</h1>
+                        <p class="cv-role">{profile.role}</p>
+                    </div>
+                </div>
+                <dl class="cv-contact" aria-label={t('cv.contact')}>
+                    <div><dt><Icon name="pin" size={14} label={t('contact.location')} /></dt><dd>{l(profile.location, lang)}</dd></div>
+                    <div><dt><Icon name="mail" size={14} label="E-Mail" /></dt><dd><a href={`mailto:${profile.email}`}>{profile.email}</a></dd></div>
+                    <div><dt><Icon name="arrow-up-right" size={14} label="Web" /></dt><dd><a href={profile.site}>nevio.dev</a></dd></div>
+                    <div><dt><Icon name="linkedin" size={14} label="LinkedIn" /></dt><dd><a href={linkedin.href}>linkedin.com/in/{linkedin.handle}</a></dd></div>
+                    <div><dt><Icon name="github" size={14} label="GitHub" /></dt><dd><a href={github.href}>github.com/{github.handle}</a></dd></div>
+                </dl>
+            </header>
+
+            <section class="cv-section cv-profile">
+                <h2 class="cv-h2">{t('cv.profile')}</h2>
+                <p>{l(profile.cvProfile, lang)}</p>
+            </section>
+
+            <div class="cv-cols">
+                <div class="cv-main">
+                    <section class="cv-section">
+                        <h2 class="cv-h2">{t('cv.experience')}</h2>
+                        {
+                            experience.map((e) => (
+                                <div class="cv-item">
+                                    <div class="cv-item__head">
+                                        <h3 class="cv-item__title">{l(e.role, lang)}</h3>
+                                        <span class="cv-item__date">{formatPeriod(e.start, e.end, lang)}</span>
+                                    </div>
+                                    <p class="cv-item__org">
+                                        {[l(e.organisation, lang), l(e.type, lang), e.location && l(e.location, lang)].filter(Boolean).join(', ')}
+                                    </p>
+                                    <p class="cv-item__text">{l(e.summary, lang)}</p>
+                                    {e.highlights && (
+                                        <ul class="cv-item__list">
+                                            {e.highlights.map((h) => (
+                                                <li>{l(h, lang)}</li>
+                                            ))}
+                                        </ul>
+                                    )}
+                                </div>
+                            ))
+                        }
+                    </section>
+
+                    <section class="cv-section">
+                        <h2 class="cv-h2">{t('cv.education')}</h2>
+                        {
+                            education.map((e) => (
+                                <div class="cv-item">
+                                    <div class="cv-item__head">
+                                        <h3 class="cv-item__title">{l(e.degree, lang)}</h3>
+                                        <span class="cv-item__date">
+                                            {formatPeriod(e.start, e.end, lang)}
+                                            {isCurrent(e.end) && ` · ${t('education.inProgress')}`}
+                                        </span>
+                                    </div>
+                                    <p class="cv-item__org">
+                                        {e.institution}, {l(e.field, lang)}
+                                    </p>
+                                </div>
+                            ))
+                        }
+                    </section>
+
+                    <section class="cv-section">
+                        <h2 class="cv-h2">{t('cv.projects')}</h2>
+                        {
+                            projects.map((p) => (
+                                <div class="cv-item">
+                                    <div class="cv-item__head">
+                                        <h3 class="cv-item__title">{p.title}</h3>
+                                        <span class="cv-item__date">{l(p.year, lang)}</span>
+                                    </div>
+                                    <p class="cv-item__text">{l(p.summary, lang)}</p>
+                                    <p class="cv-item__tags">{p.stack.join(', ')}</p>
+                                </div>
+                            ))
+                        }
+                    </section>
+                </div>
+
+                <aside class="cv-side">
+                    <section class="cv-section">
+                        <h2 class="cv-h2">{t('cv.skills')}</h2>
+                        {
+                            skillGroups.map((g) => (
+                                <div class="cv-skill">
+                                    <h3 class="cv-skill__title">{l(g.title, lang)}</h3>
+                                    <p class="cv-skill__items">{g.items.map((i) => skillName(i.name, lang)).join(', ')}</p>
+                                </div>
+                            ))
+                        }
+                    </section>
+
+                    <section class="cv-section">
+                        <h2 class="cv-h2">{t('cv.languages')}</h2>
+                        <dl class="cv-langs">
+                            {
+                                profile.languages.map((x) => (
+                                    <div>
+                                        <dt>{l(x.name, lang)}</dt>
+                                        <dd>{l(x.level, lang)}</dd>
+                                    </div>
+                                ))
+                            }
+                        </dl>
+                    </section>
+                </aside>
+            </div>
+
+            <footer class="cv-foot">
+                <span>nevio.dev</span>
+                <span>{profile.name}, {new Date().getFullYear()}</span>
+            </footer>
+        </article>
+    </div>
+
+    <script>
+        document.querySelector<HTMLButtonElement>('[data-cv-download]')?.addEventListener('click', (e) => {
+            const previous = document.title;
+            document.title = (e.currentTarget as HTMLButtonElement).dataset.filename ?? previous;
+            window.print();
+            window.setTimeout(() => (document.title = previous), 500);
+        });
+        document.querySelector('[data-cv-print]')?.addEventListener('click', () => window.print());
+    </script>
+</BaseLayout>
+
+<style>
+    .cv-page {
+        padding: calc(var(--nav-top) + var(--nav-h) + var(--s-7)) 0 var(--s-9);
+        background: var(--paper-100);
+        min-height: 100svh;
+    }
+
+    .cv-toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--s-4);
+        max-width: calc(52rem + var(--gutter) * 2);
+        margin-bottom: var(--s-5);
+    }
+
+    .cv-back {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: var(--fs-sm);
+        font-weight: 550;
+        color: var(--text-2);
+    }
+
+    .cv-back:hover {
+        color: var(--text);
+    }
+
+    .cv-actions {
+        display: flex;
+        gap: var(--s-2);
+    }
+
+    .cv-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        height: 2.5rem;
+        padding-inline: 1rem;
+        border-radius: var(--r-full);
+        border: 1px solid var(--line-strong);
+        font-size: var(--fs-sm);
+        font-weight: 560;
+        transition: background-color var(--dur-2) var(--ease-soft);
+    }
+
+    .cv-btn {
+        color: var(--text);
+    }
+
+    .cv-btn:hover {
+        background: var(--surface-2);
+    }
+
+    .cv-btn--primary {
+        border-color: transparent;
+        background: var(--invert-bg);
+        color: var(--invert-text);
+    }
+
+    .cv-btn--primary:hover {
+        background: var(--cobalt-500);
+        color: #fff;
+    }
+
+    /* ---- The sheet: A4 proportions on screen --------------------------- */
+    .cv-sheet {
+        width: min(52rem, calc(100% - var(--gutter) * 2));
+        margin-inline: auto;
+        padding: clamp(1.5rem, 5vw, 3.5rem);
+        border-radius: var(--r-md);
+        background: var(--white);
+        box-shadow: var(--shadow-2);
+        font-size: 0.9375rem;
+        line-height: 1.55;
+        color: var(--text);
+    }
+
+    .cv-head {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: var(--s-5);
+        padding-bottom: var(--s-6);
+        border-bottom: 2px solid var(--ink-900);
+    }
+
+    .cv-head__id {
+        display: flex;
+        align-items: center;
+        gap: var(--s-4);
+    }
+
+    .cv-head__id :global(.cv-mark) {
+        color: var(--ink-900);
+    }
+
+    .cv-name {
+        font-size: clamp(1.75rem, 1.2rem + 2vw, 2.5rem);
+        line-height: 1;
+        letter-spacing: -0.045em;
+    }
+
+    .cv-role {
+        margin-top: var(--s-1);
+        color: var(--cobalt-500);
+        font-weight: 560;
+    }
+
+    .cv-contact {
+        display: grid;
+        gap: 0.2rem;
+        font-size: var(--fs-xs);
+    }
+
+    .cv-contact div {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .cv-contact dt {
+        color: var(--text-3);
+        display: inline-flex;
+    }
+
+    .cv-contact a:hover {
+        color: var(--cobalt-500);
+    }
+
+    .cv-section {
+        margin-top: var(--s-6);
+    }
+
+    .cv-h2 {
+        margin-bottom: var(--s-3);
+        padding-bottom: var(--s-2);
+        border-bottom: 1px solid var(--line);
+        font-size: var(--fs-xs);
+        font-weight: 650;
+        letter-spacing: 0.02em;
+        color: var(--cobalt-500);
+    }
+
+    .cv-profile p {
+        max-width: 72ch;
+        color: var(--text-2);
+    }
+
+    .cv-cols {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 15rem;
+        gap: var(--s-7);
+    }
+
+    .cv-item + .cv-item {
+        margin-top: var(--s-4);
+    }
+
+    .cv-item__head {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 0 var(--s-4);
+    }
+
+    .cv-item__title {
+        font-size: 1rem;
+        letter-spacing: -0.015em;
+    }
+
+    .cv-item__date {
+        font-size: var(--fs-xs);
+        color: var(--text-3);
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
+    }
+
+    .cv-item__org {
+        font-size: var(--fs-xs);
+        font-weight: 550;
+        color: var(--text-2);
+    }
+
+    .cv-item__text {
+        margin-top: var(--s-1);
+        color: var(--text-2);
+    }
+
+    .cv-item__list {
+        margin-top: var(--s-1);
+        padding-left: 1.1rem;
+        color: var(--text-2);
+    }
+
+    .cv-item__tags {
+        margin-top: 0.15rem;
+        font-size: var(--fs-xs);
+        color: var(--text-3);
+    }
+
+    .cv-skill + .cv-skill {
+        margin-top: var(--s-3);
+    }
+
+    .cv-skill__title {
+        font-size: var(--fs-xs);
+        font-weight: 620;
+        letter-spacing: 0;
+    }
+
+    .cv-skill__items {
+        color: var(--text-2);
+        font-size: var(--fs-sm);
+    }
+
+    .cv-langs div {
+        display: flex;
+        justify-content: space-between;
+        padding-block: 0.3rem;
+        border-bottom: 1px solid var(--line);
+        font-size: var(--fs-sm);
+    }
+
+    .cv-langs dd {
+        color: var(--text-3);
+    }
+
+    .cv-foot {
+        display: flex;
+        justify-content: space-between;
+        margin-top: var(--s-7);
+        padding-top: var(--s-3);
+        border-top: 1px solid var(--line);
+        font-size: var(--fs-xs);
+        color: var(--text-3);
+    }
+
+    @media (max-width: 719px) {
+        .cv-cols {
+            grid-template-columns: 1fr;
+            gap: 0;
+        }
+    }
+
+    /* ---- Print: just the sheet ------------------------------------------ */
+    @media print {
+        @page {
+            size: A4;
+            margin: 14mm 15mm;
+        }
+
+        :global(body.cv-body) {
+            background: #fff !important;
+        }
+
+        :global(.cv-body .nav),
+        :global(.cv-body .footer),
+        :global(.cv-body .lang-hint),
+        :global(.cv-body .skip-link),
+        .cv-toolbar {
+            display: none !important;
+        }
+
+        .cv-page {
+            padding: 0;
+            min-height: 0;
+            background: #fff;
+        }
+
+        .cv-sheet {
+            width: 100%;
+            padding: 0;
+            border-radius: 0;
+            box-shadow: none;
+            font-size: 9.5pt;
+            opacity: 1 !important;
+            transform: none !important;
+            filter: none !important;
+        }
+
+        .cv-cols {
+            grid-template-columns: minmax(0, 1fr) 52mm;
+            gap: 8mm;
+        }
+
+        .cv-item,
+        .cv-skill {
+            break-inside: avoid;
+        }
+
+        a {
+            text-decoration: none;
+        }
+    }
+</style>

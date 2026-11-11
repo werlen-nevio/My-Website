@@ -1,0 +1,356 @@
+---
+import Icon from '../ui/Icon.astro';
+import {
+    useT,
+    l,
+    localizePath,
+    formatMonth,
+    formatPeriod,
+    formatDuration,
+    monthsBetween,
+    isCurrent,
+    nowMonth,
+    type Lang,
+} from '../../i18n';
+import { experience } from '../../data/experience';
+import { education, educationPlaceholder } from '../../data/education';
+
+/** Experience and education as calm, CV-like rows. */
+interface Props {
+    lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useT(lang);
+
+function progress(start: string, end: string) {
+    const total = monthsBetween(start, end);
+    const done = Math.max(0, Math.min(total, monthsBetween(start, nowMonth()) - 1));
+    return Math.round((done / total) * 100);
+}
+---
+
+<section class="section theme-light career" id="experience" aria-labelledby="career-title" data-build-section>
+    <div class="container">
+        <div class="shead">
+            <h2 class="label" id="career-title" data-build="draw" data-build-label="Layout">{t('career.title')}</h2>
+            <p class="statement" data-build="type" data-build-label="Text">{t('experience.intro')}</p>
+        </div>
+
+        <div class="shead career__block">
+            <h3 class="career__sub">{t('career.experience')}</h3>
+            <ol class="rows" role="list">
+                {
+                    experience.map((item) => {
+                        const current = isCurrent(item.end);
+                        return (
+                            <li class:list={['row', { 'is-current': current }]} data-build="draw" data-build-label="UI">
+                                <div class="row__when">
+                                    <p class="row__period">
+                                        <time datetime={item.start}>{formatMonth(item.start, lang)}</time>
+                                        {` ${t('time.to')} `}
+                                        {item.end ? <time datetime={item.end}>{formatMonth(item.end, lang)}</time> : t('time.present')}
+                                    </p>
+                                    {!current && <span class="row__duration">{formatDuration(monthsBetween(item.start, item.end!), lang)}</span>}
+                                </div>
+                                <div class="row__main">
+                                    <h4 class="row__title">{l(item.role, lang)}</h4>
+                                    <p class="row__org">{l(item.organisation, lang)}</p>
+                                    <p class="row__text">{l(item.summary, lang)}</p>
+                                    {item.highlights && (
+                                        <ul class="row__list" role="list">
+                                            {item.highlights.map((h) => (
+                                                <li>{l(h, lang)}</li>
+                                            ))}
+                                        </ul>
+                                    )}
+                                    {item.link &&
+                                        (item.link.href.startsWith('http') ? (
+                                            <a class="link-arrow row__link" href={item.link.href} target="_blank" rel="noopener">
+                                                {l(item.link.label, lang)}
+                                                <Icon name="arrow-up-right" size={15} />
+                                                <span class="sr-only">{t('a11y.newTab')}</span>
+                                            </a>
+                                        ) : (
+                                            <a class="link-arrow row__link" href={localizePath(item.link.href, lang)}>
+                                                {l(item.link.label, lang)}
+                                                <Icon name="arrow-right" size={15} />
+                                            </a>
+                                        ))}
+                                </div>
+                                <ul class="row__meta" role="list">
+                                    <li>
+                                        <span class="sr-only">{t('experience.type')}: </span>
+                                        {l(item.type, lang)}
+                                    </li>
+                                    {item.location && (
+                                        <li>
+                                            <span class="sr-only">{t('experience.location')}: </span>
+                                            {l(item.location, lang)}
+                                        </li>
+                                    )}
+                                    {item.workMode && (
+                                        <li>
+                                            <span class="sr-only">{t('experience.mode')}: </span>
+                                            {l(item.workMode, lang)}
+                                        </li>
+                                    )}
+                                    {item.specialisation && <li>{l(item.specialisation, lang)}</li>}
+                                </ul>
+                            </li>
+                        );
+                    })
+                }
+            </ol>
+        </div>
+
+        <div class="shead career__block" id="education">
+            <h3 class="career__sub">{t('career.education')}</h3>
+            <ol class="rows" role="list">
+                {
+                    education.map((item) => {
+                        const current = isCurrent(item.end) && item.start <= nowMonth();
+                        const pct = progress(item.start, item.end);
+                        return (
+                            <li class:list={['row', { 'is-current': current }]} data-build="draw" data-build-label="UI">
+                                <div class="row__when">
+                                    <p class="row__period">{formatPeriod(item.start, item.end, lang)}</p>
+                                    {!current && <span class="row__duration">{formatDuration(monthsBetween(item.start, item.end), lang)}</span>}
+                                </div>
+                                <div class="row__main">
+                                    <h4 class="row__title">{l(item.degree, lang)}</h4>
+                                    <p class="row__org">
+                                        {item.institution}
+                                        {item.institutionNote && lang === 'en' && <span class="row__note">, {l(item.institutionNote, lang)}</span>}
+                                    </p>
+                                    {current && (
+                                        <div class="row__progress" data-progress data-start={item.start} data-end={item.end}>
+                                            <span class="row__bar" aria-hidden="true">
+                                                <i style={`--p:${pct / 100}`} data-progress-bar />
+                                            </span>
+                                            <span class="row__pct" data-progress-label data-template={t('education.progress')}>
+                                                {t('education.progress', { n: pct })}
+                                            </span>
+                                        </div>
+                                    )}
+                                </div>
+                                <ul class="row__meta" role="list">
+                                    <li>
+                                        <span class="sr-only">{t('education.field')}: </span>
+                                        {l(item.field, lang)}
+                                    </li>
+                                </ul>
+                            </li>
+                        );
+                    })
+                }
+                {
+                    educationPlaceholder && (
+                        <li class="row row--placeholder" data-build="draw">
+                            <div class="row__when">
+                                <Icon name="file" size={18} />
+                            </div>
+                            <div class="row__main">
+                                <h4 class="row__title">{l(educationPlaceholder.title, lang)}</h4>
+                                <p class="row__org">{l(educationPlaceholder.text, lang)}</p>
+                            </div>
+                        </li>
+                    )
+                }
+            </ol>
+        </div>
+    </div>
+</section>
+
+<style>
+    .career {
+        padding-top: calc(var(--section-y) * 0.4);
+        background:
+            radial-gradient(40% 30% at 0% 35%, rgba(122, 98, 230, 0.06), transparent 70%),
+            var(--bg);
+    }
+
+    .career__block {
+        margin-top: clamp(4rem, 7vw, 6rem);
+    }
+
+    .career__sub {
+        padding-top: var(--s-5);
+        font-size: var(--fs-sm);
+        font-weight: 560;
+        letter-spacing: 0;
+        color: var(--text-3);
+    }
+
+    .rows {
+        border-top: 1px solid var(--line-strong);
+    }
+
+    .row {
+        display: grid;
+        grid-template-columns: minmax(9rem, 2.3fr) minmax(0, 5fr) minmax(8rem, 2fr);
+        gap: var(--s-3) var(--s-6);
+        padding-block: var(--s-6);
+        border-bottom: 1px solid var(--line);
+        transition: background-color var(--dur-3) var(--ease-soft);
+    }
+
+    .row__when {
+        display: grid;
+        align-content: start;
+        justify-items: start;
+        gap: var(--s-2);
+        padding-top: 0.35rem;
+    }
+
+    .row__period {
+        font-size: var(--fs-sm);
+        color: var(--text-2);
+        font-variant-numeric: tabular-nums;
+    }
+
+    .row__duration {
+        font-size: var(--fs-xs);
+        color: var(--text-3);
+    }
+
+    .row__title {
+        font-size: var(--fs-lg);
+        letter-spacing: -0.03em;
+        line-height: 1.15;
+        transition: color var(--dur-2) var(--ease-soft);
+    }
+
+    .row:hover .row__title {
+        color: var(--accent);
+    }
+
+    .row__org {
+        margin-top: var(--s-1);
+        font-weight: 540;
+        color: var(--text);
+        opacity: 0.8;
+    }
+
+    .row__note {
+        font-weight: 450;
+        color: var(--text-3);
+    }
+
+    .row__text {
+        margin-top: var(--s-4);
+        max-width: 58ch;
+        color: var(--text-2);
+    }
+
+    .row__list {
+        display: grid;
+        gap: var(--s-2);
+        margin-top: var(--s-3);
+        max-width: 58ch;
+        color: var(--text-2);
+    }
+
+    .row__list li {
+        position: relative;
+        padding-left: 1.25rem;
+    }
+
+    /* a plain bullet in the text colour */
+    .row__list li::before {
+        content: '';
+        position: absolute;
+        left: 0.2rem;
+        top: 0.68em;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: currentColor;
+        opacity: 0.6;
+    }
+
+    .row__link {
+        margin-top: var(--s-4);
+        font-size: var(--fs-sm);
+    }
+
+    .row__meta {
+        display: grid;
+        align-content: start;
+        gap: 0.2rem;
+        padding-top: 0.35rem;
+        font-size: var(--fs-sm);
+        color: var(--text-2);
+    }
+
+    .row__progress {
+        display: grid;
+        gap: var(--s-2);
+        max-width: 22rem;
+        margin-top: var(--s-4);
+    }
+
+    .row__bar {
+        position: relative;
+        height: 3px;
+        border-radius: 3px;
+        background: var(--line);
+        overflow: hidden;
+    }
+
+    .row__bar i {
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: linear-gradient(90deg, var(--cobalt-500), var(--cobalt-300));
+        transform: scaleX(var(--p, 0));
+        transform-origin: left;
+        transition: transform 1.4s var(--ease-out);
+    }
+
+    .row__pct {
+        font-size: var(--fs-xs);
+        color: var(--text-3);
+    }
+
+    .row--placeholder {
+        color: var(--text-3);
+    }
+
+    .row--placeholder .row__title {
+        font-size: var(--fs-base);
+        font-weight: 560;
+        color: var(--text-2);
+    }
+
+    .row--placeholder .row__org {
+        font-weight: 450;
+        color: var(--text-3);
+    }
+
+    @media (max-width: 899px) {
+        .career__sub {
+            padding-top: 0;
+        }
+
+        .row {
+            grid-template-columns: 1fr;
+            gap: var(--s-3);
+        }
+
+        .row__when {
+            grid-auto-flow: column;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 0;
+        }
+
+        .row__meta {
+            grid-auto-flow: column;
+            justify-content: start;
+            gap: var(--s-4);
+            padding-top: 0;
+            font-size: var(--fs-xs);
+        }
+    }
+</style>

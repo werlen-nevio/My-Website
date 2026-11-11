@@ -1,0 +1,325 @@
+---
+import Icon from '../ui/Icon.astro';
+import { useT, l, localizePath, type Lang } from '../../i18n';
+import { profile } from '../../data/profile';
+
+interface Props {
+    lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useT(lang);
+---
+
+<section class="section section--layer theme-dark tone-deep contact" id="contact" aria-labelledby="contact-title" data-build-section>
+    <canvas class="contact__topo" aria-hidden="true" data-topo="calm"></canvas>
+
+    <div class="container contact__inner">
+        <h2 class="contact__title" id="contact-title" data-build="type" data-build-label="Text">{t('contact.title')}</h2>
+        <p class="contact__text" data-reveal="assemble">{t('contact.text')}</p>
+
+        <div class="contact__line">
+            <div class="contact__cta-wrap">
+                <a class="round-btn round-btn--accent" href={`mailto:${profile.email}`} data-magnetic data-build="draw" data-build-label="Button">
+                    <span class="round-btn__inner" data-magnetic-inner>
+                        <Icon name="mail" size={20} />
+                        {t('contact.cta')}
+                    </span>
+                </a>
+            </div>
+        </div>
+
+        <div class="contact__mail" data-reveal="assemble">
+            <a class="contact__address" href={`mailto:${profile.email}`}>
+                <span>{profile.email}</span>
+                <Icon name="arrow-up-right" size={28} class="contact__address-icon" />
+            </a>
+            <div class="contact__actions">
+                <button class="contact__copy" type="button" data-copy={profile.email} data-copied-label={t('contact.copied')}>
+                    <span class="contact__copy-icons" aria-hidden="true">
+                        <Icon name="copy" size={16} class="i-copy" />
+                        <Icon name="check" size={16} class="i-check" />
+                    </span>
+                    <span data-copy-label>{t('contact.copy')}</span>
+                </button>
+                <span class="sr-only" role="status" data-copy-status data-message={t('contact.copiedAnnounce')}></span>
+            </div>
+        </div>
+
+        <div class="contact__bottom">
+            <div class="contact__block" data-reveal="assemble">
+                <p class="contact__label">{t('contact.elsewhere')}</p>
+                <ul class="contact__links" role="list">
+                    {
+                        profile.socials.map((s) => (
+                            <li>
+                                <a class="contact__link" href={s.href} target="_blank" rel="noopener">
+                                    <Icon name={s.id} size={18} />
+                                    {s.label}
+                                    <Icon name="arrow-up-right" size={14} class="contact__ext" />
+                                    <span class="sr-only">{t('a11y.newTab')}</span>
+                                </a>
+                            </li>
+                        ))
+                    }
+                    <li>
+                        <a class="contact__link" href={localizePath('/cv', lang)}>
+                            <Icon name="file" size={18} />
+                            {t('nav.cv')}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <dl class="contact__facts" data-reveal="assemble">
+                <div>
+                    <dt>{t('contact.location')}</dt>
+                    <dd>{l(profile.location, lang)}</dd>
+                </div>
+                <div class="contact__clock">
+                    <dt>{t('contact.localTime')}</dt>
+                    <dd><time data-clock data-locale={lang === 'de' ? 'de-CH' : 'en-GB'}>--:--</time></dd>
+                </div>
+                <div>
+                    <dt>{t('contact.languages')}</dt>
+                    <dd>{profile.languages.map((x) => l(x.name, lang)).join(', ')}</dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+</section>
+
+<style>
+    .contact {
+        background:
+            radial-gradient(55% 45% at 75% 100%, rgba(50, 67, 245, 0.28), transparent 70%),
+            radial-gradient(35% 30% at 10% 20%, rgba(61, 214, 163, 0.06), transparent 70%),
+            var(--bg);
+        overflow: clip;
+        padding-bottom: var(--s-9);
+    }
+
+    /* The contour map returns for the finale */
+    .contact__topo {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        -webkit-mask-image: radial-gradient(70% 70% at 75% 45%, #000 30%, transparent 85%);
+        mask-image: radial-gradient(70% 70% at 75% 45%, #000 30%, transparent 85%);
+    }
+
+    .contact__inner {
+        position: relative;
+    }
+
+    .contact__title {
+        max-width: 12ch;
+        font-size: clamp(3rem, 1.2rem + 7vw, 8rem);
+        font-weight: 620;
+        line-height: 0.98;
+        letter-spacing: var(--tracking-display);
+    }
+
+    .contact__text {
+        margin-top: var(--s-6);
+        max-width: 42ch;
+        font-size: var(--fs-md);
+        color: var(--text-2);
+    }
+
+    /* Hairline with the round call to action sitting on it */
+    .contact__line {
+        position: relative;
+        margin-top: clamp(5rem, 9vw, 8rem);
+        border-top: 1px solid var(--line-strong);
+    }
+
+    .contact__cta-wrap {
+        position: absolute;
+        right: clamp(0rem, 8vw, 9rem);
+        top: 0;
+        transform: translateY(-50%);
+    }
+
+    /* leave room for the lower half of the round button */
+    .contact__mail {
+        margin-top: clamp(4.5rem, 3.5rem + 3vw, 7rem);
+        padding-block: var(--s-6);
+        border-bottom: 1px solid var(--line);
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--s-5) var(--s-7);
+    }
+
+    .contact__address {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: var(--s-4);
+        font-size: var(--fs-xl);
+        font-weight: 560;
+        letter-spacing: -0.035em;
+        line-height: 1.1;
+        color: var(--text);
+        overflow-wrap: anywhere;
+    }
+
+    .contact__address span {
+        background: linear-gradient(currentColor, currentColor) left bottom / 0% 2px no-repeat;
+        padding-bottom: 0.06em;
+        transition: background-size 0.6s var(--ease-out);
+    }
+
+    .contact__address:hover span {
+        background-size: 100% 2px;
+    }
+
+    .contact__address :global(.contact__address-icon) {
+        color: var(--accent);
+        transition: transform var(--dur-3) var(--ease-out);
+    }
+
+    .contact__address:hover :global(.contact__address-icon) {
+        transform: translate(4px, -4px);
+    }
+
+    .contact__actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--s-3);
+    }
+
+    .contact__copy {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        height: 2.75rem;
+        padding-inline: 1.125rem;
+        border-radius: var(--r-full);
+        border: 1px solid var(--line-strong);
+        font-size: var(--fs-sm);
+        font-weight: 560;
+        color: var(--text);
+        transition:
+            border-color var(--dur-2) var(--ease-soft),
+            background-color var(--dur-2) var(--ease-soft);
+    }
+
+    .contact__copy:hover {
+        border-color: color-mix(in srgb, var(--accent) 60%, transparent);
+        background: var(--accent-wash);
+    }
+
+    .contact__copy-icons {
+        display: grid;
+    }
+
+    .contact__copy-icons :global(svg) {
+        grid-area: 1 / 1;
+        transition:
+            transform var(--dur-2) var(--ease-out),
+            opacity var(--dur-2) var(--ease-soft);
+    }
+
+    .contact__copy-icons :global(.i-check) {
+        opacity: 0;
+        transform: scale(0.5);
+        color: var(--accent);
+    }
+
+    .contact__copy.is-copied :global(.i-copy) {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+
+    .contact__copy.is-copied :global(.i-check) {
+        opacity: 1;
+        transform: none;
+    }
+
+    :global(html:not(.js)) .contact__copy,
+    :global(html:not(.js)) .contact__clock {
+        display: none;
+    }
+
+    .contact__bottom {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: var(--s-7);
+        margin-top: var(--s-7);
+    }
+
+    .contact__label {
+        font-size: var(--fs-xs);
+        color: var(--text-3);
+    }
+
+    .contact__links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--s-2);
+        margin-top: var(--s-3);
+    }
+
+    .contact__link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        height: 2.75rem;
+        padding-inline: 1rem;
+        border-radius: var(--r-full);
+        background: var(--surface);
+        border: 1px solid var(--line);
+        font-size: var(--fs-sm);
+        font-weight: 550;
+        transition:
+            background-color var(--dur-2) var(--ease-soft),
+            border-color var(--dur-2) var(--ease-soft);
+    }
+
+    .contact__link:hover {
+        background: var(--surface-2);
+        border-color: var(--line-strong);
+    }
+
+    .contact__link :global(.contact__ext) {
+        color: var(--text-3);
+    }
+
+    .contact__facts {
+        display: grid;
+        grid-template-columns: repeat(3, auto);
+        justify-content: end;
+        gap: var(--s-7);
+    }
+
+    .contact__facts dt {
+        font-size: var(--fs-xs);
+        color: var(--text-3);
+    }
+
+    .contact__facts dd {
+        margin-top: var(--s-2);
+        font-weight: 520;
+    }
+
+    .contact__facts time {
+        font-variant-numeric: tabular-nums;
+    }
+
+    @media (max-width: 899px) {
+        .contact__bottom {
+            grid-template-columns: 1fr;
+        }
+
+        .contact__facts {
+            justify-content: start;
+            grid-template-columns: repeat(auto-fit, minmax(8rem, auto));
+            gap: var(--s-5) var(--s-7);
+        }
+    }
+</style>

@@ -1,0 +1,119 @@
+---
+import Icon, { type IconName } from './Icon.astro';
+
+/**
+ * Link-styled button. `primary` inverts the current theme (light pill on
+ * dark, ink pill on light); `ghost` is a hairline pill.
+ */
+interface Props {
+    href: string;
+    variant?: 'primary' | 'ghost';
+    size?: 'md' | 'lg';
+    icon?: IconName;
+    external?: boolean;
+    class?: string;
+    [key: string]: unknown;
+}
+
+const { href, variant = 'primary', size = 'md', icon, external = false, class: className, ...rest } = Astro.props;
+---
+
+<a
+    href={href}
+    class:list={['btn', `btn--${variant}`, `btn--${size}`, className]}
+    target={external ? '_blank' : undefined}
+    rel={external ? 'noopener' : undefined}
+    {...rest}
+>
+    <span class="btn__label"><slot /></span>
+    {
+        icon && (
+            <span class="btn__icon" aria-hidden="true">
+                <Icon name={icon} size={16} />
+                <Icon name={icon} size={16} />
+            </span>
+        )
+    }
+</a>
+
+<style>
+    .btn {
+        --btn-h: 2.75rem;
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.6rem;
+        height: var(--btn-h);
+        padding-inline: 1.25rem;
+        border-radius: var(--r-full);
+        font-size: var(--fs-sm);
+        font-weight: 560;
+        letter-spacing: -0.01em;
+        white-space: nowrap;
+        isolation: isolate;
+        transition:
+            transform var(--dur-2) var(--ease-out),
+            background-color var(--dur-2) var(--ease-soft),
+            border-color var(--dur-2) var(--ease-soft),
+            box-shadow var(--dur-2) var(--ease-soft),
+            color var(--dur-2) var(--ease-soft);
+    }
+
+    .btn--lg {
+        --btn-h: 3.25rem;
+        padding-inline: 1.5rem;
+        font-size: var(--fs-base);
+    }
+
+    .btn:active {
+        transform: scale(0.97);
+    }
+
+    .btn--primary {
+        background: var(--invert-bg);
+        color: var(--invert-text);
+        box-shadow: 0 1px 0 rgba(255, 255, 255, 0.25) inset, 0 10px 28px -12px color-mix(in srgb, var(--accent) 60%, transparent);
+    }
+
+    .btn--primary:hover {
+        box-shadow: 0 1px 0 rgba(255, 255, 255, 0.25) inset, 0 16px 40px -14px color-mix(in srgb, var(--accent) 80%, transparent);
+    }
+
+    .btn--ghost {
+        color: var(--text);
+        border: 1px solid var(--line-strong);
+        background: color-mix(in srgb, var(--surface) 60%, transparent);
+    }
+
+    .btn--ghost:hover {
+        border-color: color-mix(in srgb, var(--accent) 60%, transparent);
+        background: var(--accent-wash);
+    }
+
+    /* Icon slides out and a copy slides in on hover */
+    .btn__icon {
+        position: relative;
+        display: grid;
+        width: 16px;
+        height: 16px;
+        overflow: hidden;
+    }
+
+    .btn__icon :global(svg) {
+        grid-area: 1 / 1;
+        transition: transform var(--dur-2) var(--ease-out);
+    }
+
+    .btn__icon :global(svg:last-child) {
+        transform: translateX(-140%);
+    }
+
+    .btn:hover .btn__icon :global(svg:first-child) {
+        transform: translateX(140%);
+    }
+
+    .btn:hover .btn__icon :global(svg:last-child) {
+        transform: none;
+    }
+</style>

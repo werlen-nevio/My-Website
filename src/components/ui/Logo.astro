@@ -1,0 +1,40 @@
+---
+import { logo } from '../../assets/logo';
+
+/**
+ * The NW monogram. Uses the <symbol> that BaseLayout renders once per page,
+ * so the path data isn't repeated. Colour comes from `currentColor`.
+ * Decorative by default – the surrounding link carries the label.
+ */
+interface Props {
+    /** Height in px; width follows the monogram's proportions. */
+    size?: number;
+    class?: string;
+    label?: string;
+}
+
+const { size = 32, class: className, label } = Astro.props;
+// <use> places the symbol's own viewport at 0,0 – so the outer box starts there too
+const [, , vbW, vbH] = logo.viewBox.split(' ');
+---
+
+<svg
+    class:list={['logo', className]}
+    width={Math.round(size * logo.ratio)}
+    height={size}
+    viewBox={`0 0 ${vbW} ${vbH}`}
+    aria-hidden={label ? undefined : 'true'}
+    role={label ? 'img' : undefined}
+    aria-label={label}
+    focusable="false"
+>
+    <use href="#nw-logo"></use>
+</svg>
+
+<style>
+    .logo {
+        flex: none;
+        max-width: none;
+        fill: currentColor;
+    }
+</style>

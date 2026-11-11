@@ -1,0 +1,419 @@
+---
+import Logo from './ui/Logo.astro';
+import Icon from './ui/Icon.astro';
+import { useT, localizePath, langs, languages, type Lang } from '../i18n';
+import { profile } from '../data/profile';
+
+/**
+ * Header that sits on top of the first section and scrolls away with it.
+ * After that a round, magnetic menu button takes over (always on phones).
+ * The menu itself is a side panel on a native <dialog>.
+ */
+interface Props {
+    lang: Lang;
+    /** Base path of the current page without language prefix. */
+    path: string;
+    /** Colour of the section the header sits on. */
+    theme?: 'dark' | 'light' | 'blue';
+}
+
+const { lang, path, theme = 'dark' } = Astro.props;
+const t = useT(lang);
+const href = (id: string) => localizePath(`/#${id}`, lang);
+
+const links = [
+    { id: 'projects', label: t('nav.projects') },
+    { id: 'about', label: t('nav.about') },
+    { id: 'experience', label: t('nav.career') },
+    { id: 'contact', label: t('nav.contact') },
+];
+---
+
+<header class:list={['header', theme === 'blue' ? 'theme-light theme-blue' : `theme-${theme}`]} data-build-root="intro">
+    <div class="container header__inner">
+        <a class="brand" href={localizePath('/', lang)} aria-label={t('nav.home')} data-build="draw" data-build-group="brand" data-build-label="Logo">
+            <Logo size={30} />
+            <span class="brand__name" aria-hidden="true">{profile.name}</span>
+        </a>
+
+        <nav class="header__nav" aria-label={t('nav.label')}>
+            <ul class="header__links" role="list">
+                {
+                    links.map((link) => (
+                        <li data-build="pop" data-build-group="nav" data-build-label="Navigation">
+                            <a class="header__link" href={href(link.id)}>
+                                {link.label}
+                            </a>
+                        </li>
+                    ))
+                }
+            </ul>
+        </nav>
+
+        <div class="lang" role="group" aria-label={t('lang.label')} data-build="draw" data-build-group="brand">
+            {
+                langs.map((code, i) => (
+                    <>
+                        {i > 0 && <span class="lang__sep" aria-hidden="true">/</span>}
+                        <a
+                            class="lang__link"
+                            href={localizePath(path, code)}
+                            hreflang={code}
+                            lang={code}
+                            aria-current={code === lang ? 'true' : undefined}
+                            data-lang-link={code}
+                        >
+                            <span aria-hidden="true">{code.toUpperCase()}</span>
+                            <span class="sr-only">{languages[code]}</span>
+                        </a>
+                    </>
+                ))
+            }
+        </div>
+    </div>
+</header>
+
+<button
+    class="fab"
+    type="button"
+    aria-haspopup="dialog"
+    aria-expanded="false"
+    aria-controls="site-menu"
+    data-menu-open
+    data-magnetic="0.25"
+    data-magnetic-self="false"
+>
+    <span class="fab__body" data-magnetic-inner>
+        <span class="fab__lines" aria-hidden="true"><i></i><i></i></span>
+        <span class="sr-only">{t('nav.openMenu')}</span>
+    </span>
+</button>
+
+<dialog id="site-menu" class="menu theme-dark" aria-label={t('nav.label')} data-menu>
+    <div class="menu__panel" data-menu-panel>
+        <div class="menu__head">
+            <p class="menu__label">{t('menu.navigation')}</p>
+            <button class="menu__close" type="button" data-menu-close>
+                <Icon name="close" size={20} />
+                <span class="sr-only">{t('nav.closeMenu')}</span>
+            </button>
+        </div>
+
+        <ul class="menu__links" role="list">
+            {
+                [{ id: 'hero', label: 'Home' }, ...links].map((link) => (
+                    <li data-menu-item>
+                        <a class="menu__link" href={link.id === 'hero' ? localizePath('/', lang) : href(link.id)} data-menu-link>
+                                                        {link.label}
+                        </a>
+                    </li>
+                ))
+            }
+        </ul>
+
+        <div class="menu__foot" data-menu-item>
+            <div>
+                <p class="menu__label">{t('menu.social')}</p>
+                <ul class="menu__social" role="list">
+                    {
+                        profile.socials.map((s) => (
+                            <li>
+                                <a href={s.href} target="_blank" rel="noopener">
+                                    {s.label}
+                                    <span class="sr-only"> {t('a11y.newTab')}</span>
+                                </a>
+                            </li>
+                        ))
+                    }
+                    <li>
+                        <a href={localizePath('/cv', lang)}>{t('nav.cv')}</a>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <p class="menu__label">{t('menu.language')}</p>
+                <ul class="menu__social" role="list">
+                    {
+                        langs.map((code) => (
+                            <li>
+                                <a
+                                    href={localizePath(path, code)}
+                                    hreflang={code}
+                                    lang={code}
+                                    aria-current={code === lang ? 'true' : undefined}
+                                    data-lang-link={code}
+                                >
+                                    {languages[code]}
+                                </a>
+                            </li>
+                        ))
+                    }
+                </ul>
+            </div>
+        </div>
+        <a class="menu__mail" href={`mailto:${profile.email}`} data-menu-item>{profile.email}</a>
+    </div>
+</dialog>
+
+<style>
+    .header {
+        position: absolute;
+        inset: 0 0 auto;
+        z-index: var(--z-nav);
+        background: transparent;
+    }
+
+    .header__inner {
+        display: flex;
+        align-items: center;
+        gap: var(--s-6);
+        height: calc(var(--nav-h) + var(--nav-top) * 2.4);
+    }
+
+    .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.7rem;
+        margin-right: auto;
+        color: var(--text);
+    }
+
+    .brand__name {
+        font-size: var(--fs-base);
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        white-space: nowrap;
+    }
+
+    .header__links {
+        display: flex;
+        gap: clamp(1.25rem, 2.6vw, 2.5rem);
+    }
+
+    /* Calm hover: the others step back */
+    .header__link {
+        position: relative;
+        display: inline-flex;
+        padding-block: 0.4rem;
+        font-size: var(--fs-sm);
+        font-weight: 520;
+        color: var(--text);
+        transition: color var(--dur-2) var(--ease-soft);
+    }
+
+    .header__links:hover .header__link {
+        color: var(--text-3);
+    }
+
+    .header__links .header__link:hover,
+    .header__link:focus-visible {
+        color: var(--text);
+    }
+
+    .lang {
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding-left: var(--s-5);
+        border-left: 1px solid var(--line);
+        font-size: var(--fs-sm);
+        font-weight: 560;
+    }
+
+    .lang__sep {
+        color: var(--text-3);
+    }
+
+    .lang__link {
+        color: var(--text-3);
+        transition: color var(--dur-2) var(--ease-soft);
+    }
+
+    .lang__link:hover,
+    .lang__link[aria-current='true'] {
+        color: var(--text);
+    }
+
+    /* ---- Round menu button --------------------------------------------- */
+    .fab {
+        position: fixed;
+        top: var(--nav-top);
+        right: var(--gutter);
+        z-index: var(--z-toast);
+        width: 4rem;
+        height: 4rem;
+        border-radius: 50%;
+        transform: scale(0);
+        transition: transform 0.5s var(--ease-out);
+    }
+
+    :global(html.is-scrolled) .fab {
+        transform: scale(1);
+    }
+
+    .fab__body {
+        display: grid;
+        place-items: center;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background: var(--ink-800);
+        border: 1px solid rgba(220, 225, 255, 0.14);
+        box-shadow: 0 14px 40px -14px rgba(7, 11, 28, 0.6);
+        transition: background-color var(--dur-2) var(--ease-soft);
+    }
+
+    .fab:hover .fab__body {
+        background: var(--cobalt-500);
+    }
+
+    .fab__lines {
+        display: grid;
+        gap: 6px;
+        width: 20px;
+    }
+
+    .fab__lines i {
+        display: block;
+        height: 1.6px;
+        border-radius: 2px;
+        background: #eef0fa;
+    }
+
+    @media (max-width: 899px) {
+        .header__nav,
+        .lang {
+            display: none;
+        }
+
+        .header__inner {
+            height: calc(var(--nav-h) + var(--nav-top) * 2);
+        }
+
+        .fab {
+            width: 3.25rem;
+            height: 3.25rem;
+            top: calc(var(--nav-top) + 0.15rem);
+            transform: none;
+        }
+    }
+
+    /* ---- Side panel ------------------------------------------------------ */
+    .menu {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        max-width: none;
+        height: 100%;
+        max-height: none;
+        padding: 0;
+        border: 0;
+        background: rgba(5, 8, 22, 0.55);
+        -webkit-backdrop-filter: blur(4px);
+        backdrop-filter: blur(4px);
+        color: var(--text);
+        overscroll-behavior: contain;
+    }
+
+    .menu::backdrop {
+        background: transparent;
+    }
+
+    .menu__panel {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        flex-direction: column;
+        width: min(100%, 34rem);
+        padding: calc(var(--nav-top) + 1rem) clamp(1.5rem, 5vw, 4rem) calc(var(--s-6) + env(safe-area-inset-bottom));
+        background: var(--ink-900);
+        border-left: 1px solid var(--line);
+        overflow-y: auto;
+    }
+
+    .menu__head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: var(--s-4);
+        border-bottom: 1px solid var(--line);
+    }
+
+    .menu__label {
+        font-size: var(--fs-xs);
+        color: var(--text-3);
+    }
+
+    .menu__close {
+        display: inline-grid;
+        place-items: center;
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+        background: rgba(232, 236, 255, 0.07);
+        transition: background-color var(--dur-2) var(--ease-soft);
+    }
+
+    .menu__close:hover {
+        background: var(--cobalt-500);
+    }
+
+    .menu__links {
+        display: grid;
+        gap: 0.25rem;
+        margin-block: var(--s-7) auto;
+    }
+
+    .menu__link {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 0;
+        font-size: clamp(2.5rem, 7vw, 3.75rem);
+        font-weight: 560;
+        line-height: 1.12;
+        letter-spacing: var(--tracking-display);
+        transition: gap 0.5s var(--ease-out);
+    }
+
+
+    .menu__link:hover,
+    .menu__link:focus-visible {
+        gap: 0.9rem;
+    }
+
+
+    .menu__foot {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--s-5);
+        margin-top: var(--s-8);
+    }
+
+    .menu__social {
+        display: grid;
+        gap: 0.25rem;
+        margin-top: var(--s-3);
+    }
+
+    .menu__social a {
+        color: var(--text-2);
+        transition: color var(--dur-2) var(--ease-soft);
+    }
+
+    .menu__social a:hover,
+    .menu__social a[aria-current='true'] {
+        color: var(--text);
+    }
+
+    .menu__mail {
+        margin-top: var(--s-6);
+        padding-top: var(--s-5);
+        border-top: 1px solid var(--line);
+        font-size: var(--fs-lg);
+        font-weight: 560;
+        letter-spacing: -0.02em;
+    }
+</style>

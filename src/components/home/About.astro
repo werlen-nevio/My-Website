@@ -1,0 +1,286 @@
+---
+import Logo from '../ui/Logo.astro';
+import Icon from '../ui/Icon.astro';
+import { useT, l, localizePath, type Lang } from '../../i18n';
+import { profile } from '../../data/profile';
+import { skillGroups, skillName } from '../../data/skills';
+
+interface Props {
+    lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useT(lang);
+const { about, portrait } = profile;
+---
+
+<section class="section section--layer theme-light about" id="about" aria-labelledby="about-title" data-build-section>
+    <div class="container">
+        <div class="shead">
+            <h2 class="label" id="about-title" data-build="draw" data-build-label="Layout">{t('about.title')}</h2>
+            <p class="statement about__statement" data-scrub-words>{l(about.statement, lang)}</p>
+        </div>
+
+        <div class="about__body">
+            <figure class="about__portrait theme-dark" data-build="draw" data-build-label="Layout">
+                {
+                    portrait ? (
+                        <img src={portrait.src} alt={l(portrait.alt, lang)} loading="lazy" decoding="async" />
+                    ) : (
+                        <span class="about__mark" aria-hidden="true">
+                            <Logo size={160} />
+                        </span>
+                    )
+                }
+                <figcaption class="about__caption">
+                    <span class="about__caption-name">{profile.name}</span>
+                    <span class="about__caption-role">{t('about.portraitCaption')}</span>
+                </figcaption>
+            </figure>
+
+            <div class="about__content">
+                <div class="about__text" data-reveal="assemble">
+                    {about.paragraphs.map((p) => <p>{l(p, lang)}</p>)}
+                </div>
+
+                <div class="about__row">
+                    <dl class="about__facts" data-reveal="assemble">
+                        {
+                            about.facts.map((fact) => (
+                                <div class="about__fact">
+                                    <dt>{l(fact.label, lang)}</dt>
+                                    <dd>{l(fact.value, lang)}</dd>
+                                </div>
+                            ))
+                        }
+                    </dl>
+                    <a class="round-btn about__cv" href={localizePath('/cv', lang)} data-magnetic>
+                        <span class="round-btn__inner" data-magnetic-inner>
+                            <Icon name="file" size={20} />
+                            {t('about.cv')}
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="shead skills" id="skills" aria-labelledby="skills-title">
+            <h3 class="label" id="skills-title" data-build="draw" data-build-label="Layout">{t('skills.title')}</h3>
+            <div class="skills__cols">
+                {
+                    skillGroups.map((group) => (
+                        <div class="skills__col" data-build="draw" data-build-label="UI">
+                            <h4 class="skills__title">{l(group.title, lang)}</h4>
+                            <ul class="skills__list" role="list">
+                                {group.items.map((item) => (
+                                    <li>
+                                        {skillName(item.name, lang)}
+                                        {item.note && <span class="skills__note">{l(item.note, lang)}</span>}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .about {
+        background:
+            radial-gradient(45% 35% at 92% 0%, rgba(50, 67, 245, 0.07), transparent 70%),
+            var(--bg);
+    }
+
+    .about__statement {
+        max-width: 28ch;
+    }
+
+    .about__body {
+        display: grid;
+        grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+        gap: var(--s-7) clamp(1rem, 2vw, 1.5rem);
+        margin-top: clamp(4rem, 7vw, 6.5rem);
+        align-items: start;
+    }
+
+    .about__portrait {
+        position: relative;
+        aspect-ratio: 4 / 5;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line-strong);
+        box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.6);
+        background:
+            radial-gradient(90% 60% at 80% 0%, rgba(50, 67, 245, 0.35), transparent 70%),
+            var(--ink-900);
+        overflow: hidden;
+    }
+
+    /* Until there is a photo, the monogram stands in */
+    .about__mark {
+        position: absolute;
+        inset: 0 0 22%;
+        display: grid;
+        place-items: center;
+        color: var(--text);
+    }
+
+    .about__mark :global(.logo) {
+        width: 64%;
+        height: auto;
+        filter: drop-shadow(0 18px 40px rgba(50, 67, 245, 0.35));
+        transition: transform 1.2s var(--ease-out);
+    }
+
+    .about__portrait:hover .about__mark :global(.logo) {
+        transform: scale(1.04) rotate(-2deg);
+    }
+
+    .about__portrait img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .about__caption {
+        position: absolute;
+        left: var(--s-5);
+        right: var(--s-5);
+        bottom: var(--s-5);
+        display: flex;
+        flex-direction: column;
+        font-size: var(--fs-sm);
+    }
+
+    .about__caption-name {
+        color: var(--text);
+        font-weight: 600;
+    }
+
+    .about__caption-role {
+        color: var(--text-2);
+        font-size: var(--fs-xs);
+    }
+
+    .about__content {
+        display: grid;
+        gap: var(--s-8);
+        padding-left: clamp(0rem, 6vw, 6rem);
+    }
+
+    .about__text {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--s-5) var(--s-7);
+        font-size: var(--fs-md);
+        line-height: 1.6;
+        color: var(--text-2);
+    }
+
+    .about__text p:first-child {
+        grid-column: 1 / -1;
+        max-width: 56ch;
+        color: var(--text);
+    }
+
+    .about__row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+        gap: var(--s-7);
+    }
+
+    .about__facts {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        border-top: 1px solid var(--line);
+    }
+
+    .about__fact {
+        display: grid;
+        gap: var(--s-1);
+        padding: var(--s-4) var(--s-4) var(--s-4) 0;
+        border-bottom: 1px solid var(--line);
+    }
+
+    .about__fact dt {
+        font-size: var(--fs-xs);
+        color: var(--text-3);
+    }
+
+    .about__fact dd {
+        font-weight: 540;
+        color: var(--text);
+    }
+
+    /* ---- Skills: typographic columns ------------------------------------ */
+    .skills {
+        margin-top: clamp(5rem, 9vw, 8rem);
+        padding-top: var(--s-6);
+        border-top: 1px solid var(--line);
+    }
+
+    .skills__cols {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+        gap: var(--s-7) var(--s-6);
+    }
+
+    .skills__title {
+        margin-bottom: var(--s-3);
+        font-size: var(--fs-xs);
+        font-weight: 560;
+        letter-spacing: 0;
+        color: var(--text-3);
+    }
+
+    .skills__list {
+        display: grid;
+        gap: 0.35rem;
+        font-size: var(--fs-md);
+        font-weight: 500;
+        letter-spacing: -0.015em;
+        color: var(--text);
+    }
+
+    .skills__note {
+        margin-left: 0.4em;
+        font-size: var(--fs-xs);
+        font-weight: 450;
+        letter-spacing: 0;
+        color: var(--text-3);
+    }
+
+    @media (max-width: 1023px) {
+        .about__body {
+            grid-template-columns: 1fr;
+        }
+
+        .about__portrait {
+            max-width: 18rem;
+        }
+
+        .about__content {
+            padding-left: 0;
+        }
+    }
+
+    @media (max-width: 639px) {
+        .about__text,
+        .about__facts {
+            grid-template-columns: 1fr;
+        }
+
+        .about__row {
+            grid-template-columns: 1fr;
+        }
+
+        .about__cv {
+            justify-self: end;
+        }
+    }
+</style>

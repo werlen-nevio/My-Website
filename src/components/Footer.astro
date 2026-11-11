@@ -1,0 +1,263 @@
+---
+import Logo from './ui/Logo.astro';
+import Icon from './ui/Icon.astro';
+import { useT, l, localizePath, type Lang } from '../i18n';
+import { profile } from '../data/profile';
+
+/**
+ * Footer – white with cobalt type, like the hero: the page ends the way it
+ * starts. A sheet with rounded corners that slides over the last section;
+ * built by the cursors the first time it scrolls into view.
+ */
+interface Props {
+    lang: Lang;
+    /** Shows the «Rebuild this page» control (home only). */
+    rebuild?: boolean;
+}
+
+const { lang, rebuild = false } = Astro.props;
+const t = useT(lang);
+const year = new Date().getFullYear();
+
+const pages = [
+    { id: 'projects', label: t('nav.projects') },
+    { id: 'about', label: t('nav.about') },
+    { id: 'experience', label: t('nav.career') },
+    { id: 'contact', label: t('nav.contact') },
+];
+---
+
+<footer class="footer section--layer theme-light theme-blue" data-build-section>
+    <div class="container footer__inner">
+        <div class="footer__top">
+            <div class="footer__brand">
+                <a class="footer__mark" href={localizePath('/', lang)} aria-label={t('nav.home')} data-build="draw" data-build-label="Logo">
+                    <Logo size={112} class="footer__logo" />
+                </a>
+                <p class="footer__name" data-build="type" data-build-group="who" data-build-label="Text">{profile.name}</p>
+                <p class="footer__role" data-build="type" data-build-group="who">
+                    {t('hero.role')}, {l(profile.location, lang)}
+                </p>
+            </div>
+
+            <nav class="footer__cols" aria-label={t('footer.nav')}>
+                <div class="footer__col" data-build="draw" data-build-group="cols" data-build-label="Navigation">
+                    <p class="footer__head">{t('footer.pages')}</p>
+                    <ul role="list">
+                        {
+                            pages.map((page) => (
+                                <li>
+                                    <a class="footer__link" href={localizePath(`/#${page.id}`, lang)}>
+                                        {page.label}
+                                    </a>
+                                </li>
+                            ))
+                        }
+                    </ul>
+                </div>
+                <div class="footer__col" data-build="draw" data-build-group="cols">
+                    <p class="footer__head">{t('footer.elsewhere')}</p>
+                    <ul role="list">
+                        {
+                            profile.socials.map((s) => (
+                                <li>
+                                    <a class="footer__link" href={s.href} target="_blank" rel="noopener">
+                                        {s.label}
+                                        <Icon name="arrow-up-right" size={14} />
+                                        <span class="sr-only"> {t('a11y.newTab')}</span>
+                                    </a>
+                                </li>
+                            ))
+                        }
+                        <li>
+                            <a class="footer__link" href={localizePath('/cv', lang)}>{t('nav.cv')}</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        <div class="footer__bottom">
+            <p class="footer__copy" data-build="draw" data-build-group="bottom" data-build-label="Info">
+                © {year} {profile.name}. {t('footer.made')}
+            </p>
+            <div class="footer__actions" data-build="draw" data-build-group="bottom">
+                {
+                    rebuild && (
+                        <button class="footer__action" type="button" data-rebuild>
+                            <Icon name="refresh" size={16} />
+                            {t('footer.rebuild')}
+                        </button>
+                    )
+                }
+                <a class="footer__action" href="#top">
+                    <Icon name="arrow-up" size={16} />
+                    {t('footer.top')}
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<style>
+    .footer {
+        position: relative;
+        background: var(--bg);
+        color: var(--text);
+        /* softer than the default layer shadow – on the light CV page it
+           would read as a grey band */
+        box-shadow: 0 -24px 56px -36px rgba(10, 15, 36, 0.22);
+    }
+
+    .footer__inner {
+        padding-top: clamp(4rem, 8vw, 6.5rem);
+    }
+
+    /* ---- Monogram + name left, link columns right ------------------------ */
+    .footer__top {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: end;
+        gap: var(--s-8);
+        padding-bottom: clamp(3rem, 7vw, 5.5rem);
+    }
+
+    .footer__mark {
+        display: inline-flex;
+        color: var(--text);
+        transition: transform var(--dur-3) var(--ease-out);
+    }
+
+    .footer__mark:hover {
+        transform: rotate(-4deg);
+    }
+
+    .footer__mark :global(.footer__logo) {
+        width: auto;
+        height: clamp(5rem, 9vw, 7rem);
+    }
+
+    .footer__name {
+        margin-top: var(--s-6);
+        font-size: var(--fs-xl);
+        font-weight: 640;
+        line-height: 1;
+        letter-spacing: -0.045em;
+    }
+
+    .footer__role {
+        margin-top: var(--s-3);
+        color: var(--text-2);
+        font-size: var(--fs-base);
+    }
+
+    .footer__cols {
+        display: flex;
+        gap: clamp(3rem, 8vw, 7.5rem);
+    }
+
+    .footer__head {
+        margin-bottom: var(--s-4);
+        color: var(--text-3);
+        font-size: var(--fs-xs);
+        font-weight: 560;
+    }
+
+    .footer__col ul {
+        display: grid;
+        gap: 0.55rem;
+    }
+
+    /* underline draws in from the left */
+    .footer__link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        padding-bottom: 0.1rem;
+        font-size: var(--fs-md);
+        font-weight: 560;
+        letter-spacing: -0.015em;
+        background: linear-gradient(currentColor, currentColor) left bottom / 0% 1px no-repeat;
+        transition: background-size 0.45s var(--ease-out);
+    }
+
+    .footer__link:hover,
+    .footer__link:focus-visible {
+        background-size: 100% 1px;
+    }
+
+    .footer__link :global(svg) {
+        opacity: 0.7;
+    }
+
+    /* ---- Bottom line ----------------------------------------------------- */
+    .footer__bottom {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--s-4) var(--s-6);
+        padding-block: var(--s-5) var(--s-6);
+        border-top: 1px solid var(--line);
+    }
+
+    .footer__copy {
+        color: var(--text-3);
+        font-size: var(--fs-xs);
+    }
+
+    .footer__actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--s-6);
+    }
+
+    .footer__action {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        color: var(--text-2);
+        font-size: var(--fs-xs);
+        font-weight: 560;
+        transition: color var(--dur-2) var(--ease-soft);
+    }
+
+    .footer__action:hover {
+        color: var(--text);
+    }
+
+    .footer__action :global(svg) {
+        transition: transform 0.7s var(--ease-out);
+    }
+
+    .footer__action[data-rebuild]:hover :global(svg) {
+        transform: rotate(-200deg);
+    }
+
+    .footer__action[href]:hover :global(svg) {
+        transform: translateY(-3px);
+    }
+
+    :global(html:not(.js)) .footer__action[data-rebuild],
+    :global(html.reduced-motion) .footer__action[data-rebuild] {
+        display: none;
+    }
+
+    /* ---- Tablet & phone -------------------------------------------------- */
+    @media (max-width: 899px) {
+        .footer__top {
+            grid-template-columns: minmax(0, 1fr);
+            align-items: start;
+        }
+    }
+
+    @media (max-width: 479px) {
+        .footer__cols {
+            gap: var(--s-7);
+        }
+
+        .footer__link {
+            font-size: var(--fs-base);
+        }
+    }
+</style>

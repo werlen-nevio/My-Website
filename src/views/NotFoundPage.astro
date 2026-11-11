@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/ui/Button.astro';
+import { useT } from '../i18n';
+
+/** One 404 for both languages (nginx serves a single file). */
+const de = useT('de');
+const en = useT('en');
+---
+
+<BaseLayout lang="de" path="/" title={de('meta.notFoundTitle')} description={de('notFound.text')} theme="dark" intro="page" noindex footer={false}>
+    <section class="nf section theme-dark" aria-labelledby="nf-title" data-build-root="intro">
+        <canvas class="nf__topo" aria-hidden="true" data-topo="calm"></canvas>
+        <div class="container nf__inner">
+            <p class="nf__code" aria-hidden="true" data-build="drag" data-build-label="Layout">404</p>
+            <div class="nf__copy" data-build="draw" data-build-label="Text">
+                <h1 class="nf__title" id="nf-title">{de('notFound.title')}</h1>
+                <p class="nf__text">{de('notFound.text')}</p>
+                <Button href="/" icon="arrow-right">{de('notFound.home')}</Button>
+            </div>
+            <div class="nf__copy nf__copy--en" lang="en" data-build="draw" data-build-label="Text">
+                <h2 class="nf__title">{en('notFound.title')}</h2>
+                <p class="nf__text">{en('notFound.text')}</p>
+                <Button href="/en" variant="ghost" icon="arrow-right">{en('notFound.home')}</Button>
+            </div>
+        </div>
+    </section>
+</BaseLayout>
+
+<style>
+    .nf {
+        min-height: 100svh;
+        display: grid;
+        align-items: center;
+        overflow: clip;
+        background:
+            radial-gradient(70% 60% at 80% 10%, rgba(50, 67, 245, 0.22), transparent 70%),
+            var(--ink-900);
+    }
+
+    /* uncharted terrain */
+    .nf__topo {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        -webkit-mask-image: radial-gradient(70% 70% at 60% 40%, #000 30%, transparent 85%);
+        mask-image: radial-gradient(70% 70% at 60% 40%, #000 30%, transparent 85%);
+    }
+
+    .nf__inner {
+        position: relative;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--s-7);
+        padding-top: var(--s-9);
+    }
+
+    .nf__code {
+        grid-column: 1 / -1;
+        font-size: clamp(6rem, 3rem + 18vw, 18rem);
+        font-weight: 640;
+        line-height: 0.85;
+        letter-spacing: -0.06em;
+        color: transparent;
+        -webkit-text-stroke: 1px var(--line-strong);
+    }
+
+    .nf__title {
+        font-size: var(--fs-lg);
+    }
+
+    .nf__text {
+        margin-block: var(--s-3) var(--s-5);
+        max-width: 40ch;
+        color: var(--text-2);
+    }
+
+    .nf__copy--en {
+        padding-left: var(--s-7);
+        border-left: 1px solid var(--line);
+    }
+
+    @media (max-width: 767px) {
+        .nf__inner {
+            grid-template-columns: 1fr;
+        }
+
+        .nf__copy--en {
+            padding-left: 0;
+            padding-top: var(--s-6);
+            border-left: 0;
+            border-top: 1px solid var(--line);
+        }
+    }
+</style>

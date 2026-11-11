@@ -1,0 +1,494 @@
+---
+import { useT, type Lang } from '../../i18n';
+import type { ProjectSlug } from '../../data/projects';
+
+/**
+ * Illustrated stand-ins for project screenshots, built from the sample
+ * content of the previous site. Sized in container units, so they scale
+ * with whatever frame they sit in. Marked as sample data.
+ */
+interface Props {
+    slug: ProjectSlug;
+    lang: Lang;
+}
+
+const { slug, lang } = Astro.props;
+const t = useT(lang);
+const de = lang === 'de';
+const titles: Record<ProjectSlug, string> = { logictrail: 'LogicTrail', slopesafe: 'SlopeSafe', aiventure: 'AIVenture' };
+
+// Seeded contour lines for the SlopeSafe map
+function rng(seed: number) {
+    return () => {
+        seed |= 0;
+        seed = (seed + 0x6d2b79f5) | 0;
+        let r = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+        r = (r + Math.imul(r ^ (r >>> 7), 61 | r)) ^ r;
+        return ((r ^ (r >>> 14)) >>> 0) / 4294967296;
+    };
+}
+function contours(cx: number, cy: number, seed: number, rings: number) {
+    const r = rng(seed);
+    const f = (n: number) => n.toFixed(1);
+    let out = '';
+    for (let k = 1; k <= rings; k++) {
+        const R = 10 + k * 17;
+        const ph = r() * 6;
+        const pts: [number, number][] = [];
+        for (let i = 0; i < 64; i++) {
+            const a = (i / 64) * Math.PI * 2;
+            const rr = R * (1 + 0.14 * Math.sin(3 * a + ph) + 0.07 * Math.sin(5 * a + k * 0.7));
+            pts.push([cx + Math.cos(a) * rr * 1.25, cy + Math.sin(a) * rr * 0.8]);
+        }
+        let d = `M${f((pts[0][0] + pts[63][0]) / 2)} ${f((pts[0][1] + pts[63][1]) / 2)}`;
+        for (let i = 0; i < 64; i++) {
+            const a = pts[i];
+            const b = pts[(i + 1) % 64];
+            d += ` Q${f(a[0])} ${f(a[1])} ${f((a[0] + b[0]) / 2)} ${f((a[1] + b[1]) / 2)}`;
+        }
+        out += `<path d="${d}Z"${k % 4 === 0 ? ' class="idx"' : ''}/>`;
+    }
+    return out;
+}
+
+const topo = contours(250, 150, 99, 12) + contours(470, 300, 7, 7);
+
+const danger = [
+    { n: 1, label: de ? 'gering' : 'low', color: '#ccff66' },
+    { n: 2, label: de ? 'mässig' : 'moderate', color: '#ffff00' },
+    { n: 3, label: de ? 'erheblich' : 'considerable', color: '#ff9900' },
+    { n: 4, label: de ? 'gross' : 'high', color: '#ff0000' },
+    { n: 5, label: de ? 'sehr gross' : 'very high', color: '#a00000' },
+];
+// LogicTrail: a small execution flow (positions in % of the view)
+const flow = [
+    { id: 'form', x: 50, y: 14, kind: 'component', label: 'LoginForm' },
+    { id: 'submit', x: 50, y: 27, kind: 'function', label: 'handleSubmit()' },
+    { id: 'route', x: 74, y: 38, kind: 'route', label: 'POST /api/auth/login' },
+    { id: 'login', x: 44, y: 49, kind: 'function', label: 'authController.login()', on: true },
+    { id: 'user', x: 70, y: 63, kind: 'service', label: 'findUserByEmail()' },
+    { id: 'err', x: 22, y: 63, kind: 'error', label: '401 Unauthorized' },
+];
+const at = (id: string) => flow.find((n) => n.id === id)!;
+const edges = [
+    ['form', 'submit'],
+    ['submit', 'route'],
+    ['route', 'login'],
+    ['login', 'user'],
+    ['login', 'err'],
+].map(([a, b]) => {
+    const A = at(a);
+    const B = at(b);
+    const my = (A.y + B.y) / 2;
+    return `M${A.x * 6} ${A.y * 3.4} C${A.x * 6} ${my * 3.4} ${B.x * 6} ${my * 3.4} ${B.x * 6} ${B.y * 3.4}`;
+});
+
+const pins = [
+    { x: 30, y: 38, n: 3 },
+    { x: 48, y: 56, n: 2 },
+    { x: 22, y: 70, n: 3 },
+    { x: 62, y: 30, n: 2 },
+    { x: 55, y: 76, n: 1 },
+];
+---
+
+<div
+    class:list={['mock', `mock--${slug}`]}
+    role="img"
+    aria-label={`${titles[slug]}: ${de ? 'Illustration mit Beispieldaten' : 'illustration with sample data'}`}
+>
+    {
+        slug === 'slopesafe' && (
+            <div class="ss">
+                <div class="ss__map">
+                    <svg class="ss__topo" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice" set:html={topo} />
+                    {pins.map((p) => (
+                        <span class="ss__pin" style={`left:${p.x}%;top:${p.y}%;--c:${danger[p.n - 1].color}`}>
+                            {p.n}
+                        </span>
+                    ))}
+                </div>
+                <div class="ss__panel">
+                    <span class="mock__tag">{de ? 'Saas-Fee' : 'Saas-Fee'}</span>
+                    <strong class="ss__level">{de ? 'Stufe 3, erheblich' : 'Level 3, considerable'}</strong>
+                    <ol class="ss__scale">
+                        {danger.map((d) => (
+                            <li class:list={{ 'is-now': d.n === 3 }} style={`--c:${d.color}`}>
+                                <b>{d.n}</b>
+                                <span>{d.label}</span>
+                            </li>
+                        ))}
+                    </ol>
+                    <span class="mock__sample">{t('projects.sample')}</span>
+                </div>
+            </div>
+        )
+    }
+
+    {
+        slug === 'logictrail' && (
+            <div class="lt">
+                <div class="lt__bar">
+                    <span class="lt__logo" />
+                    <strong>{de ? 'Wie funktioniert der Login?' : 'How does login work?'}</strong>
+                </div>
+                <div class="lt__graph">
+                    <svg class="lt__edges" viewBox="0 0 600 340" preserveAspectRatio="none">
+                        {edges.map((d) => (
+                            <path d={d} vector-effect="non-scaling-stroke" />
+                        ))}
+                    </svg>
+                    {flow.map((n) => (
+                        <span class:list={['lt__node', `k-${n.kind}`, { 'is-on': n.on }]} style={`left:${n.x}%;top:${n.y}%`}>
+                            <i />
+                            {n.label}
+                        </span>
+                    ))}
+                </div>
+                <span class="mock__sample">{t('projects.sample')}</span>
+            </div>
+        )
+    }
+
+    {
+        slug === 'aiventure' && (
+            <div class="ai">
+                <div class="ai__card">
+                    <div class="ai__top">
+                        <span>{de ? 'Tagesbild' : 'Image of the day'}</span>
+                        <span>{de ? 'Versuch 2' : 'Guess 2'}</span>
+                    </div>
+                    <div class="ai__img">
+                        <span class="ai__sun" />
+                        <span class="ai__hill ai__hill--back" />
+                        <span class="ai__hill" />
+                        <span class="ai__fox" />
+                    </div>
+                    <div class="ai__guess">{de ? '«Ein Fuchs sitzt im Schnee unter der Wintersonne»' : '“A fox sitting in the snow under the winter sun”'}</div>
+                    <div class="ai__meter">
+                        <span class="ai__bar">
+                            <i />
+                        </span>
+                        <span>{de ? '78 % nah dran' : '78 % close'}</span>
+                    </div>
+                </div>
+                <span class="mock__sample">{t('projects.sample')}</span>
+            </div>
+        )
+    }
+</div>
+
+<style>
+    .mock {
+        position: absolute;
+        inset: 0;
+        container-type: size;
+        overflow: hidden;
+        font-size: clamp(9px, 2.1cqmin + 2px, 15px);
+        color: var(--text-2);
+        background:
+            radial-gradient(80% 70% at 85% 10%, rgba(50, 67, 245, 0.16), transparent 70%),
+            var(--surface-solid);
+    }
+
+    .mock__sample {
+        position: absolute;
+        right: 1.2em;
+        bottom: 1em;
+        font-size: 0.78em;
+        color: var(--text-3);
+    }
+
+    .mock__tag {
+        font-size: 0.85em;
+        color: var(--text-3);
+    }
+
+    /* ---- SlopeSafe ------------------------------------------------------ */
+    .ss {
+        display: grid;
+        grid-template-columns: 1.65fr 1fr;
+        height: 100%;
+    }
+
+    .ss__map {
+        position: relative;
+        border-right: 1px solid var(--line);
+        background: radial-gradient(70% 70% at 40% 40%, rgba(142, 155, 255, 0.08), transparent 70%);
+    }
+
+    .ss__topo {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .ss__topo :global(path) {
+        fill: none;
+        stroke: rgba(200, 207, 245, 0.18);
+        stroke-width: 1;
+    }
+
+    .ss__topo :global(path.idx) {
+        stroke: rgba(200, 207, 245, 0.36);
+    }
+
+    .ss__pin {
+        position: absolute;
+        display: grid;
+        place-items: center;
+        width: 2em;
+        height: 2em;
+        border-radius: 50%;
+        background: var(--c);
+        color: #1a1200;
+        font-size: 0.9em;
+        font-weight: 700;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 0 0 0.35em color-mix(in srgb, var(--c) 25%, transparent);
+    }
+
+    .ss__panel {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5em;
+        padding: 1.4em 1.2em;
+    }
+
+    /* narrow frames (phones): tighter scale, label clear of the list */
+    @container (max-width: 460px) {
+        .ss__panel {
+            padding: 1em 0.9em 2.4em;
+        }
+
+        .ss__scale {
+            gap: 0.15em;
+        }
+
+        .ss__scale li {
+            padding-block: 0.2em;
+        }
+    }
+
+    .ss__level {
+        color: var(--text);
+        font-size: 1.2em;
+        font-weight: 600;
+        line-height: 1.2;
+    }
+
+    .ss__scale {
+        display: grid;
+        gap: 0.35em;
+        margin-top: 0.6em;
+        padding: 0;
+        list-style: none;
+    }
+
+    .ss__scale li {
+        display: flex;
+        align-items: center;
+        gap: 0.6em;
+        padding: 0.3em 0.45em;
+        border-radius: 0.5em;
+        font-size: 0.9em;
+        opacity: 0.55;
+    }
+
+    .ss__scale li.is-now {
+        opacity: 1;
+        background: rgba(255, 153, 0, 0.12);
+        color: var(--text);
+    }
+
+    .ss__scale b {
+        display: grid;
+        place-items: center;
+        width: 1.6em;
+        height: 1.6em;
+        border-radius: 0.35em;
+        background: var(--c);
+        color: #1a1200;
+        font-size: 0.85em;
+    }
+
+    /* ---- LogicTrail ---------------------------------------------------- */
+    .lt {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .lt__bar {
+        display: flex;
+        align-items: center;
+        gap: 0.7em;
+        padding: 0.8em 1.1em;
+        border-bottom: 1px solid var(--line);
+        color: var(--text);
+        font-size: 0.95em;
+    }
+
+    .lt__logo {
+        width: 1.3em;
+        height: 1.3em;
+        border-radius: 0.35em;
+        background: #ffc400;
+    }
+
+    .lt__graph {
+        position: relative;
+        flex: 1;
+        background-image: radial-gradient(var(--line) 1px, transparent 1px);
+        background-size: 1.4em 1.4em;
+    }
+
+    .lt__edges {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .lt__edges path {
+        fill: none;
+        stroke: #5b8cff;
+        stroke-width: 1.4;
+    }
+
+    .lt__node {
+        --k: #9aa3c7;
+        position: absolute;
+        display: flex;
+        align-items: center;
+        gap: 0.5em;
+        padding: 0.35em 0.7em;
+        border-radius: 0.45em;
+        border: 1px solid var(--line-strong);
+        background: var(--surface-solid);
+        color: var(--text);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 0.72em;
+        white-space: nowrap;
+        transform: translate(-50%, -50%);
+    }
+
+    .lt__node i {
+        width: 0.8em;
+        height: 0.8em;
+        border-radius: 0.2em;
+        background: var(--k);
+    }
+
+    .lt__node.k-component { --k: #a855f7; }
+    .lt__node.k-route { --k: #3b82f6; }
+    .lt__node.k-service { --k: #14b8a6; }
+    .lt__node.k-error { --k: #ef4444; }
+
+    .lt__node.is-on {
+        border-color: #5b8cff;
+        box-shadow: 0 0 0 0.2em rgba(91, 140, 255, 0.22);
+    }
+
+    /* ---- AIVenture ----------------------------------------------------- */
+    .ai {
+        display: grid;
+        place-items: center;
+        height: 100%;
+        padding: 1.4em;
+    }
+
+    .ai__card {
+        width: min(100%, 30em);
+        padding: 1em;
+        border-radius: 1em;
+        background: var(--surface-2);
+        border: 1px solid var(--line);
+    }
+
+    .ai__top {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.85em;
+        color: var(--text-3);
+    }
+
+    .ai__img {
+        position: relative;
+        height: 9em;
+        margin-block: 0.8em;
+        border-radius: 0.7em;
+        overflow: hidden;
+        background: linear-gradient(180deg, #2a3a8a 0%, #6d7fe0 55%, #f3c7a0 100%);
+    }
+
+    .ai__sun {
+        position: absolute;
+        right: 22%;
+        top: 22%;
+        width: 2.6em;
+        height: 2.6em;
+        border-radius: 50%;
+        background: radial-gradient(circle, #fff6e0, #ffd38a 60%, transparent 70%);
+    }
+
+    .ai__hill {
+        position: absolute;
+        left: -10%;
+        right: -10%;
+        bottom: -55%;
+        height: 100%;
+        border-radius: 50%;
+        background: #eef1ff;
+    }
+
+    .ai__hill--back {
+        left: 30%;
+        bottom: -45%;
+        background: #c9d1ff;
+    }
+
+    .ai__fox {
+        position: absolute;
+        left: 34%;
+        bottom: 26%;
+        width: 2.2em;
+        height: 1.6em;
+        background: #e8742c;
+        clip-path: polygon(0 100%, 12% 30%, 25% 0, 35% 35%, 65% 35%, 75% 0, 88% 30%, 100% 100%);
+    }
+
+    .ai__guess {
+        padding: 0.7em 0.9em;
+        border-radius: 0.6em;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        color: var(--text);
+        font-size: 0.95em;
+    }
+
+    .ai__meter {
+        display: flex;
+        align-items: center;
+        gap: 0.8em;
+        margin-top: 0.8em;
+        font-size: 0.85em;
+    }
+
+    .ai__bar {
+        flex: 1;
+        height: 0.45em;
+        border-radius: 1em;
+        background: var(--line);
+        overflow: hidden;
+    }
+
+    .ai__bar i {
+        display: block;
+        width: 78%;
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, var(--cobalt-500), var(--cobalt-300));
+    }
+</style>

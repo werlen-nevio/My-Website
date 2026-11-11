@@ -1,7 +1,21 @@
+# build output
+dist/
+.astro/
+
+# dependencies
+node_modules/
+
+# screenshots live on the server only (see README)
+assets/
+public/assets/
+
+# logs
+npm-debug.log*
+
+# OS / editor
 .DS_Store
 Thumbs.db
 ehthumbs.db
 Icon?
 .idea/
 .vscode/
-assets/

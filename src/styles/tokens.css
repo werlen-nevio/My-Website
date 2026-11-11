@@ -1,0 +1,172 @@
+/* =====================================================================
+   Design tokens
+   Palette: deep ultramarine ink, mineral white, one cobalt accent.
+   Every component reads semantic tokens (--bg, --text, …) that switch
+   with .theme-dark / .theme-light.
+   ===================================================================== */
+
+:root {
+    /* ---- Palette ---------------------------------------------------- */
+    --ink-950: #070b1c;
+    --ink-900: #0a0f24;
+    --ink-800: #111734;
+    --ink-700: #1a2147;
+    --paper-50: #f7f8f5;
+    --paper-100: #f1f2ef;
+    --paper-200: #e7e9e4;
+    --white: #ffffff;
+    --cobalt-500: #3243f5;
+    --cobalt-600: #2534d8;
+    --cobalt-300: #8e9bff;
+    --cobalt-200: #c3caff;
+    --mist: #dce1ff;
+
+    /* ---- Typography ------------------------------------------------- */
+    --font-sans: 'Mona Sans Variable', 'Mona Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: ui-monospace, 'SF Mono', 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace;
+
+    /* Type scale ≈ 1.25 with fluid display steps */
+    --fs-xs: 0.8125rem;    /* 13 */
+    --fs-sm: 0.9375rem;    /* 15 */
+    --fs-base: 1.0625rem;  /* 17 */
+    --fs-md: clamp(1.125rem, 1.05rem + 0.35vw, 1.3125rem);
+    --fs-lg: clamp(1.375rem, 1.22rem + 0.7vw, 1.75rem);
+    --fs-xl: clamp(2rem, 1.45rem + 2.4vw, 3.5rem);
+    --fs-2xl: clamp(2.5rem, 1.3rem + 5.2vw, 6rem);
+    --fs-statement: clamp(1.625rem, 1.15rem + 2vw, 2.875rem);
+
+    --lh-tight: 1.04;
+    --lh-snug: 1.2;
+    --lh-body: 1.6;
+
+    --tracking-display: -0.045em;
+    --tracking-heading: -0.03em;
+    --tracking-body: -0.005em;
+
+    /* ---- Space (4px base) ------------------------------------------- */
+    --s-1: 0.25rem;
+    --s-2: 0.5rem;
+    --s-3: 0.75rem;
+    --s-4: 1rem;
+    --s-5: 1.5rem;
+    --s-6: 2rem;
+    --s-7: 3rem;
+    --s-8: 4rem;
+    --s-9: 6rem;
+    --s-10: 8rem;
+
+    --gutter: clamp(1.25rem, 4vw, 3rem);
+    --container: 84rem;
+    --section-y: clamp(6rem, 3.5rem + 9vw, 11rem);
+    --nav-h: 3.5rem;
+    --nav-top: clamp(0.75rem, 1.5vw, 1.25rem);
+
+    /* ---- Radii: hierarchy, not one size for all --------------------- */
+    --r-xs: 6px;
+    --r-sm: 10px;
+    --r-md: 16px;
+    --r-lg: 22px;
+    --r-xl: 30px;
+    --r-full: 999px;
+
+    /* ---- Motion ----------------------------------------------------- */
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+    --ease-soft: cubic-bezier(0.2, 0.8, 0.2, 1);
+    --dur-1: 0.18s;
+    --dur-2: 0.35s;
+    --dur-3: 0.6s;
+    --dur-4: 0.9s;
+
+    --z-canvas: 0;
+    --z-content: 1;
+    --z-nav: 50;
+    --z-toast: 60;
+    --z-overlay: 80;
+}
+
+/* ---- Semantic themes ------------------------------------------------ */
+.theme-dark {
+    --bg: var(--ink-900);
+    --bg-raised: var(--ink-800);
+    --surface: rgba(232, 236, 255, 0.035);
+    --surface-2: rgba(232, 236, 255, 0.06);
+    --surface-solid: #10163a;
+    --line: rgba(220, 225, 255, 0.1);
+    --line-strong: rgba(220, 225, 255, 0.2);
+    --text: #eef0fa;
+    --text-2: #a9b0ce;
+    --text-3: #7f87ab;
+    --accent: var(--cobalt-300);
+    --accent-strong: var(--cobalt-200);
+    --accent-wash: rgba(142, 155, 255, 0.14);
+    --invert-bg: #eef0fa;
+    --invert-text: var(--ink-900);
+    --glass-bg: rgba(18, 25, 60, 0.5);
+    --glass-line: rgba(220, 225, 255, 0.12);
+    --glass-highlight: rgba(255, 255, 255, 0.07);
+    --shadow-1: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 8px 24px -12px rgba(0, 0, 0, 0.5);
+    --shadow-2: 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 30px 80px -30px rgba(0, 0, 0, 0.7);
+    --focus: var(--cobalt-200);
+    color-scheme: dark;
+    color: var(--text);
+}
+
+/*
+ * Tonal steps inside the dark theme – sections alternate between a deeper
+ * and a slightly lifted night blue instead of switching to light.
+ */
+.tone-deep {
+    --bg: var(--ink-950);
+    --surface-solid: #0c1230;
+}
+
+.tone-lifted {
+    --bg: #0e1533;
+    --surface: rgba(232, 236, 255, 0.045);
+    --surface-2: rgba(232, 236, 255, 0.07);
+    --line: rgba(220, 225, 255, 0.11);
+}
+
+/* Light is reserved for documents (the printable CV sheet). */
+.theme-light {
+    --bg: var(--paper-100);
+    --bg-raised: var(--paper-50);
+    --surface: var(--white);
+    --surface-2: var(--paper-50);
+    --surface-solid: var(--white);
+    --line: rgba(10, 15, 36, 0.09);
+    --line-strong: rgba(10, 15, 36, 0.18);
+    --text: var(--ink-900);
+    --text-2: #4a5068;
+    --text-3: #5f6580;
+    --accent: var(--cobalt-500);
+    --accent-strong: var(--cobalt-600);
+    --accent-wash: rgba(50, 67, 245, 0.08);
+    --invert-bg: var(--ink-900);
+    --invert-text: #eef0fa;
+    --glass-bg: rgba(255, 255, 255, 0.62);
+    --glass-line: rgba(10, 15, 36, 0.08);
+    --glass-highlight: rgba(255, 255, 255, 0.9);
+    --shadow-1: 0 1px 2px rgba(10, 15, 36, 0.04), 0 6px 18px -10px rgba(10, 15, 36, 0.14);
+    --shadow-2: 0 1px 2px rgba(10, 15, 36, 0.04), 0 14px 34px -16px rgba(10, 15, 36, 0.16), 0 40px 80px -48px rgba(10, 15, 36, 0.24);
+    --focus: var(--cobalt-500);
+    color-scheme: light;
+    color: var(--text);
+}
+
+/* White with cobalt type – the home hero (used together with .theme-light) */
+.theme-blue {
+    --bg: var(--white);
+    --line: rgba(50, 67, 245, 0.16);
+    --line-strong: rgba(50, 67, 245, 0.32);
+    --text: var(--cobalt-500);
+    --text-2: #4352ee;
+    --text-3: #5563ea;
+    --accent: var(--cobalt-500);
+    --accent-strong: var(--cobalt-600);
+    --accent-wash: rgba(50, 67, 245, 0.08);
+    --invert-bg: var(--cobalt-500);
+    --invert-text: var(--white);
+    --focus: var(--cobalt-600);
+}

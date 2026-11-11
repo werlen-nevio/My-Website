@@ -1,0 +1,266 @@
+---
+import BrowserFrame from './BrowserFrame.astro';
+import ProjectMock from './ProjectMock.astro';
+import Icon from './Icon.astro';
+import { useT, l, localizePath, type Lang } from '../../i18n';
+import type { Project } from '../../data/projects';
+
+/**
+ * Portfolio work card: a tinted stage with the product screen rising out
+ * of it, a calm caption underneath. The whole card is one link (via the
+ * title): to the case study, or straight to the product when `link` is
+ * set. On hover a «View» bubble follows the cursor.
+ */
+interface Props {
+    project: Project;
+    lang: Lang;
+    featured?: boolean;
+}
+
+const { project: p, lang, featured = false } = Astro.props;
+const t = useT(lang);
+const external = Boolean(p.link);
+const href = p.link ? p.link.href : localizePath(`/projects/${p.slug}`, lang);
+---
+
+<article class:list={['work', { 'work--featured': featured }]} data-cursor={t('work.view', { title: p.title })}>
+    <div class="work__stage" style={`--stage-a:${p.stage[0]};--stage-b:${p.stage[1]}`} data-build="draw" data-build-label="Layout">
+        <div class="work__screen theme-dark">
+            <BrowserFrame domain={p.domain} src={p.cover?.src} alt={p.cover ? l(p.cover.alt, lang) : ''}>
+                <ProjectMock slug={p.slug} lang={lang} />
+            </BrowserFrame>
+        </div>
+    </div>
+
+    <div class="work__caption" data-reveal="assemble">
+        <div class="work__head">
+            <h3 class="work__title">
+                {
+                    external ? (
+                        <a class="work__link" href={href} target="_blank" rel="noopener">
+                            {p.title}
+                            <span class="sr-only"> {t('a11y.newTab')}</span>
+                        </a>
+                    ) : (
+                        <a class="work__link" href={href}>
+                            {p.title}
+                        </a>
+                    )
+                }
+            </h3>
+            <span class="work__year">{l(p.year, lang)}</span>
+        </div>
+        <p class="work__cat">{l(p.category, lang)}</p>
+        <p class="work__summary">{l(p.summary, lang)}</p>
+        {
+            p.link?.repo && (
+                <a class="link-arrow work__repo" href={p.link.repo} target="_blank" rel="noopener">
+                    {t('projects.repo')}
+                    <Icon name="arrow-up-right" size={15} />
+                    <span class="sr-only">{t('a11y.newTab')}</span>
+                </a>
+            )
+        }
+        <dl class="work__meta">
+            <div>
+                <dt>{t('projects.role')}</dt>
+                <dd>{l(p.role, lang)}</dd>
+            </div>
+            <div>
+                <dt>{t('projects.stack')}</dt>
+                <dd>{p.stack.join(', ')}</dd>
+            </div>
+            <div>
+                <dt>{t('projects.status')}</dt>
+                <dd>{l(p.status, lang)}</dd>
+            </div>
+        </dl>
+    </div>
+</article>
+
+<style>
+    .work {
+        position: relative;
+        display: grid;
+        gap: var(--s-5);
+    }
+
+    /* ---- Stage ------------------------------------------------------------ */
+    .work__stage {
+        position: relative;
+        aspect-ratio: 4 / 3;
+        border-radius: var(--r-xl);
+        background:
+            radial-gradient(90% 70% at 85% 0%, rgba(255, 255, 255, 0.22), transparent 60%),
+            radial-gradient(60% 60% at 10% 100%, rgba(5, 8, 22, 0.45), transparent 70%),
+            linear-gradient(150deg, var(--stage-a), var(--stage-b));
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+        overflow: hidden;
+        isolation: isolate;
+    }
+
+    .work--featured .work__stage {
+        aspect-ratio: 16 / 8.5;
+    }
+
+    /* The screen rises out of the bottom edge */
+    .work__screen {
+        position: absolute;
+        left: 9%;
+        right: 9%;
+        top: 11%;
+        bottom: -14%;
+        transition: transform 1.1s var(--ease-out);
+    }
+
+    .work--featured .work__screen {
+        left: 12%;
+        right: 12%;
+        top: 12%;
+        bottom: -18%;
+    }
+
+    .work__screen :global(.frame) {
+        height: 100%;
+        box-shadow:
+            0 2px 6px rgba(10, 15, 36, 0.12),
+            0 40px 80px -30px rgba(10, 15, 36, 0.55);
+    }
+
+    .work:hover .work__screen {
+        transform: translateY(-3%) scale(1.015);
+    }
+
+    /* ---- Caption ---------------------------------------------------------- */
+    .work__head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: var(--s-4);
+        padding-top: var(--s-4);
+        border-top: 1px solid var(--line-strong);
+    }
+
+    .work__title {
+        font-size: var(--fs-xl);
+        font-weight: 600;
+        line-height: 1;
+        letter-spacing: var(--tracking-display);
+    }
+
+    .work--featured .work__title {
+        font-size: clamp(2.5rem, 1.2rem + 4vw, 5rem);
+    }
+
+    .work__link::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+    }
+
+    .work__link:focus-visible {
+        outline: none;
+    }
+
+    /* sits above the card-wide link */
+    .work__repo {
+        position: relative;
+        z-index: 2;
+        justify-self: start;
+        font-size: var(--fs-sm);
+    }
+
+    .work:has(.work__link:focus-visible) .work__stage {
+        outline: 2px solid var(--focus);
+        outline-offset: 4px;
+    }
+
+    .work__year {
+        font-size: var(--fs-sm);
+        color: var(--text-3);
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
+    }
+
+    .work__cat {
+        margin-top: calc(var(--s-2) * -1);
+        font-size: var(--fs-md);
+        font-weight: 500;
+        color: var(--text-2);
+    }
+
+    .work__summary {
+        max-width: 56ch;
+        color: var(--text-2);
+    }
+
+    .work__meta {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, auto));
+        justify-content: start;
+        gap: var(--s-6);
+        font-size: var(--fs-sm);
+    }
+
+    .work__meta dt {
+        font-size: var(--fs-xs);
+        color: var(--text-3);
+    }
+
+    .work__meta dd {
+        color: var(--text);
+        font-weight: 520;
+    }
+
+    /* Featured: caption next to nothing – wide, two columns */
+    @media (min-width: 1024px) {
+        .work--featured .work__caption {
+            display: grid;
+            grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+            column-gap: var(--s-7);
+            align-items: start;
+        }
+
+        .work--featured .work__head {
+            grid-column: 1 / -1;
+        }
+
+        .work--featured .work__cat,
+        .work--featured .work__summary,
+        .work--featured .work__repo {
+            grid-column: 1;
+        }
+
+        .work--featured .work__meta {
+            grid-column: 2;
+            grid-row: 2 / span 2;
+            grid-template-columns: 1fr;
+            gap: var(--s-3);
+            padding-top: var(--s-2);
+        }
+    }
+
+    .work__caption {
+        display: grid;
+        gap: var(--s-4);
+    }
+
+    @media (max-width: 559px) {
+        .work__meta {
+            grid-template-columns: 1fr;
+            gap: var(--s-3);
+        }
+
+        .work__stage,
+        .work--featured .work__stage {
+            aspect-ratio: 4 / 3.4;
+        }
+
+        .work__screen,
+        .work--featured .work__screen {
+            left: 6%;
+            right: 6%;
+        }
+    }
+</style>

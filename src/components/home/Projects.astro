@@ -1,0 +1,348 @@
+---
+import WorkCard from '../ui/WorkCard.astro';
+import Icon from '../ui/Icon.astro';
+import { useT, l, type Lang } from '../../i18n';
+import { projects, venture } from '../../data/projects';
+import { profile } from '../../data/profile';
+
+interface Props {
+    lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useT(lang);
+const github = profile.socials.find((s) => s.id === 'github')!;
+
+/*
+ * Firn layers for the Firntech panel: snow that survives a summer is
+ * pressed into ice layer by layer, so the lines sit closer and flatter
+ * towards the bottom. Seeded, so every build draws the same layers.
+ */
+function strata(count: number) {
+    let seed = 7;
+    const rand = () => {
+        seed = (seed * 16807) % 2147483647;
+        return seed / 2147483647;
+    };
+    const W = 1200;
+    const H = 160;
+    const lines: { d: string; o: number }[] = [];
+    for (let k = 1; k <= count; k++) {
+        const depth = k / count;
+        const y = H * Math.pow(depth, 0.62);
+        const amp = 6 * (1 - depth) + 0.6;
+        const f1 = 1 + rand() * 1.5;
+        const f2 = 2.5 + rand() * 2;
+        const ph = rand() * Math.PI * 2;
+        let d = '';
+        for (let i = 0; i <= 48; i++) {
+            const x = (i / 48) * W;
+            const a = (i / 48) * Math.PI * 2;
+            const yy = y + amp * Math.sin(f1 * a + ph) + amp * 0.35 * Math.sin(f2 * a + ph * 1.7);
+            d += `${i ? 'L' : 'M'}${x.toFixed(0)} ${yy.toFixed(1)}`;
+        }
+        lines.push({ d, o: 0.18 + depth * 0.5 });
+    }
+    return lines;
+}
+
+const layers = strata(15);
+---
+
+<section class="section section--layer theme-dark tone-deep projects" id="projects" aria-labelledby="projects-title" data-build-section>
+    <div class="container">
+        <div class="shead">
+            <h2 class="label" id="projects-title" data-build="draw" data-build-label="Layout">{t('projects.title')}</h2>
+            <p class="statement" data-build="type" data-build-label="Text">{t('projects.intro')}</p>
+        </div>
+
+        <div class="projects__grid">
+            {projects.map((project, i) => <WorkCard project={project} lang={lang} featured={i === 0} />)}
+        </div>
+
+        <div class="projects__more">
+            <a class="link-arrow" href={`${github.href}?tab=repositories`} target="_blank" rel="noopener">
+                {t('projects.more')}
+                <Icon name="arrow-up-right" size={16} />
+                <span class="sr-only">{t('a11y.newTab')}</span>
+            </a>
+        </div>
+
+        {
+            venture && (
+                <article
+                    class="venture theme-light theme-blue"
+                    id="firntech"
+                    aria-labelledby="venture-name"
+                    data-cursor={t('work.view', { title: venture.name })}
+                    data-build="draw"
+                    data-build-label="Layout"
+                >
+                    <div class="venture__top">
+                        <h3 class="venture__name" id="venture-name">
+                            <a class="venture__link" href={venture.href} target="_blank" rel="noopener">
+                                {venture.name}
+                                <span class="sr-only"> {t('a11y.newTab')}</span>
+                            </a>
+                        </h3>
+                        <span class="venture__domain" aria-hidden="true">
+                            {venture.domain}
+                            <Icon name="arrow-up-right" size={18} />
+                        </span>
+                    </div>
+
+                    <p class="venture__claim">{l(venture.claim, lang)}</p>
+
+                    <div class="venture__body">
+                        <p class="venture__text">{l(venture.text, lang)}</p>
+                        <dl class="venture__facts">
+                            {venture.facts.map((f) => (
+                                <div>
+                                    <dt>{l(f.label, lang)}</dt>
+                                    <dd>{l(f.value, lang)}</dd>
+                                </div>
+                            ))}
+                        </dl>
+                    </div>
+
+                    <div class="venture__layers">
+                        <svg viewBox="0 0 1200 160" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                            {layers.map((line) => (
+                                <path d={line.d} style={`opacity:${line.o.toFixed(2)}`} vector-effect="non-scaling-stroke" />
+                            ))}
+                        </svg>
+                        <p class="venture__note">{l(venture.note, lang)}</p>
+                    </div>
+                </article>
+            )
+        }
+    </div>
+</section>
+
+<style>
+    .projects__grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: clamp(4rem, 6vw, 6rem) clamp(1.25rem, 2.5vw, 2.25rem);
+        margin-top: clamp(4rem, 7vw, 6.5rem);
+    }
+
+    .projects__grid > :global(.work--featured) {
+        grid-column: 1 / -1;
+    }
+
+    /* Editorial stagger: the second column sits lower */
+    .projects__grid > :global(.work:nth-child(3)) {
+        margin-top: clamp(0rem, 8vw, 8rem);
+    }
+
+    .projects__more {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: clamp(3rem, 6vw, 5rem);
+    }
+
+    .projects__more .link-arrow {
+        white-space: nowrap;
+    }
+
+    /* ---- Firntech: a white sheet, like fresh snow on the dark section --- */
+    .venture {
+        position: relative;
+        display: grid;
+        margin-top: clamp(4rem, 8vw, 7rem);
+        padding: clamp(1.75rem, 4.5vw, 4rem) clamp(1.5rem, 4.5vw, 4rem) 0;
+        border-radius: var(--r-xl);
+        background: var(--bg);
+        color: var(--text);
+        overflow: hidden;
+        isolation: isolate;
+    }
+
+    .venture__top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: var(--s-5);
+    }
+
+    .venture__name {
+        margin-left: -0.05em;
+        font-size: clamp(3.5rem, 1rem + 11vw, 11.5rem);
+        font-weight: 640;
+        line-height: 0.86;
+        letter-spacing: -0.055em;
+    }
+
+    /* the whole sheet is the link */
+    .venture__link::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        border-radius: inherit;
+    }
+
+    .venture__link:focus-visible {
+        outline: none;
+    }
+
+    .venture:has(.venture__link:focus-visible) {
+        outline: 2px solid var(--cobalt-200);
+        outline-offset: 4px;
+    }
+
+    .venture__domain {
+        display: inline-flex;
+        flex: none;
+        align-items: center;
+        gap: 0.4rem;
+        margin-top: 0.6rem;
+        padding-bottom: 0.2rem;
+        font-size: var(--fs-md);
+        font-weight: 560;
+        background: linear-gradient(currentColor, currentColor) left bottom / 100% 1px no-repeat;
+    }
+
+    .venture__domain :global(svg) {
+        transition: transform var(--dur-2) var(--ease-out);
+    }
+
+    .venture:hover .venture__domain :global(svg) {
+        transform: translate(3px, -3px);
+    }
+
+    .venture__claim {
+        max-width: 20ch;
+        margin-top: clamp(1.5rem, 3.5vw, 2.75rem);
+        font-size: clamp(1.625rem, 1rem + 2vw, 2.75rem);
+        font-weight: 540;
+        line-height: 1.08;
+        letter-spacing: -0.035em;
+        text-wrap: balance;
+    }
+
+    .venture__body {
+        display: grid;
+        grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+        align-items: end;
+        gap: var(--s-6) var(--s-8);
+        margin-top: clamp(2rem, 5vw, 3.5rem);
+    }
+
+    .venture__text {
+        max-width: 46ch;
+        color: var(--text-2);
+        font-size: var(--fs-md);
+        line-height: 1.45;
+    }
+
+    .venture__facts {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, auto));
+        justify-content: end;
+        gap: var(--s-6);
+        font-size: var(--fs-sm);
+    }
+
+    .venture__facts dt {
+        color: var(--text-3);
+        font-size: var(--fs-xs);
+    }
+
+    .venture__facts dd {
+        font-weight: 560;
+    }
+
+    /* ---- Firn layers along the bottom edge ------------------------------- */
+    .venture__layers {
+        position: relative;
+        height: clamp(6.5rem, 12vw, 10rem);
+        margin-top: clamp(2rem, 4vw, 3rem);
+        margin-inline: calc(clamp(1.5rem, 4.5vw, 4rem) * -1);
+    }
+
+    .venture__layers svg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+        transition: transform 1.2s var(--ease-out);
+        transform-origin: bottom;
+    }
+
+    .venture__layers path {
+        fill: none;
+        stroke: var(--cobalt-500);
+        stroke-width: 1.25;
+    }
+
+    .venture:hover .venture__layers svg {
+        transform: scaleY(0.9);
+    }
+
+    .venture__note {
+        position: absolute;
+        right: clamp(1.5rem, 4.5vw, 4rem);
+        bottom: var(--s-4);
+        padding: 0.2rem 0.6rem;
+        border-radius: var(--r-xs);
+        background: var(--bg);
+        color: var(--text-3);
+        font-size: var(--fs-xs);
+    }
+
+    @media (max-width: 899px) {
+        .projects__grid {
+            grid-template-columns: 1fr;
+        }
+
+        .projects__grid > :global(.work:nth-child(3)) {
+            margin-top: 0;
+        }
+
+        .projects__more {
+            justify-content: flex-start;
+        }
+
+        .venture__body {
+            grid-template-columns: 1fr;
+            align-items: start;
+        }
+
+        .venture__facts {
+            justify-content: start;
+        }
+    }
+
+    @media (max-width: 559px) {
+        .venture__top {
+            flex-direction: column;
+            gap: var(--s-4);
+        }
+
+        .venture__domain {
+            order: -1;
+            margin-top: 0;
+            font-size: var(--fs-base);
+        }
+
+        .venture__facts {
+            grid-template-columns: 1fr;
+            gap: var(--s-3);
+        }
+
+        .venture__note {
+            left: clamp(1.5rem, 4.5vw, 4rem);
+            right: auto;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .venture__layers svg,
+        .venture__domain :global(svg) {
+            transition: none;
+        }
+    }
+</style>

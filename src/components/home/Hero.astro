@@ -1,0 +1,340 @@
+---
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+import { useT, l, localizePath, formatMonth, isCurrent, nowMonth, type Lang } from '../../i18n';
+import { profile } from '../../data/profile';
+import { experience } from '../../data/experience';
+import { education } from '../../data/education';
+
+/**
+ * Hero: white, cobalt type; name, one sentence, two actions and
+ * what Nevio is working on right now.
+ *
+ * Every piece carries `data-build`: on load one cursor draws the frame
+ * around everything, then the team builds the content inside it (see
+ * scripts/build). Afterwards a few cursors stay like colleagues in a
+ * shared file (scripts/build/live.ts – targets carry `data-live`).
+ */
+interface Props {
+    lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useT(lang);
+
+// «Currently» – derived from the data, never typed twice
+const now = [
+    ...experience
+        .filter((e) => isCurrent(e.end))
+        .map((e) => ({ title: l(e.role, lang), org: l(e.organisation, lang), when: t('now.since', { date: formatMonth(e.start, lang) }) })),
+    ...education
+        .filter((e) => isCurrent(e.end) && e.start <= nowMonth())
+        .map((e) => ({ title: l(e.degree, lang).replace(/\s*\(.*\)$/, ''), org: e.institution, when: t('now.until', { date: formatMonth(e.end, lang) }) })),
+];
+
+// Fragments of the name; split where kerning doesn't matter (v|i, r|l)
+const first = [profile.firstName.slice(0, 3), profile.firstName.slice(3)];
+const last = [profile.lastName.slice(0, 3), profile.lastName.slice(3)];
+
+const liveLabels = JSON.stringify({ design: t('live.design'), code: t('live.code'), text: t('live.text') });
+---
+
+<section class="hero section theme-light theme-blue" id="hero" aria-labelledby="hero-name" data-hero data-build-root="intro">
+    <div class="container hero__inner" data-hero-inner data-live-labels={liveLabels}>
+        <div class="hero__board" data-board>
+            <!-- drawn first, by its own cursor; invisible once the build is done -->
+            <div
+                class="hero__frame"
+                aria-hidden="true"
+                data-build="draw"
+                data-build-first
+                data-build-hold
+                data-build-label="Frame"
+                data-build-name={t('hero.frame')}
+            >
+            </div>
+
+            <h1 class="hero__name" id="hero-name" data-hero-name data-live="name">
+                <span class="hero__line" data-name-line
+                    ><span class="hero__chunk" data-build="drag" data-build-group="n1" data-build-group-sm="n1" data-build-label="Headline">{first[0]}</span
+                    ><span class="hero__chunk" data-build="drag" data-build-group="n2" data-build-group-sm="n1" data-build-label="Headline">{first[1]}</span
+                ></span>{' '}<span class="hero__line" data-name-line
+                    ><span class="hero__chunk" data-build="drag" data-build-group="n3" data-build-group-sm="n2" data-build-label="Headline">{last[0]}</span
+                    ><span class="hero__chunk" data-build="drag" data-build-group="n4" data-build-group-sm="n2" data-build-label="Headline">{last[1]}</span
+                ></span>
+            </h1>
+
+            <div class="hero__row">
+                <p class="hero__lede" data-build="type" data-build-group="text" data-live="lede" data-live-text>{t('hero.lede')}</p>
+                <div class="hero__ctas">
+                    <Button
+                        href={localizePath('/#projects', lang)}
+                        size="lg"
+                        icon="arrow-down"
+                        data-magnetic="0.25"
+                        data-build="draw"
+                        data-build-group="cta"
+                        data-build-label="Button"
+                        data-live="cta"
+                    >
+                        {t('hero.ctaProjects')}
+                    </Button>
+                    <a class="link-arrow" href={localizePath('/#contact', lang)} data-build="draw" data-build-group="cta" data-live="link">
+                        {t('hero.ctaContact')}
+                        <Icon name="arrow-right" size={16} />
+                    </a>
+                </div>
+            </div>
+
+            <!-- «Currently»: one cursor draws the title and drags the list in -->
+            <div class="hero__now" role="group" aria-labelledby="hero-now-title">
+                <p class="hero__now-title" id="hero-now-title" data-build="draw" data-build-group="status" data-build-label="Status">
+                    {t('now.title')}
+                </p>
+                <ul class="hero__now-list" role="list" data-build="drag" data-build-group="status">
+                    {
+                        now.map((item, i) => (
+                            <li class="hero__now-item" data-live={i === 0 ? 'now' : undefined}>
+                                <span class="hero__now-role">{item.title}</span>
+                                <span class="hero__now-meta">
+                                    {item.org}, {item.when}
+                                </span>
+                            </li>
+                        ))
+                    }
+                </ul>
+                <p class="hero__place" data-build="draw" data-build-group="meta" data-build-label="Info">
+                    <span class="hero__place-main">{l(profile.location, lang)}</span>
+                    <span class="hero__place-sub">
+                        <time data-clock data-locale={lang === 'de' ? 'de-CH' : 'en-GB'} data-live="clock">--:--</time>
+                        {' '}{t('hero.localTime')}
+                    </span>
+                </p>
+            </div>
+        </div>
+
+        <!-- the colleagues' cursors, selections and guides live here -->
+        <div class="live-layer" aria-hidden="true" data-live-layer></div>
+    </div>
+</section>
+
+<style>
+    .hero {
+        position: relative;
+        min-height: 100svh;
+        padding: 0;
+        overflow: clip;
+        /* plain white, cobalt type */
+        background: var(--bg);
+    }
+
+    /* Content sits at the bottom of the first screen */
+    .hero__inner {
+        position: relative;
+        z-index: var(--z-content);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        min-height: 100svh;
+        padding-top: calc(var(--nav-h) + var(--nav-top) * 2.4 + var(--s-8));
+        padding-bottom: calc(var(--s-6) + clamp(1.5rem, 3.2vw, 2.75rem));
+    }
+
+    .hero__board {
+        position: relative;
+    }
+
+    /* The frame the first cursor draws – a little larger than the content */
+    .hero__frame {
+        position: absolute;
+        inset: calc(var(--s-5) * -1) calc(min(var(--s-5), var(--gutter) - 0.5rem) * -1);
+        pointer-events: none;
+    }
+
+    /* ---- The name: type as the main visual ------------------------------ */
+    .hero__name {
+        --name-fs: min(calc((min(100vw, var(--container) + var(--gutter) * 2) - var(--gutter) * 2) / 6.05), 24svh);
+        margin-left: -0.045em;
+        font-size: var(--name-fs);
+        font-weight: 640;
+        line-height: 0.86;
+        letter-spacing: -0.055em;
+        white-space: nowrap;
+        color: var(--text);
+    }
+
+    .hero__line,
+    .hero__chunk {
+        display: inline-block;
+    }
+
+    .hero__chunk {
+        will-change: transform;
+    }
+
+    /* ---- One sentence, two actions -------------------------------------- */
+    .hero__row {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: var(--s-8);
+        margin-top: clamp(1.75rem, 5vh, 3.25rem);
+    }
+
+    .hero__lede {
+        max-width: 32ch;
+        font-size: clamp(1.375rem, 1rem + 1vw, 1.875rem);
+        font-weight: 500;
+        line-height: 1.18;
+        letter-spacing: -0.028em;
+        color: var(--text);
+        text-wrap: balance;
+    }
+
+    .hero__ctas {
+        display: flex;
+        flex: none;
+        align-items: center;
+        gap: var(--s-6);
+    }
+
+    /* ---- «Currently» + place, one line under everything ------------------ */
+    .hero__now {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--s-7);
+        margin-top: clamp(2rem, 6vh, 4rem);
+        padding-top: var(--s-4);
+        border-top: 1px solid var(--line);
+        font-size: var(--fs-sm);
+    }
+
+    .hero__now-title {
+        flex: none;
+        min-width: 7.5rem;
+        padding-top: 0.1rem;
+        color: var(--text);
+        font-size: var(--fs-xs);
+        font-weight: 600;
+    }
+
+    .hero__now-list {
+        display: grid;
+        flex: 1;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--s-5);
+    }
+
+    .hero__now-item {
+        display: grid;
+        gap: 0.15rem;
+    }
+
+    .hero__now-role {
+        font-weight: 600;
+        color: var(--text);
+    }
+
+    .hero__now-meta,
+    .hero__place-sub {
+        color: var(--text-3);
+        font-size: var(--fs-xs);
+    }
+
+    .hero__place {
+        display: grid;
+        flex: none;
+        gap: 0.15rem;
+        text-align: right;
+    }
+
+    .hero__place-main {
+        font-weight: 600;
+        color: var(--text);
+    }
+
+    .hero__place-sub time {
+        font-variant-numeric: tabular-nums;
+    }
+
+    :global(html:not(.js)) .hero__place-sub {
+        display: none;
+    }
+
+    /* ---- Colleagues ------------------------------------------------------- */
+    .live-layer {
+        position: absolute;
+        inset: 0;
+        z-index: 4;
+        pointer-events: none;
+    }
+
+    /* ---- Short laptop screens ------------------------------------------- */
+    @media (min-width: 1024px) and (max-height: 820px) {
+        .hero__inner {
+            padding-top: calc(var(--nav-h) + var(--nav-top) * 2.4 + var(--s-6));
+        }
+
+        .hero__row {
+            margin-top: var(--s-6);
+        }
+
+        .hero__lede {
+            font-size: clamp(1.25rem, 0.9rem + 0.9vw, 1.625rem);
+        }
+
+        .hero__now {
+            margin-top: var(--s-6);
+        }
+    }
+
+    /* ---- Tablet & phone ------------------------------------------------- */
+    @media (max-width: 1023px) {
+        /* tall portrait screens: don't leave half the screen empty */
+        .hero,
+        .hero__inner {
+            min-height: min(100svh, 56rem);
+        }
+
+        .hero__row {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: var(--s-6);
+        }
+
+        .hero__now {
+            flex-wrap: wrap;
+            row-gap: var(--s-4);
+        }
+
+        .hero__now-title {
+            width: 100%;
+        }
+
+        .hero__place {
+            text-align: left;
+        }
+    }
+
+    /* ---- Phone: the name stacks on two lines ---------------------------- */
+    @media (max-width: 767px) {
+        .hero__name {
+            --name-fs: calc((100vw - var(--gutter) * 2) / 3.2);
+            line-height: 0.84;
+        }
+
+        .hero__line {
+            display: block;
+        }
+
+        .hero__ctas {
+            flex-wrap: wrap;
+            gap: var(--s-5);
+        }
+
+        .hero__now-list {
+            grid-template-columns: minmax(0, 1fr);
+            gap: var(--s-4);
+        }
+    }
+</style>

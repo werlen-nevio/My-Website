@@ -1,0 +1,12 @@
+---
+import CaseStudyPage from '../../views/CaseStudyPage.astro';
+import { caseStudies, type ProjectSlug } from '../../data/projects';
+
+export function getStaticPaths() {
+    return caseStudies.map((p) => ({ params: { slug: p.slug } }));
+}
+
+const { slug } = Astro.params as { slug: ProjectSlug };
+---
+
+<CaseStudyPage lang="de" slug={slug} />

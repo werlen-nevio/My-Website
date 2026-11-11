@@ -1,0 +1,148 @@
+---
+import '../styles/base.css';
+import monaLatin from '@fontsource-variable/mona-sans/files/mona-sans-latin-wght-normal.woff2?url';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import LangHint from '../components/LangHint.astro';
+import { useT, localizePath, langs, defaultLang, locales, ogLocales, type Lang } from '../i18n';
+import { profile } from '../data/profile';
+import { logo } from '../assets/logo';
+
+interface Props {
+    lang: Lang;
+    /** Base path without language prefix: '/', '/cv', '/projects/pyra' */
+    path: string;
+    title: string;
+    description: string;
+    /** 'home' plays the swarm rebuild, 'page' a short assemble. */
+    intro?: 'home' | 'page';
+    /** Theme of the first section; sets the initial page background. */
+    theme?: 'dark' | 'light' | 'blue';
+    ogType?: 'website' | 'profile' | 'article';
+    jsonLd?: Record<string, unknown>;
+    noindex?: boolean;
+    nav?: boolean;
+    footer?: boolean;
+    rebuild?: boolean;
+    bodyClass?: string;
+}
+
+const {
+    lang,
+    path,
+    title,
+    description,
+    intro,
+    theme = 'dark',
+    ogType = 'website',
+    jsonLd,
+    noindex = false,
+    nav = true,
+    footer = true,
+    rebuild = false,
+    bodyClass,
+} = Astro.props;
+
+const t = useT(lang);
+const site = Astro.site ?? new URL(profile.site);
+const canonical = new URL(localizePath(path, lang), site).href;
+// one share image per language (public/og.png, public/og-en.png)
+const ogImage = new URL(lang === defaultLang ? '/og.png' : `/og-${lang}.png`, site).href;
+---
+
+<!doctype html>
+<html lang={locales[lang]} data-page-theme={theme} data-intro={intro}>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <meta name="author" content={profile.name} />
+        <meta name="theme-color" content={theme === 'dark' ? '#0A0F24' : theme === 'light' ? '#F1F2EF' : '#FFFFFF'} />
+        <meta name="color-scheme" content="dark light" />
+        {noindex && <meta name="robots" content="noindex" />}
+
+        {!noindex && <link rel="canonical" href={canonical} />}
+        {
+            !noindex &&
+                langs.map((code) => (
+                    <link rel="alternate" hreflang={locales[code]} href={new URL(localizePath(path, code), site).href} data-alt-lang={code} />
+                ))
+        }
+        {!noindex && <link rel="alternate" hreflang="x-default" href={new URL(localizePath(path, defaultLang), site).href} />}
+
+        <meta property="og:type" content={ogType} />
+        <meta property="og:site_name" content="nevio.dev" />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={canonical} />
+        <meta property="og:image" content={ogImage} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content={`${profile.name}, ${profile.role}`} />
+        <meta property="og:locale" content={ogLocales[lang]} />
+        {langs.filter((c) => c !== lang).map((c) => <meta property="og:locale:alternate" content={ogLocales[c]} />)}
+        <meta name="twitter:card" content="summary_large_image" />
+
+        <!-- sizes on the .ico keeps browsers that understand SVG on the SVG -->
+        <link rel="icon" href="/favicon.ico" sizes="32x32" />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="preload" href={monaLatin} as="font" type="font/woff2" crossorigin />
+
+        {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+
+        <!--
+            Runs before first paint:
+            - marks JS + reduced motion
+            - hides intro elements only if the intro can actually run (failsafe after 5 s)
+            - honours a language the visitor picked explicitly on an earlier visit
+        -->
+        <script is:inline>
+            (function () {
+                var d = document.documentElement;
+                d.classList.add('js');
+                var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                if (reduce) d.classList.add('reduced-motion');
+
+                try {
+                    var pref = localStorage.getItem('nw:lang');
+                    var cur = d.lang.slice(0, 2);
+                    var internal = document.referrer.indexOf(location.origin) === 0;
+                    var alt = document.querySelector('link[data-alt-lang="' + pref + '"]');
+                    if (pref && pref !== cur && alt && !internal) {
+                        location.replace(new URL(alt.href).pathname + location.hash);
+                        return;
+                    }
+                } catch (e) {}
+
+                var intro = d.getAttribute('data-intro');
+                if (intro && !reduce) {
+                    var deep = location.hash.length > 1;
+                    d.setAttribute('data-intro-mode', intro === 'home' && !deep ? 'full' : 'short');
+                    d.classList.add('intro-pending');
+                    window.__nwIntroFailsafe = setTimeout(function () {
+                        d.classList.remove('intro-pending');
+                    }, 5000);
+                }
+            })();
+        </script>
+    </head>
+    <body class:list={[bodyClass]}>
+        <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+            <symbol id="nw-logo" viewBox={logo.viewBox}><path d={logo.d}></path></symbol>
+        </svg>
+        <a class="skip-link" href="#main">{t('a11y.skip')}</a>
+        <span id="top" aria-hidden="true"></span>
+        {nav && <Nav lang={lang} path={path} theme={theme} />}
+        <main id="main" tabindex="-1">
+            <slot />
+        </main>
+        {footer && <Footer lang={lang} rebuild={rebuild} />}
+        <LangHint lang={lang} path={path} />
+
+        <script>
+            import '../scripts/site';
+        </script>
+    </body>
+</html>

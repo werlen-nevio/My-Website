@@ -1,0 +1,762 @@
+@import '@fontsource-variable/mona-sans/wght.css';
+@import './tokens.css';
+
+/* =====================================================================
+   Reset & base
+   ===================================================================== */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    scroll-padding-top: calc(var(--nav-h) + var(--nav-top) * 2);
+    hanging-punctuation: first last;
+}
+
+html:not(.has-lenis) {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100svh;
+    font-family: var(--font-sans);
+    font-size: var(--fs-base);
+    line-height: var(--lh-body);
+    letter-spacing: var(--tracking-body);
+    font-weight: 420;
+    font-optical-sizing: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: 'ss01' on, 'cv11' on;
+    background: var(--page-bg, var(--ink-900));
+    transition: background-color 0.8s var(--ease-in-out);
+    overflow-x: clip;
+}
+
+html[data-page-theme='light'] {
+    --page-bg: var(--paper-100);
+}
+
+html[data-page-theme='dark'] {
+    --page-bg: var(--ink-900);
+}
+
+html[data-page-theme='blue'] {
+    --page-bg: var(--white);
+}
+
+img,
+svg,
+video,
+canvas {
+    display: block;
+    max-width: 100%;
+}
+
+img {
+    height: auto;
+}
+
+input,
+button,
+textarea,
+select {
+    font: inherit;
+    color: inherit;
+    letter-spacing: inherit;
+}
+
+button {
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+ul[role='list'],
+ol[role='list'] {
+    list-style: none;
+    padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-weight: 600;
+    line-height: var(--lh-snug);
+    letter-spacing: var(--tracking-heading);
+    text-wrap: balance;
+}
+
+p {
+    text-wrap: pretty;
+}
+
+::selection {
+    background: var(--cobalt-500);
+    color: #fff;
+}
+
+/* ---- Focus: always visible for keyboard users ----------------------- */
+:focus {
+    outline: none;
+}
+
+:focus-visible {
+    outline: 2px solid var(--focus, var(--cobalt-300));
+    outline-offset: 3px;
+    border-radius: var(--r-xs);
+}
+
+/* ---- Layout primitives ---------------------------------------------- */
+.container {
+    width: 100%;
+    max-width: calc(var(--container) + var(--gutter) * 2);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+}
+
+.section {
+    position: relative;
+    padding-block: var(--section-y);
+    background: var(--bg);
+}
+
+/*
+ * Theme changes are built as stacked layers: the next section slides over
+ * the previous one with rounded top corners – the page assembles itself
+ * layer by layer while scrolling.
+ */
+.section--layer {
+    --layer-r: clamp(1.5rem, 3.2vw, 2.75rem);
+    z-index: 1;
+    margin-top: calc(var(--layer-r) * -1);
+    border-radius: var(--layer-r) var(--layer-r) 0 0;
+    box-shadow: 0 -32px 64px -32px rgba(7, 11, 28, 0.5);
+    /* the shadow may only fall upwards – its blur tail would otherwise band
+       faintly across the top of the following section */
+    clip-path: inset(-120px 0 0 0);
+}
+
+.theme-dark.section--layer {
+    box-shadow:
+        0 -1px 0 rgba(220, 225, 255, 0.08),
+        0 -32px 64px -32px rgba(7, 11, 28, 0.3);
+}
+
+/* on the white hero the dark sheet needs no shadow – it would read as grey haze */
+.theme-blue + .section--layer {
+    box-shadow: none;
+}
+
+.grid-12 {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+.sr-only {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.skip-link {
+    position: fixed;
+    top: var(--s-3);
+    left: var(--s-3);
+    z-index: 100;
+    padding: var(--s-3) var(--s-4);
+    border-radius: var(--r-sm);
+    background: var(--white);
+    color: var(--ink-900);
+    font-weight: 600;
+    transform: translateY(-160%);
+    transition: transform var(--dur-2) var(--ease-out);
+}
+
+.skip-link:focus-visible {
+    transform: none;
+}
+
+/* ---- Shared text styles --------------------------------------------- */
+.section-title {
+    font-size: var(--fs-xl);
+    line-height: var(--lh-tight);
+    letter-spacing: var(--tracking-display);
+    font-weight: 600;
+}
+
+.section-intro {
+    margin-top: var(--s-5);
+    max-width: 34ch;
+    font-size: var(--fs-md);
+    line-height: 1.5;
+    color: var(--text-2);
+}
+
+.muted {
+    color: var(--text-2);
+}
+
+/* Inline text links inside prose */
+.text-link {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--accent) 55%, transparent);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.22em;
+    transition: text-decoration-color var(--dur-2) var(--ease-soft), color var(--dur-2) var(--ease-soft);
+}
+
+.text-link:hover {
+    color: var(--accent-strong);
+    text-decoration-color: currentColor;
+}
+
+/* ---- Glass ----------------------------------------------------------- */
+.glass {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-line);
+    box-shadow: inset 0 1px 0 var(--glass-highlight), var(--shadow-2);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    backdrop-filter: blur(18px) saturate(150%);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .glass {
+        background: var(--surface-solid);
+    }
+}
+
+/* ---- Intro gating ----------------------------------------------------
+   Everything the builders assemble on load stays hidden until the build
+   is planned. The inline head script adds .intro-pending only when JS runs
+   and motion is allowed, and removes it after 5 s as a failsafe.
+   -------------------------------------------------------------------- */
+html.intro-pending [data-build-root='intro'] [data-build] {
+    opacity: 0;
+}
+
+/* ---- Cross-document view transitions ----------------------------------
+   The next page slides up over the current one like a new layer.
+   -------------------------------------------------------------------- */
+@view-transition {
+    navigation: auto;
+}
+
+::view-transition-old(root) {
+    animation: vt-out 0.75s var(--ease-in-out) both;
+}
+
+::view-transition-new(root) {
+    animation: vt-in 0.85s var(--ease-out) both;
+}
+
+@keyframes vt-out {
+    to {
+        transform: scale(0.94) translateY(-3%);
+        opacity: 0.35;
+        filter: brightness(0.6);
+    }
+}
+
+@keyframes vt-in {
+    from {
+        transform: translateY(100%);
+    }
+}
+
+/* =====================================================================
+   Portfolio building blocks
+   ===================================================================== */
+
+/* Section head: a small label in the left column, the statement on the right */
+.shead {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+    gap: var(--s-5) clamp(1rem, 2vw, 1.5rem);
+    align-items: start;
+}
+
+.label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding-top: 0.55em;
+    font-size: var(--fs-sm);
+    font-weight: 560;
+    letter-spacing: -0.005em;
+    line-height: 1.3;
+    color: var(--text-2);
+}
+
+
+.statement {
+    font-size: var(--fs-statement);
+    font-weight: 500;
+    line-height: 1.16;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    text-wrap: balance;
+    max-width: 26ch;
+}
+
+@media (max-width: 899px) {
+    .shead {
+        grid-template-columns: 1fr;
+        gap: var(--s-3);
+    }
+}
+
+/* Round magnetic button – the signature call to action */
+.round-btn {
+    --size: clamp(7.5rem, 6rem + 5vw, 10.5rem);
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    background: var(--invert-bg);
+    color: var(--invert-text);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    text-align: center;
+    isolation: isolate;
+    overflow: hidden;
+}
+
+.round-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: var(--cobalt-500);
+    transform: translateY(101%);
+    transition: transform 0.6s var(--ease-out);
+}
+
+.round-btn:hover::before,
+.round-btn:focus-visible::before {
+    transform: none;
+}
+
+.round-btn:hover,
+.round-btn:focus-visible {
+    color: #fff;
+}
+
+.round-btn--accent {
+    background: var(--cobalt-500);
+    color: #fff;
+}
+
+.round-btn--accent::before {
+    background: var(--cobalt-600);
+}
+
+.round-btn__inner {
+    display: grid;
+    justify-items: center;
+    gap: 0.35rem;
+    padding: 1rem;
+}
+
+/* Text link with arrow and drawn underline */
+.link-arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-bottom: 0.2rem;
+    font-weight: 560;
+    color: var(--text);
+    background: linear-gradient(currentColor, currentColor) left bottom / 100% 1px no-repeat;
+    transition: background-size 0.5s var(--ease-out);
+}
+
+.link-arrow:hover {
+    background-size: 0% 1px;
+    background-position: right bottom;
+}
+
+.link-arrow svg {
+    transition: transform var(--dur-2) var(--ease-out);
+}
+
+.link-arrow:hover svg {
+    transform: translateX(4px);
+}
+
+/* =====================================================================
+   Swarm Rebuild – builder cursors
+   ===================================================================== */
+.build-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    z-index: 70;
+    pointer-events: none;
+    /* cursors entering from the side must never widen the page (phones
+       would zoom out); vertically everything stays visible */
+    overflow-x: clip;
+    overflow-y: visible;
+}
+
+.bc {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform-origin: 2px 2px;
+    will-change: transform;
+    filter: drop-shadow(0 4px 10px rgba(7, 11, 28, 0.35));
+}
+
+.bc__arrow,
+.bc__beam {
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    /* the cursor box is 0 × 0 – the global max-width would collapse the svg */
+    max-width: none;
+    transition: opacity 0.15s linear;
+}
+
+.bc__arrow path {
+    fill: var(--bc-bg);
+    stroke: #fff;
+    stroke-width: 1.4;
+    stroke-linejoin: round;
+}
+
+.bc__beam {
+    top: -11px;
+    left: -7px;
+    opacity: 0;
+}
+
+.bc__beam path {
+    fill: none;
+    stroke: var(--bc-bg);
+    stroke-width: 2;
+    stroke-linecap: round;
+}
+
+.bc.is-text .bc__arrow {
+    opacity: 0;
+}
+
+.bc.is-text .bc__beam {
+    opacity: 1;
+}
+
+.bc__label {
+    position: absolute;
+    top: 20px;
+    left: 14px;
+    padding: 0.18rem 0.5rem 0.22rem;
+    border-radius: 3px 9px 9px 9px;
+    background: var(--bc-bg);
+    color: var(--bc-fg);
+    font-size: 0.71875rem;
+    font-weight: 600;
+    letter-spacing: 0.005em;
+    line-height: 1.25;
+    white-space: nowrap;
+}
+
+.bc__ripple {
+    position: absolute;
+    top: -14px;
+    left: -14px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid var(--bc-bg);
+    opacity: 0;
+}
+
+/* Selection frame, like in a design tool */
+.bsel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 1.5px solid var(--bc-bg);
+    border-radius: 2px;
+    background: color-mix(in srgb, var(--bc-bg) 6%, transparent);
+}
+
+.bsel__h {
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    background: #fff;
+    border: 1.5px solid var(--bc-bg);
+}
+
+.bsel__h.tl { top: -4px; left: -4px; }
+.bsel__h.tr { top: -4px; right: -4px; }
+.bsel__h.bl { bottom: -4px; left: -4px; }
+.bsel__h.br { bottom: -4px; right: -4px; }
+
+.bsel__size {
+    position: absolute;
+    top: calc(100% + 7px);
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    background: var(--bc-bg);
+    color: var(--bc-fg);
+    font-size: 0.65rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.bcaret {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2px;
+    border-radius: 1px;
+    background: var(--bc-bg);
+}
+
+/* name of a drawn frame, like a frame title in a design tool */
+.bsel__name {
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: -1px;
+    color: var(--bc-bg);
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+/* ---- Live session in the hero (scripts/build/live.ts) ---------------- */
+.live-guide,
+.live-outline,
+.live-measure,
+.live-inspect,
+.live-tip,
+.live-hl {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+/* a guide across the whole hero (the hero clips it) */
+.live-guide {
+    left: -100vw;
+    width: 300vw;
+    height: 1px;
+    background: var(--c);
+}
+
+.live-guide__val,
+.live-measure__val {
+    position: absolute;
+    padding: 0.1rem 0.35rem;
+    border-radius: 3px;
+    background: var(--c);
+    color: var(--cf);
+    font-size: 0.65rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.3;
+    white-space: nowrap;
+}
+
+.live-guide__val {
+    top: -1.35rem;
+}
+
+/* spacing between two elements */
+.live-outline {
+    box-shadow: inset 0 0 0 1px var(--c);
+}
+
+.live-measure {
+    background: var(--c);
+}
+
+.live-measure::before,
+.live-measure::after {
+    content: '';
+    position: absolute;
+    background: var(--c);
+}
+
+.live-measure.is-v::before,
+.live-measure.is-v::after {
+    left: -3px;
+    width: 7px;
+    height: 1px;
+}
+
+.live-measure.is-v::before { top: 0; }
+.live-measure.is-v::after { bottom: 0; }
+
+.live-measure.is-h::before,
+.live-measure.is-h::after {
+    top: -3px;
+    width: 1px;
+    height: 7px;
+}
+
+.live-measure.is-h::before { left: 0; }
+.live-measure.is-h::after { right: 0; }
+
+.live-measure.is-v .live-measure__val {
+    top: 50%;
+    left: 7px;
+    transform: translateY(-50%);
+}
+
+.live-measure.is-h .live-measure__val {
+    top: 7px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* DevTools-style inspection: content tinted, padding (border) a shade deeper */
+.live-inspect {
+    box-sizing: border-box;
+    border: 0 solid color-mix(in srgb, var(--c) 30%, transparent);
+    background: color-mix(in srgb, var(--c) 16%, transparent);
+    background-clip: padding-box;
+    outline: 1px solid color-mix(in srgb, var(--c) 70%, transparent);
+}
+
+.live-tip {
+    display: flex;
+    align-items: baseline;
+    padding: 0.28rem 0.5rem;
+    border-radius: 6px;
+    background: var(--ink-800);
+    box-shadow: 0 8px 20px -8px rgba(7, 11, 28, 0.45);
+    color: #a9b0ce;
+    font-size: 0.6875rem;
+    line-height: 1.3;
+    white-space: nowrap;
+}
+
+.live-tip b {
+    color: var(--c);
+    font-weight: 650;
+}
+
+.live-tip em {
+    margin-left: 0.6rem;
+    color: #7f87ab;
+    font-style: normal;
+    font-variant-numeric: tabular-nums;
+}
+
+/* text selected by a colleague – tints, never covers the glyphs */
+.live-hl {
+    border-radius: 2px;
+    background: color-mix(in srgb, var(--c) 40%, transparent);
+    mix-blend-mode: multiply;
+}
+
+/* The visitor's own cursor over projects – a builder with a name tag */
+.view-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 90;
+    pointer-events: none;
+    visibility: hidden;
+}
+
+.view-cursor.is-on {
+    visibility: visible;
+}
+
+.view-cursor svg {
+    max-width: none;
+}
+
+.view-cursor__arrow {
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    max-width: none;
+    filter: drop-shadow(0 4px 10px rgba(7, 11, 28, 0.4));
+    transform-origin: 2px 2px;
+    transition: transform 0.15s var(--ease-out);
+}
+
+.view-cursor__arrow path {
+    fill: var(--cobalt-500);
+    stroke: #fff;
+    stroke-width: 1.4;
+    stroke-linejoin: round;
+}
+
+.view-cursor.is-down .view-cursor__arrow {
+    transform: scale(0.86);
+}
+
+.view-cursor__tag {
+    position: absolute;
+    top: 21px;
+    left: 15px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.7rem 0.4rem;
+    border-radius: 3px 12px 12px 12px;
+    background: var(--cobalt-500);
+    color: #fff;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    white-space: nowrap;
+    box-shadow: 0 10px 30px -10px rgba(50, 67, 245, 0.7);
+    transform-origin: 0 0;
+    transform: scale(0.4);
+    opacity: 0;
+    transition:
+        transform 0.45s var(--ease-out),
+        opacity 0.2s var(--ease-soft);
+}
+
+.view-cursor.is-on .view-cursor__tag {
+    transform: none;
+    opacity: 1;
+}
+
+html.has-view-cursor [data-cursor],
+html.has-view-cursor [data-cursor] * {
+    cursor: none;
+}

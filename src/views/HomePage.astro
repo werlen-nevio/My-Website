@@ -1,0 +1,67 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/home/Hero.astro';
+import About from '../components/home/About.astro';
+import Projects from '../components/home/Projects.astro';
+import Career from '../components/home/Career.astro';
+import Contact from '../components/home/Contact.astro';
+import { useT, l, localizePath, type Lang } from '../i18n';
+import { profile } from '../data/profile';
+import { experience } from '../data/experience';
+import { education } from '../data/education';
+import { skillGroups, skillName } from '../data/skills';
+
+interface Props {
+    lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useT(lang);
+const site = Astro.site?.href.replace(/\/$/, '') ?? profile.site;
+const currentJob = experience.find((e) => e.end === null && e.id !== 'founder');
+
+const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ProfilePage',
+    url: `${site}${localizePath('/', lang)}`,
+    inLanguage: lang,
+    mainEntity: {
+        '@type': 'Person',
+        name: profile.name,
+        givenName: profile.firstName,
+        familyName: profile.lastName,
+        jobTitle: profile.role,
+        url: site,
+        email: `mailto:${profile.email}`,
+        description: t('hero.lede'),
+        address: { '@type': 'PostalAddress', addressRegion: l(profile.location, lang).split(',')[0], addressCountry: 'CH' },
+        sameAs: profile.socials.map((s) => s.href),
+        worksFor: currentJob ? { '@type': 'Organization', name: l(currentJob.organisation, lang) } : undefined,
+        alumniOf: education.map((e) => ({ '@type': 'EducationalOrganization', name: e.institution })),
+        knowsLanguage: ['de', 'en', 'fr'],
+        knowsAbout: skillGroups.flatMap((g) => g.items.map((i) => skillName(i.name, lang))),
+    },
+};
+---
+
+<BaseLayout
+    lang={lang}
+    path="/"
+    title={t('meta.homeTitle')}
+    description={t('meta.homeDescription')}
+    intro="home"
+    theme="blue"
+    ogType="profile"
+    jsonLd={jsonLd}
+    rebuild
+>
+    <Hero lang={lang} />
+    <Projects lang={lang} />
+    <About lang={lang} />
+    <Career lang={lang} />
+    <Contact lang={lang} />
+
+    <script>
+        import '../scripts/home';
+    </script>
+</BaseLayout>
