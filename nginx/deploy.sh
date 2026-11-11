@@ -22,6 +22,12 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(dirname "${SCRIPT_DIR}")"
 MODE="${1:-setup}"
 
+# The distro's Node is too old for Astro; prefer the standalone install if present
+NODE_HOME="${NODE_HOME:-/opt/node/current}"
+if [ -x "${NODE_HOME}/bin/node" ]; then
+    export PATH="${NODE_HOME}/bin:${PATH}"
+fi
+
 build_site() {
     echo ">>> Building site..."
     cd "${REPO_ROOT}"
