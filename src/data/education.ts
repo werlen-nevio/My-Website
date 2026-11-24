@@ -38,6 +38,27 @@ export const education: Education[] = [
     },
 ];
 
+export interface Certificate {
+    id: string;
+    title: string;
+    issuer: string;
+    /** Issue date, YYYY-MM. */
+    issued: string;
+    verifyUrl: string;
+    note: Localized;
+}
+
+export const certificates: Certificate[] = [
+    {
+        id: 'claude-code-in-action',
+        title: 'Claude Code in action',
+        issuer: 'Claude Academy (Anthropic)',
+        issued: '2026-11',
+        verifyUrl: 'https://academy.claude.com/verify/10cc68f2dd73a1053a9799c8094a389b',
+        note: { de: 'Kurs-Abschlusszertifikat', en: 'Course completion badge' },
+    },
+];
+
 /**
  * Placeholder for courses and certificates. Replace or remove once there
  * is real content – it renders as a quiet dashed card.
