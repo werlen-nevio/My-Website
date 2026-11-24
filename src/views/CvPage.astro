@@ -2,10 +2,10 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Logo from '../components/ui/Logo.astro';
 import Icon from '../components/ui/Icon.astro';
-import { useT, l, localizePath, formatPeriod, isCurrent, type Lang } from '../i18n';
+import { useT, l, localizePath, formatPeriod, formatMonth, isCurrent, type Lang } from '../i18n';
 import { profile } from '../data/profile';
 import { experience } from '../data/experience';
-import { education } from '../data/education';
+import { education, certificates } from '../data/education';
 import { projects } from '../data/projects';
 import { skillGroups, skillName } from '../data/skills';
 
@@ -101,6 +101,19 @@ const github = profile.socials.find((s) => s.id === 'github')!;
                                     </div>
                                     <p class="cv-item__org">
                                         {e.institution}, {l(e.field, lang)}
+                                    </p>
+                                </div>
+                            ))
+                        }
+                        {
+                            certificates.map((c) => (
+                                <div class="cv-item">
+                                    <div class="cv-item__head">
+                                        <h3 class="cv-item__title">{c.title}</h3>
+                                        <span class="cv-item__date">{formatMonth(c.issued, lang, 'long')}</span>
+                                    </div>
+                                    <p class="cv-item__org">
+                                        {c.issuer}, {l(c.note, lang)}
                                     </p>
                                 </div>
                             ))

@@ -13,7 +13,7 @@ import {
     type Lang,
 } from '../../i18n';
 import { experience } from '../../data/experience';
-import { education, educationPlaceholder } from '../../data/education';
+import { education, educationPlaceholder, certificates } from '../../data/education';
 
 /** Experience and education as calm, CV-like rows. */
 interface Props {
@@ -143,6 +143,28 @@ function progress(start: string, end: string) {
                             </li>
                         );
                     })
+                }
+                {
+                    certificates.map((c) => (
+                        <li class="row" data-build="draw" data-build-label="UI" id={`cert-${c.id}`}>
+                            <div class="row__when">
+                                <p class="row__period">{formatMonth(c.issued, lang, 'long')}</p>
+                            </div>
+                            <div class="row__main">
+                                <h4 class="row__title">{c.title}</h4>
+                                <p class="row__org">{c.issuer}</p>
+                            </div>
+                            <ul class="row__meta" role="list">
+                                <li>{l(c.note, lang)}</li>
+                                <li>
+                                    <a class="row__verify" href={c.verifyUrl} target="_blank" rel="noopener noreferrer">
+                                        <Icon name="check" size={14} /> {lang === 'de' ? 'Verifizieren' : 'Verify'}
+                                        <Icon name="arrow-up-right" size={14} />
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    ))
                 }
                 {
                     educationPlaceholder && (
@@ -311,6 +333,15 @@ function progress(start: string, end: string) {
     .row__pct {
         font-size: var(--fs-xs);
         color: var(--text-3);
+    }
+
+    .row__verify {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35em;
+        color: var(--text);
+        text-decoration: underline;
+        text-underline-offset: 3px;
     }
 
     .row--placeholder {
